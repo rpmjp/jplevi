@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-gun-800 text-ink font-sans antialiased;
+  }
+
+  /* Visible, high-contrast keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid theme("colors.hud.DEFAULT");
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: theme("colors.signal.DEFAULT");
+    color: theme("colors.gun.900");
+  }
+}
+
+@layer components {
+  /* --- Cockpit chrome -------------------------------------------------- */
+
+  /* Corner-bracket panel: four L-brackets drawn with gradients, no extra DOM. */
+  .panel {
+    @apply relative bg-gun-700/60 border border-gun-500/70;
+    box-shadow: theme("boxShadow.panel");
+  }
+
+  .panel::before,
+  .panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    border-color: theme("colors.hud.DEFAULT");
+    opacity: 0.75;
+  }
+
+  .panel::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+
+  .panel::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+  }
+
+  /* Opposite pair of brackets, for panels that want all four corners. */
+  .panel-brackets > .bracket-tr,
+  .panel-brackets > .bracket-bl {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    border-color: theme("colors.hud.DEFAULT");
+    opacity: 0.75;
+  }
+
+  .panel-brackets > .bracket-tr {
+    top: -1px;
+    right: -1px;
+    border-top: 2px solid;
+    border-right: 2px solid;
+  }
+
+  .panel-brackets > .bracket-bl {
+    bottom: -1px;
+    left: -1px;
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+  }
+
+  /* Small uppercase telemetry label. */
+  .hud-label {
+    @apply font-mono text-[0.65rem] uppercase tracking-hud text-hud/80;
+  }
+
+  .hud-rule {
+    @apply h-px w-full bg-gradient-to-r from-hud/35 via-gun-500/60 to-transparent;
+  }
+
+  /* --- Controls -------------------------------------------------------- */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 font-mono text-xs uppercase
+      tracking-hud transition-colors duration-150;
+  }
+
+  .btn-primary {
+    @apply btn bg-signal text-gun-900 font-semibold hover:bg-signal-soft;
+    box-shadow: theme("boxShadow.signal");
+  }
+
+  .btn-ghost {
+    @apply btn border border-gun-400 text-ink-muted hover:border-hud/70 hover:text-hud;
+  }
+
+  .link-quiet {
+    @apply text-ink-muted transition-colors hover:text-ink;
+  }
+}
+
+@layer utilities {
+  /* Boot-in reveal; staggered by inline --boot-delay where used. */
+  .boot-in {
+    animation: boot 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--boot-delay, 0ms);
+  }
+
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.022) 0px,
+      rgba(255, 255, 255, 0.022) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+}
+
+/* Respect the user's motion preference: no sweeps, no boot, no scan. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .boot-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

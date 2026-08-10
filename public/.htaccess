@@ -1,0 +1,61 @@
+# JP Levi — Apache config for static export on shared hosting (Hostinger).
+# This file is copied verbatim into out/ by the Next.js static export.
+
+# ---- Error documents --------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# ---- Canonical trailing slashes --------------------------------------------
+# The export uses trailingSlash: true, so /gaming -> /gaming/ resolves to
+# /gaming/index.html via DirectoryIndex. Let Apache add the slash for real dirs.
+<IfModule mod_dir.c>
+  DirectoryIndex index.html
+  DirectorySlash On
+</IfModule>
+
+Options -Indexes
+
+# ---- Security headers -------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  # Enable once the site is served over HTTPS on the apex + www:
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+</IfModule>
+
+# ---- Caching ----------------------------------------------------------------
+# Hashed build assets are immutable; HTML must always revalidate.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Content-hashed bundles emitted under /_next/static/
+  <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^_next/static/ - [E=IMMUTABLE:1]
+  </IfModule>
+  Header set Cache-Control "public, max-age=31536000, immutable" env=IMMUTABLE
+
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---- Compression ------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml \
+    application/javascript application/json image/svg+xml font/woff2
+</IfModule>
