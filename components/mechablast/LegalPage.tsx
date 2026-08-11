@@ -4,7 +4,7 @@ import { game, routes } from "@/app/mechablast/game";
 
 /**
  * Shell for the two legal documents. The document's own markdown supplies every
- * heading, including the <h1> — nothing here rewrites or re-titles the text.
+ * heading, including the <h1> - nothing here rewrites or re-titles the text.
  */
 export function LegalPage({ eyebrow, source }: { eyebrow: string; source: string }) {
   return (

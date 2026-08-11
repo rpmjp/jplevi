@@ -5,7 +5,7 @@ import rehypeRaw from "rehype-raw";
 
 /**
  * Renders markdown verbatim. No sanitising, rewriting, or reflowing of the
- * source text — the legal copy is rendered exactly as authored.
+ * source text - the legal copy is rendered exactly as authored.
  *
  * rehype-raw passes through inline HTML in the source, so authored markup
  * renders as markup and `<!-- comments -->` stay invisible instead of being

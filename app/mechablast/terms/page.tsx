@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Terms of Service",
   description,
   openGraph: {
-    title: `${game.name} — Terms of Service`,
+    title: `${game.name}: Terms of Service`,
     description,
     images: [{ url: game.ogImage, width: 1200, height: 630, alt: `${game.name} key art` }],
     type: "article",

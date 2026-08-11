@@ -7,7 +7,7 @@ export function MechaHeader() {
       <div className="mx-auto flex max-w-shell flex-wrap items-center gap-x-8 gap-y-3 px-5 py-4 sm:px-8">
         <Link
           href={routes.home}
-          aria-label={`${game.name} — home`}
+          aria-label={`${game.name} home`}
           className="font-display text-lg font-extrabold uppercase tracking-wordmark text-ink"
         >
           Mecha<span className="text-mecha-cyan">Blast</span>

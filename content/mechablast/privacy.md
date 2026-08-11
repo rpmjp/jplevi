@@ -1,4 +1,4 @@
-# MechaBlast — Privacy Policy
+# MechaBlast - Privacy Policy
 
 **Owner / Data controller:** JP LEVI INC., a New Jersey corporation (brand:
 "jplevi"), the publisher of MechaBlast ("we", "us", "our").
@@ -8,9 +8,9 @@
 ## The short version
 
 MechaBlast is a single-player game. It shows a privacy notice on first launch and
-collects **anonymous, aggregate gameplay analytics only if you allow it** — it is
+collects **anonymous, aggregate gameplay analytics only if you allow it** - it is
 **OFF until you opt in**, carries **no personal data**, and you can **turn it off
-any time in Settings**. In-app purchases are processed by the app store, not by us —
+any time in Settings**. In-app purchases are processed by the app store, not by us -
 we never see your payment details. The game **shows ads** through Google AdMob
 (interstitials between levels and optional, opt-in "watch for a reward" ads); AdMob
 uses a device advertising identifier to deliver and measure them, and you can buy a
@@ -18,37 +18,37 @@ one-time **Remove Ads** upgrade that turns off the interstitials.
 
 ## What we collect (only after you opt in)
 
-If — and only if — you grant analytics consent, the game records **anonymous,
+If - and only if - you grant analytics consent, the game records **anonymous,
 aggregate** gameplay events to help us balance difficulty and fix rough spots:
 
-- **Progression** — which levels you start, clear, or fail (with the failure cause),
+- **Progression** - which levels you start, clear, or fail (with the failure cause),
   boss attempts and defeats, tutorial completion, and per-level completion time,
-  score, and shot accuracy — all as aggregate counts.
-- **Economy** — store screens viewed, in-game (scrap) purchases, real-money purchases
-  (which pack), and freezer usage — item ids and amounts only.
-- **Retention** — app launches and closes (session boundaries), daily-reward claims,
+  score, and shot accuracy - all as aggregate counts.
+- **Economy** - store screens viewed, in-game (scrap) purchases, real-money purchases
+  (which pack), and freezer usage - item ids and amounts only.
+- **Retention** - app launches and closes (session boundaries), daily-reward claims,
   and login-streak length.
-- **Settings** — significant accessibility/audio changes (e.g. reduce-motion, mute) as
+- **Settings** - significant accessibility/audio changes (e.g. reduce-motion, mute) as
   aggregate signals.
 
 ## What our analytics never collects
 
 Our gameplay analytics collects no name, email, phone number, precise location,
 contacts, photos, or any per-keystroke / per-shot activity, and ties nothing to your
-identity. Analytics measures aggregate behaviour for tuning — it is **not
+identity. Analytics measures aggregate behaviour for tuning - it is **not
 surveillance** and carries **no personally identifying information**. (The app
 enforces this technically: every event payload is stripped of identifying keys and
 non-aggregate values before it can be sent.) The advertising identifier described in
-the Advertising section below is used only by Google AdMob for ads — it is **not**
+the Advertising section below is used only by Google AdMob for ads - it is **not**
 part of, or combined with, our gameplay analytics.
 
 ## Advertising (Google AdMob)
 
 The game is free and shows ads through **Google AdMob**:
 
-- **Interstitial ads** — a full-screen ad shown at natural breaks (between levels, or
+- **Interstitial ads** - a full-screen ad shown at natural breaks (between levels, or
   after a run ends), never during active gameplay, and frequency-capped.
-- **Rewarded ads** — **optional and opt-in**: you tap "watch an ad" to earn a reward
+- **Rewarded ads** - **optional and opt-in**: you tap "watch an ad" to earn a reward
   (scrap, a freezer, or a revive). You are never forced to watch one.
 
 To serve, frequency-cap, measure, and protect these ads from fraud, AdMob collects a
@@ -59,14 +59,14 @@ is processed by Google as an independent controller under
 terms. Ad creatives are limited to a **PG** content rating to match the game's age
 rating.
 
-- **Consent (EEA/UK/Switzerland and similar regions)** — on first launch the app shows
+- **Consent (EEA/UK/Switzerland and similar regions)** - on first launch the app shows
   Google's certified consent message (User Messaging Platform); your choice governs
   whether personalized ads may be used.
-- **iOS** — the app does **not** ask for App Tracking Transparency and therefore serves
+- **iOS** - the app does **not** ask for App Tracking Transparency and therefore serves
   **non-personalized** ads (no cross-app/website tracking).
-- **Remove Ads** — a one-time in-app purchase removes the interstitial ads. Opt-in
+- **Remove Ads** - a one-time in-app purchase removes the interstitial ads. Opt-in
   rewarded ads remain available if you choose to use them.
-- **Children** — this is a general-audience title, not a "Made for Kids" app; see the
+- **Children** - this is a general-audience title, not a "Made for Kids" app; see the
   Children's privacy section.
 
 ## Consent and your control
@@ -80,7 +80,7 @@ rating.
 ## In-app purchases
 
 MechaBlast offers optional consumable purchases (scrap packs and freezer bundles).
-**Payment is processed entirely by the App Store / Google Play** — MechaBlast never
+**Payment is processed entirely by the App Store / Google Play** - MechaBlast never
 receives, stores, or transmits your payment card or billing details. The store may
 share a purchase confirmation with the app so it can grant the item you bought. There
 are **no loot boxes and no randomized paid rewards**; every purchase grants a fixed,
@@ -89,9 +89,9 @@ pre-disclosed amount.
 ## Children's privacy (COPPA / GDPR-K)
 
 MechaBlast contains only mild cartoon robot-vs-robot action and is suitable for a broad
-audience, but it is a **general-audience game — not a "Made for Kids" app**, and it is
+audience, but it is a **general-audience game - not a "Made for Kids" app**, and it is
 not directed at children under 13. Our gameplay analytics is **opt-in** and carries
-**no personal data**, so it never behaviourally tracks anyone — child or adult — who
+**no personal data**, so it never behaviourally tracks anyone - child or adult - who
 has not consented. The game does serve ads via Google AdMob (which uses a device
 advertising identifier), limited to **PG** ad content and, on iOS, **non-personalized**
 (no cross-app tracking). We do not knowingly collect personal information from children.
@@ -104,14 +104,14 @@ information, contact us and we will delete it.
 We do not sell your personal information. We share data only with the service providers
 needed to run the game:
 
-- **Google AdMob** (advertising) and **Google User Messaging Platform** (consent) —
+- **Google AdMob** (advertising) and **Google User Messaging Platform** (consent) -
   receive the device advertising identifier and ad-interaction/diagnostic data as
   described in the Advertising section, and process it as an independent controller
   under Google's terms.
-- **Analytics provider** — when analytics is enabled by a deployment and you have opted
+- **Analytics provider** - when analytics is enabled by a deployment and you have opted
   in, aggregate, non-identifying events are sent to our analytics provider to process
   on our behalf.
-- **App store billing** (Apple App Store / Google Play) — processes purchases; we
+- **App store billing** (Apple App Store / Google Play) - processes purchases; we
   receive only a purchase confirmation, never your payment-card details.
 
 (In builds where no analytics provider is configured, no analytics leaves your device.
@@ -170,7 +170,7 @@ purposes are described throughout this policy.
 ## Security
 
 We use reasonable technical and organizational measures to protect data (including
-encryption in transit and data minimization — notably, we do not collect payment-card
+encryption in transit and data minimization - notably, we do not collect payment-card
 data or account passwords). No method of transmission or storage is completely secure.
 
 ## Data breach

@@ -1,4 +1,4 @@
-# MechaBlast — End User License Agreement & Terms of Service
+# MechaBlast - End User License Agreement & Terms of Service
 
 **Publisher / Owner:** JP LEVI INC., a New Jersey corporation ("JP LEVI", "we", "us",
 "our").
@@ -32,9 +32,9 @@ are reserved by JP LEVI INC.
 
 ## 4. Ownership and intellectual property
 
-The App and all of its content — including source code, art, sprites, animation, audio,
+The App and all of its content - including source code, art, sprites, animation, audio,
 music, level and world design, text, story, characters, and the "MechaBlast" and
-"jplevi" names and logos (the "Content") — are owned by JP LEVI INC. and protected by
+"jplevi" names and logos (the "Content") - are owned by JP LEVI INC. and protected by
 copyright, trademark, and other laws. **© 2026 JP LEVI INC. All rights reserved.** These
 Terms grant you no right to our trademarks, trade names, or logos.
 
@@ -77,7 +77,7 @@ Some purchases grant in-game items or currency (e.g. scrap, gear, freezers) or t
 "Remove Ads" upgrade (collectively, "Virtual Items"). You acknowledge and agree:
 
 - Virtual Items are a **limited, personal, revocable license** to use features within the
-  App — they are **not your property**;
+  App - they are **not your property**;
 - Virtual Items **have no monetary value**, are not real currency, and **cannot be
   redeemed for cash** or transferred, sold, or exchanged outside the App;
 - we may manage, regulate, modify, remove, or discontinue Virtual Items, and change the
@@ -252,7 +252,7 @@ If you are a consumer in the EU/EEA or the UK (or where similar rights apply):
   the following digital content [describe], ordered on [date], [your name], [your address],
   [date]."*
 
-## 24. Apple App Store — additional terms
+## 24. Apple App Store - additional terms
 
 If you obtained the App from the Apple App Store, the following also apply and control for
 the Apple version of the App in case of conflict:
@@ -273,7 +273,7 @@ the Apple version of the App in case of conflict:
 - Apple and its subsidiaries are third-party beneficiaries of these Terms and may enforce
   them against you.
 
-## 25. Google Play — additional terms
+## 25. Google Play - additional terms
 
 If you obtained the App from Google Play, your use is also subject to the Google Play Terms
 of Service. In-app purchases are processed through Google Play's billing system and are

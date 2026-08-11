@@ -6,18 +6,18 @@ const description = `${game.pitch} ${game.blurb}`;
 
 export const metadata: Metadata = {
   title: {
-    absolute: `${game.name} — ${game.pitch}`,
+    absolute: `${game.name}: ${game.pitch}`,
   },
   description,
   openGraph: {
-    title: `${game.name} — ${game.pitch}`,
+    title: `${game.name}: ${game.pitch}`,
     description,
     images: [{ url: game.ogImage, width: 1200, height: 630, alt: `${game.name} key art` }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${game.name} — ${game.pitch}`,
+    title: `${game.name}: ${game.pitch}`,
     description,
     images: [game.ogImage],
   },
@@ -166,13 +166,13 @@ export default function MechaBlastHome() {
           </p>
           {/*
             TODO: drop the trailer in here once it is cut. Keep it a plain
-            <iframe> — no third-party script tags, so nothing loads until the
+            <iframe> - no third-party script tags, so nothing loads until the
             user is on this page and nothing needs a runtime.
 
             <iframe
               className="h-full w-full"
               src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
-              title="MechaBlast — announcement trailer"
+              title="MechaBlast announcement trailer"
               loading="lazy"
               allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

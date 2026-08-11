@@ -5,7 +5,7 @@ import { site } from "@/app/site";
 
 export const metadata: Metadata = {
   title: "Gaming",
-  description: "The gaming division of JP Levi Inc. — original games and the tooling behind them.",
+  description: "The gaming division of JP Levi Inc. Original games and the tooling behind them.",
 };
 
 export default function GamingPage() {
@@ -23,7 +23,7 @@ export default function GamingPage() {
           Gaming
         </h1>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg">
-          Original games and the tooling behind them. This section is under construction — titles,
+          Original games and the tooling behind them. This section is under construction. Titles,
           devlogs, and press material land here.
         </p>
       </div>

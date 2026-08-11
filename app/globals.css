@@ -144,7 +144,7 @@
     box-shadow: theme("boxShadow.cel");
   }
 
-  /* Primary: solid cyan on black type — the store CTAs. */
+  /* Primary: solid cyan on black type - the store CTAs. */
   .cel-btn-primary {
     @apply cel-btn border-mecha-cyan bg-mecha-cyan text-mecha-void hover:bg-mecha-cyan-soft;
   }
@@ -154,7 +154,7 @@
     @apply cel-btn border-mecha-edge bg-mecha-raised text-ink hover:border-mecha-cyan hover:text-mecha-cyan;
   }
 
-  /* Buttons press into their own shadow on hover — disabled under reduced motion. */
+  /* Buttons press into their own shadow on hover - disabled under reduced motion. */
   .cel-btn:hover {
     transform: translate(2px, 2px);
     box-shadow: theme("boxShadow.cel-sm");

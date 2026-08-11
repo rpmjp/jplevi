@@ -4,7 +4,7 @@
  */
 
 /**
- * Mirrors lib/game/config/legal_config.dart in the app. Keep the two in sync —
+ * Mirrors lib/game/config/legal_config.dart in the app. Keep the two in sync -
  * along with /LICENSE, store/terms_of_service.md, and store/privacy_policy.md.
  */
 export const game = {
@@ -19,7 +19,7 @@ export const game = {
   bundleId: "com.jplevi.mechablast",
   supportEmail: "support@jplevi.com",
   copyrightYear: 2026,
-  /** LegalConfig.copyright — the exact in-app notice. */
+  /** LegalConfig.copyright - the exact in-app notice. */
   copyright: "© 2026 JP LEVI INC. All rights reserved.",
   appVersion: "1.0.0",
   venue: "New Jersey (Essex County)",
@@ -47,7 +47,7 @@ export const sectionNav = [
 export type StoreLink = {
   id: string;
   label: string;
-  /** TODO: real store URL — placeholder until the listings are live. */
+  /** TODO: real store URL - placeholder until the listings are live. */
   href: string;
 };
 
@@ -90,8 +90,8 @@ export const features = [
 ];
 
 export const screenshots = [
-  { src: "/mechablast/shots/shot1.png", alt: "MechaBlast gameplay — mech firing on a robot patrol" },
-  { src: "/mechablast/shots/shot2.png", alt: "MechaBlast gameplay — boss fight in a scrapyard world" },
-  { src: "/mechablast/shots/shot3.png", alt: "MechaBlast gameplay — mech upgrade and loadout screen" },
-  { src: "/mechablast/shots/shot4.png", alt: "MechaBlast gameplay — platforming across a collapsing bridge" },
+  { src: "/mechablast/shots/shot1.png", alt: "MechaBlast gameplay: mech firing on a robot patrol" },
+  { src: "/mechablast/shots/shot2.png", alt: "MechaBlast gameplay: boss fight in a scrapyard world" },
+  { src: "/mechablast/shots/shot3.png", alt: "MechaBlast gameplay: mech upgrade and loadout screen" },
+  { src: "/mechablast/shots/shot4.png", alt: "MechaBlast gameplay: platforming across a collapsing bridge" },
 ];

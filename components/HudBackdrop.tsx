@@ -1,6 +1,6 @@
 /**
  * Fixed, non-interactive cockpit backdrop: faint grid, a slow teal scan sweep,
- * and scanlines. Pure CSS — the motion is disabled by prefers-reduced-motion.
+ * and scanlines. Pure CSS - the motion is disabled by prefers-reduced-motion.
  */
 export function HudBackdrop() {
   return (

@@ -24,7 +24,7 @@ export function SiteHeader() {
                 <li key={division.id}>
                   <span
                     className="font-mono text-[0.7rem] uppercase tracking-hud text-ink-dim"
-                    title={`${division.name} — in development`}
+                    title={`${division.name} (in development)`}
                   >
                     {division.name}
                     <span className="sr-only"> (in development)</span>

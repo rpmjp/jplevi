@@ -7,7 +7,7 @@ export default function CorporateLayout({ children }: { children: React.ReactNod
   return (
     <>
       <HudBackdrop />
-      {/* No background here — HudBackdrop sits behind at -z-10. */}
+      {/* No background here - HudBackdrop sits behind at -z-10. */}
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
         <main id="main" className="flex-1">

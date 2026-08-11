@@ -4,7 +4,7 @@ import path from "node:path";
 /**
  * Reads a legal document from content/mechablast/ at build time.
  *
- * This runs during `next build` only — under output: "export" every page is
+ * This runs during `next build` only - under output: "export" every page is
  * prerendered, so there is no request-time filesystem access.
  */
 export type LegalSlug = "privacy" | "terms";

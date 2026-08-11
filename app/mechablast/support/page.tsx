@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { game, routes } from "../game";
 
-const description = `Get help with ${game.name} — contact support, report a bug, or read the privacy policy and terms.`;
+const description = `Get help with ${game.name}: contact support, report a bug, or read the privacy policy and terms.`;
 
 export const metadata: Metadata = {
   title: "Support",
   description,
   openGraph: {
-    title: `${game.name} — Support`,
+    title: `${game.name}: Support`,
     description,
     images: [{ url: game.ogImage, width: 1200, height: 630, alt: `${game.name} key art` }],
     type: "article",
@@ -39,7 +39,7 @@ export default function SupportPage() {
         Need a hand?
       </h1>
       <p className="mt-6 max-w-[72ch] text-base leading-relaxed text-ink-muted">
-        Email us and a human will read it — bug reports, account-free progress problems, purchase
+        Email us and a human will read it: bug reports, account-free progress problems, purchase
         trouble, or privacy requests.
       </p>
 
@@ -73,8 +73,8 @@ export default function SupportPage() {
             Purchases and refunds
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-            Purchases and refunds are handled by the app store you bought from — Apple&rsquo;s App
-            Store or Google Play — not by {game.publisher} We cannot issue refunds or see your
+            Purchases and refunds are handled by the app store you bought from (Apple&rsquo;s App
+            Store or Google Play), not by {game.publisher} We cannot issue refunds or see your
             payment details.
           </p>
           <p className="mt-4 text-sm leading-relaxed text-ink-muted">

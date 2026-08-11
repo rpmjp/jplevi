@@ -1,6 +1,6 @@
 /**
  * Single source of truth for company facts.
- * Header, footer, and every page read from here — nothing gets hardcoded twice.
+ * Header, footer, and every page read from here - nothing gets hardcoded twice.
  */
 
 export type DivisionStatus = "live" | "coming";
@@ -26,7 +26,7 @@ export const site = {
   statement: "We build the things we'd want to use.",
   /** Supporting line under the hero statement. */
   support:
-    "JP Levi Inc. is a New Jersey builder's studio working across gaming, AI/ML, web, and software — one team, shipping under one roof.",
+    "JP Levi Inc. is a New Jersey builder's studio working across gaming, AI/ML, web, and software. One team, shipping under one roof.",
   /** Short "what we do / the studio" line. */
   studioLine:
     "Small team, long horizon. We design, engineer, and ship our own products end to end, and take on select work for people building something worth building.",
@@ -62,7 +62,7 @@ export const divisions: Division[] = [
   {
     id: "software",
     name: "Software",
-    blurb: "Product engineering — platforms, services, and internal tooling.",
+    blurb: "Product engineering: platforms, services, and internal tooling.",
     status: "coming",
   },
 ];
@@ -72,7 +72,7 @@ export const liveDivisions = divisions.filter(
   (d): d is Division & { href: string } => d.status === "live" && Boolean(d.href),
 );
 
-/** The first live section — the parent home's primary CTA target. */
+/** The first live section - the parent home's primary CTA target. */
 export const primaryDivision = liveDivisions[0];
 
 export const statusLabel: Record<DivisionStatus, string> = {

@@ -6,8 +6,8 @@ import { game } from "./game";
 export const metadata: Metadata = {
   // Section-wide title template; each page supplies its own `title`.
   title: {
-    default: `${game.name} — ${game.pitch}`,
-    template: `%s — ${game.name}`,
+    default: `${game.name}: ${game.pitch}`,
+    template: `%s | ${game.name}`,
   },
 };
 
