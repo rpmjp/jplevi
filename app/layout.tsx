@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Saira, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
-import { HudBackdrop } from "@/components/HudBackdrop";
 import { site } from "./site";
 
 const display = Saira({
@@ -53,24 +50,21 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+/**
+ * Root layout holds only the document shell and fonts. Site chrome lives in
+ * app/(corporate)/layout.tsx so sections like /mechablast/ can supply their own.
+ */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="min-h-screen">
+      <body className="min-h-screen overflow-x-hidden">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-signal focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-hud focus:text-gun-900"
         >
           Skip to content
         </a>
-        <HudBackdrop />
-        <div className="flex min-h-screen flex-col">
-          <SiteHeader />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <SiteFooter />
-        </div>
+        {children}
       </body>
     </html>
   );

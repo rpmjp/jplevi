@@ -35,7 +35,8 @@ export const site = {
   },
   domain: "jplevi.com",
   url: "https://jplevi.com",
-  founded: 2024,
+  /** JP LEVI INC. incorporated in Newark, NJ on 2015-08-28. */
+  founded: 2015,
 } as const;
 
 export const divisions: Division[] = [

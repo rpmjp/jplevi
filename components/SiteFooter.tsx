@@ -28,9 +28,9 @@ export function SiteFooter() {
                     {division.name}
                   </Link>
                 ) : (
-                  <span className="text-ink-dim/80">
+                  <span className="text-ink-dim">
                     {division.name}
-                    <span className="ml-2 font-mono text-[0.6rem] uppercase tracking-hud text-ink-dim/60">
+                    <span className="ml-2 font-mono text-[0.6rem] uppercase tracking-hud text-ink-dim">
                       {statusLabel[division.status]}
                     </span>
                   </span>
@@ -62,7 +62,7 @@ export function SiteFooter() {
           <p className="font-mono text-[0.65rem] uppercase tracking-hud text-ink-dim">
             © {year} {site.legalName}. All rights reserved.
           </p>
-          <p className="font-mono text-[0.65rem] uppercase tracking-hud text-ink-dim/70">
+          <p className="font-mono text-[0.65rem] uppercase tracking-hud text-ink-dim">
             Built in {site.state}
           </p>
         </div>

@@ -37,6 +37,16 @@ jobs:
           test -f out/gaming/index.html
           test -f out/404.html
           test -f out/.htaccess
+          test -f out/mechablast/index.html
+          test -f out/mechablast/privacy/index.html
+          test -f out/mechablast/terms/index.html
+          test -f out/mechablast/support/index.html
+          test -f out/mechablast/press/index.html
+          test -f out/mechablast/og.png
+          for n in 1 2 3 4; do test -f "out/mechablast/shots/shot$n.png"; done
+          # The legal pages must render their source, not an empty shell.
+          grep -q "Privacy Policy" out/mechablast/privacy/index.html
+          grep -q "End User License Agreement" out/mechablast/terms/index.html
           echo "Static export verified."
 
       - name: Upload build artifact

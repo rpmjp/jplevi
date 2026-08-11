@@ -26,6 +26,16 @@
     background: theme("colors.signal.DEFAULT");
     color: theme("colors.gun.900");
   }
+
+  /* MechaBlast section recolors focus + selection to its own accent. */
+  .mecha-scope :focus-visible {
+    outline-color: theme("colors.mecha.cyan");
+  }
+
+  .mecha-scope ::selection {
+    background: theme("colors.mecha.cyan");
+    color: theme("colors.mecha.void");
+  }
 }
 
 @layer components {
@@ -89,7 +99,7 @@
 
   /* Small uppercase telemetry label. */
   .hud-label {
-    @apply font-mono text-[0.65rem] uppercase tracking-hud text-hud/80;
+    @apply font-mono text-[0.65rem] uppercase tracking-hud text-hud;
   }
 
   .hud-rule {
@@ -114,6 +124,91 @@
 
   .link-quiet {
     @apply text-ink-muted transition-colors hover:text-ink;
+  }
+
+  /* --- MechaBlast: cel-shaded arcade -------------------------------------- */
+
+  /* Inked panel: thick outline + hard, blur-free drop shadow. */
+  .cel-panel {
+    @apply border-2 border-mecha-edge bg-mecha-panel;
+    box-shadow: theme("boxShadow.cel");
+  }
+
+  .cel-eyebrow {
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-hud text-mecha-cyan;
+  }
+
+  .cel-btn {
+    @apply inline-flex items-center justify-center gap-2 border-2 px-6 py-3.5 font-mono text-sm
+      font-semibold uppercase tracking-[0.14em] transition-transform duration-150;
+    box-shadow: theme("boxShadow.cel");
+  }
+
+  /* Primary: solid cyan on black type — the store CTAs. */
+  .cel-btn-primary {
+    @apply cel-btn border-mecha-cyan bg-mecha-cyan text-mecha-void hover:bg-mecha-cyan-soft;
+  }
+
+  /* Secondary: outlined, fills on hover. */
+  .cel-btn-ghost {
+    @apply cel-btn border-mecha-edge bg-mecha-raised text-ink hover:border-mecha-cyan hover:text-mecha-cyan;
+  }
+
+  /* Buttons press into their own shadow on hover — disabled under reduced motion. */
+  .cel-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: theme("boxShadow.cel-sm");
+  }
+
+  .cel-btn:active {
+    transform: translate(5px, 5px);
+    box-shadow: none;
+  }
+
+  .cel-link {
+    @apply text-mecha-cyan underline decoration-mecha-cyan-deep underline-offset-4
+      transition-colors hover:decoration-mecha-cyan;
+  }
+
+  /* Legal-page typography: @tailwindcss/typography retuned to the section theme. */
+  .prose-mecha {
+    --tw-prose-invert-body: theme("colors.ink.muted");
+    --tw-prose-invert-headings: theme("colors.ink.DEFAULT");
+    --tw-prose-invert-lead: theme("colors.ink.muted");
+    --tw-prose-invert-links: theme("colors.mecha.cyan");
+    --tw-prose-invert-bold: theme("colors.ink.DEFAULT");
+    --tw-prose-invert-counters: theme("colors.mecha.cyan");
+    --tw-prose-invert-bullets: theme("colors.mecha.edge");
+    --tw-prose-invert-hr: theme("colors.mecha.line");
+    --tw-prose-invert-quotes: theme("colors.ink.DEFAULT");
+    --tw-prose-invert-quote-borders: theme("colors.mecha.cyan");
+    --tw-prose-invert-captions: theme("colors.ink.dim");
+    --tw-prose-invert-code: theme("colors.mecha.cyan");
+    --tw-prose-invert-pre-code: theme("colors.ink.DEFAULT");
+    --tw-prose-invert-pre-bg: theme("colors.mecha.void");
+    --tw-prose-invert-th-borders: theme("colors.mecha.edge");
+    --tw-prose-invert-td-borders: theme("colors.mecha.line");
+  }
+
+  .prose-mecha :where(h1, h2, h3, h4) {
+    @apply font-display tracking-tight;
+  }
+
+  .prose-mecha :where(h2) {
+    @apply mt-12 border-t-2 border-mecha-line pt-8;
+  }
+
+  .prose-mecha :where(a):focus-visible {
+    outline-color: theme("colors.mecha.cyan");
+  }
+
+  /* Wide tables scroll inside their own container instead of the page body. */
+  .prose-mecha :where(table) {
+    @apply my-0 w-full text-sm;
+  }
+
+  .prose-mecha :where(th) {
+    @apply font-mono text-[0.7rem] uppercase tracking-hud text-mecha-cyan;
   }
 }
 
@@ -150,5 +245,12 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  /* Buttons keep their color feedback but stop moving. */
+  .cel-btn:hover,
+  .cel-btn:active {
+    transform: none;
+    box-shadow: theme("boxShadow.cel");
   }
 }

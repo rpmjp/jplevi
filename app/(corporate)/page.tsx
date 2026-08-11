@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Panel } from "@/components/Panel";
-import { divisions, primaryDivision, site, statusLabel } from "./site";
+import { divisions, primaryDivision, site, statusLabel } from "@/app/site";
 
 export default function HomePage() {
   return (
@@ -82,7 +82,7 @@ export default function HomePage() {
                   <span className="font-mono text-[0.7rem] tracking-hud text-ink-dim">{index}</span>
                   <span
                     className={`font-mono text-[0.6rem] uppercase tracking-hud ${
-                      isLive ? "text-hud" : "text-hazard/80"
+                      isLive ? "text-hud" : "text-hazard"
                     }`}
                   >
                     <span
@@ -106,7 +106,7 @@ export default function HomePage() {
 
                 <p
                   className={`mt-6 font-mono text-[0.65rem] uppercase tracking-hud ${
-                    isLive ? "text-signal" : "text-ink-dim/60"
+                    isLive ? "text-signal" : "text-ink-dim"
                   }`}
                 >
                   {isLive ? "Enter section →" : "Not yet open"}

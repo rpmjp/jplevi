@@ -26,14 +26,43 @@ npm run typecheck
 
 ```
 app/
-  site.ts        single config module — company facts + division list (live | coming)
-  layout.tsx     shared shell: fonts, metadata, header, footer, HUD backdrop
-  page.tsx       parent home
-  gaming/        section landing (stub — real route so the URL exists)
-  not-found.tsx  custom 404 (exported as out/404.html)
-components/      Wordmark, SiteHeader, SiteFooter, Panel, HudBackdrop
-public/.htaccess Apache rules: 404 mapping, security headers, cache policy
+  layout.tsx        document shell only: fonts, base metadata, skip link
+  site.ts           single config module — company facts + division list (live | coming)
+  not-found.tsx     custom 404 (exported as out/404.html); carries its own chrome
+  icon.svg          corporate favicon
+  (corporate)/      route group wearing the HUD chrome — header, footer, backdrop
+    layout.tsx
+    page.tsx        parent home
+    gaming/         division landing
+  mechablast/       game section — owns its chrome, does NOT inherit the corporate one
+    layout.tsx      MechaBlast header + footer
+    game.ts         game facts; mirrors lib/game/config/legal_config.dart in the app
+    legal.ts        build-time reader for content/mechablast/*.md
+    icon.svg        section favicon
+    page.tsx  privacy/  terms/  support/  press/
+components/
+  mechablast/       MechaHeader, MechaFooter, Markdown, LegalPage
+content/mechablast/ privacy.md, terms.md — rendered verbatim at build time
+public/mechablast/  og.png + shots/shot1–4.png
+public/.htaccess    Apache rules: 404 mapping, security headers, cache policy
 ```
+
+### Chrome and route groups
+
+The root layout deliberately holds no header or footer. Corporate pages get theirs from
+`app/(corporate)/layout.tsx`; MechaBlast supplies its own in `app/mechablast/layout.tsx`. A route
+group `(corporate)` does not appear in the URL, so `/` and `/gaming/` are unchanged. Any future
+section that needs different chrome follows the MechaBlast pattern.
+
+### Legal documents
+
+`content/mechablast/privacy.md` and `terms.md` are read with `fs.readFileSync` inside server
+components and rendered by react-markdown (+ remark-gfm for tables, + rehype-raw so authored HTML
+and comments behave). This happens at **build time only** — under `output: "export"` there is no
+request-time filesystem access, and the rendered pages ship ~200 B of route JS.
+
+**The rendering is verbatim.** Nothing rewrites, reflows, or re-titles the source, and the markdown
+supplies its own `<h1>`. To update the legal text, replace the markdown file and rebuild.
 
 ### Adding a division
 
@@ -43,13 +72,24 @@ entry to `status: "live"` and give it an `href`. Nothing else needs editing.
 
 ## Design system
 
-Cockpit-HUD: gunmetal base, **signal orange** for CTAs and energy, **teal** for HUD/telemetry lines
+Two systems share one set of tokens.
+
+**Corporate** — cockpit-HUD: gunmetal base, **signal orange** for CTAs and energy, **teal** for HUD/telemetry lines
 and corner brackets, **amber reserved for hazard/attention only**. Corner-bracket panels, a
 restrained scanline/boot motion gated behind `prefers-reduced-motion`, visible keyboard focus, fully
 responsive. The parent home runs the system quiet and corporate; sections can turn it up.
 
+**MechaBlast** — cel-shaded arcade: near-black ground (`mecha.void`), one bold **cyan** accent,
+2px outlines and hard blur-free drop shadows (`shadow-cel`) instead of gradients. Buttons press into
+their own shadow on hover; that motion is disabled under `prefers-reduced-motion`.
+
 Tokens live in [tailwind.config.ts](tailwind.config.ts); component classes (`.panel`, `.hud-label`,
-`.btn-primary`, …) in [app/globals.css](app/globals.css).
+`.btn-primary`, `.cel-panel`, `.cel-btn-primary`, `.prose-mecha`, …) in
+[app/globals.css](app/globals.css).
+
+Every text/ground pair in both palettes meets **WCAG AA** (≥4.5:1); the lowest is `ink-dim` at
+5.2:1 on `gun-800`. Text colors are used at full opacity — dimming them with a `/60`-style modifier
+drops them below AA.
 
 ## Deploying
 

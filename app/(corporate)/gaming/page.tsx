@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Panel } from "@/components/Panel";
-import { site } from "../site";
+import { site } from "@/app/site";
 
 export const metadata: Metadata = {
   title: "Gaming",
@@ -28,7 +28,28 @@ export default function GamingPage() {
         </p>
       </div>
 
+      {/* First title out of the division. */}
       <Panel className="mt-14 p-8 sm:p-12">
+        <div className="flex flex-wrap items-center gap-3">
+          <span aria-hidden="true" className="inline-block h-1.5 w-1.5 rounded-full bg-hud" />
+          <p className="font-mono text-[0.65rem] uppercase tracking-hud text-hud">Title 01</p>
+        </div>
+        <h2 className="mt-6 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+          MechaBlast
+        </h2>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-muted">
+          Cel-shaded, landscape, run-and-gun mobile platformer. Blast robots, beat bosses across 8
+          worlds, earn scrap, upgrade your mech.
+        </p>
+        <div className="mt-7">
+          <Link href="/mechablast/" className="btn-primary">
+            Visit MechaBlast
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </Panel>
+
+      <Panel className="mt-6 p-8 sm:p-12">
         <div className="flex flex-wrap items-center gap-3">
           <span
             aria-hidden="true"

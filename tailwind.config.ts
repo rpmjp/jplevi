@@ -24,7 +24,7 @@ const config: Config = {
         ink: {
           DEFAULT: "#DCE4EC", // primary text
           muted: "#93A2B1", // secondary text
-          dim: "#64748B", // tertiary / labels
+          dim: "#7C8B9C", // tertiary / labels — 5.2:1 on gun-800, AA
         },
         signal: {
           DEFAULT: "#FF6A1F", // signal orange — CTAs, energy
@@ -39,6 +39,20 @@ const config: Config = {
         hazard: {
           DEFAULT: "#F5B33C", // amber — attention/hazard only
           deep: "#B87E15",
+        },
+        /**
+         * MechaBlast section palette — cel-shaded arcade.
+         * Near-black ground + one bold cyan accent, hard outlines, no gradients.
+         */
+        mecha: {
+          void: "#05070A", // page ground
+          panel: "#0C1117", // card / panel fill
+          raised: "#131A22", // raised surface
+          line: "#232E3A", // hairline
+          edge: "#3A4A5C", // strong outline
+          cyan: "#2BE7F5", // the accent — 11.9:1 on void
+          "cyan-soft": "#8DF3FA",
+          "cyan-deep": "#0A7E8A",
         },
       },
       fontFamily: {
@@ -56,6 +70,10 @@ const config: Config = {
       boxShadow: {
         panel: "0 1px 0 0 rgba(255,255,255,0.03) inset, 0 24px 48px -32px rgba(0,0,0,0.9)",
         signal: "0 0 0 1px rgba(255,106,31,0.35), 0 12px 32px -16px rgba(255,106,31,0.55)",
+        // Hard, blur-free offsets — the cel-shaded "inked" edge.
+        cel: "5px 5px 0 0 #05070A",
+        "cel-sm": "3px 3px 0 0 #05070A",
+        "cel-cyan": "5px 5px 0 0 #0A7E8A",
       },
       backgroundImage: {
         grid:
@@ -86,7 +104,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
 
 export default config;
