@@ -28,6 +28,9 @@ export const game = {
   ogImage: "/mechablast/og.png",
 } as const;
 
+/** The game's canonical root link. */
+export const gameUrl = "https://jplevi.com/mechablast/";
+
 export const routes = {
   home: "/mechablast/",
   privacy: "/mechablast/privacy/",

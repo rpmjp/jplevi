@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { features, game, routes, screenshots, stores } from "./game";
+import { features, game, gameUrl, routes, screenshots, stores } from "./game";
 
 const description = `${game.pitch} ${game.blurb}`;
 
@@ -9,9 +9,11 @@ export const metadata: Metadata = {
     absolute: `${game.name}: ${game.pitch}`,
   },
   description,
+  alternates: { canonical: routes.home },
   openGraph: {
     title: `${game.name}: ${game.pitch}`,
     description,
+    url: gameUrl,
     images: [{ url: game.ogImage, width: 1200, height: 630, alt: `${game.name} key art` }],
     type: "website",
   },

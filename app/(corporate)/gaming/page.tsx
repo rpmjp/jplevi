@@ -6,6 +6,13 @@ import { site } from "@/app/site";
 export const metadata: Metadata = {
   title: "Gaming",
   description: "The gaming division of JP Levi Inc. Original games and the tooling behind them.",
+  alternates: { canonical: "/gaming/" },
+  openGraph: {
+    title: "Gaming | JP Levi",
+    description: "The gaming division of JP Levi Inc. Original games and the tooling behind them.",
+    url: "https://jplevi.com/gaming/",
+    type: "website",
+  },
 };
 
 export default function GamingPage() {

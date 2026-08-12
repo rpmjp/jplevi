@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Panel } from "@/components/Panel";
 import { divisions, primaryDivision, site, statusLabel } from "@/app/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (

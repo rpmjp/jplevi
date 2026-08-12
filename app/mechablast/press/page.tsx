@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { game, routes } from "../game";
+import { game, gameUrl, routes } from "../game";
 
 const description = `Press information for ${game.name}. ${game.pitch} Press kit coming soon.`;
 
 export const metadata: Metadata = {
   title: "Press",
   description,
+  alternates: { canonical: routes.press },
   openGraph: {
+    url: `${gameUrl}press/`,
     title: `${game.name}: Press`,
     description,
     images: [{ url: game.ogImage, width: 1200, height: 630, alt: `${game.name} key art` }],

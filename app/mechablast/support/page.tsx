@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { game, routes } from "../game";
+import { game, gameUrl, routes } from "../game";
 
 const description = `Get help with ${game.name}: contact support, report a bug, or read the privacy policy and terms.`;
 
 export const metadata: Metadata = {
   title: "Support",
   description,
+  alternates: { canonical: routes.support },
   openGraph: {
+    url: `${gameUrl}support/`,
     title: `${game.name}: Support`,
     description,
     images: [{ url: game.ogImage, width: 1200, height: 630, alt: `${game.name} key art` }],
