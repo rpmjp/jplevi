@@ -66,6 +66,7 @@ export function BizFooter() {
             <ul className="mt-4 space-y-2.5 font-mono text-[0.82rem] text-paper/80">
               <li>{site.legalName}</li>
               <li>{biz.location}</li>
+              <li>Est. {biz.founded}</li>
               <li>
                 {/* The gaming side stays a quiet door, not a nav item. */}
                 <Link href="/gaming/" className="transition-colors hover:text-brand-soft">
@@ -79,9 +80,6 @@ export function BizFooter() {
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/15 pt-5">
           <p className="font-mono text-[0.68rem] uppercase tracking-label text-paper/45">
             © {year} {site.legalName}. All rights reserved.
-          </p>
-          <p className="font-mono text-[0.68rem] uppercase tracking-label text-paper/45">
-            {biz.coords}
           </p>
         </div>
       </div>

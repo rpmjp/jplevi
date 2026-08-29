@@ -24,7 +24,7 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
           {biz.rail}
         </span>
         <span className="biz-rail font-mono text-[0.62rem] uppercase tracking-label text-ink-soft">
-          {biz.coords}
+          {biz.region}
         </span>
       </div>
 

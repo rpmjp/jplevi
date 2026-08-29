@@ -11,7 +11,10 @@ export const biz = {
   person: "Robert Jean Pierre",
   role: "ML + AI Engineer",
   location: "North Brunswick, NJ",
-  coords: "40.3907° N, 74.4721° W",
+  /** Deliberately no coordinates: they resolve to a precise spot. */
+  region: "New Jersey, USA",
+  /** JP LEVI INC. incorporated in Newark, NJ on 2015-08-28. */
+  founded: 2015,
   email: "hello@jplevi.com",
   phone: "(929) 356-4644",
   /** E.164 for the tel: link. */
@@ -32,7 +35,7 @@ export const biz = {
 export const bizRoutes = {
   home: "/",
   work: "/work/",
-  capabilities: "/capabilities/",
+  services: "/services/",
   hosting: "/hosting/",
   about: "/about/",
   contact: "/contact/",
@@ -40,13 +43,14 @@ export const bizRoutes = {
 
 export const bizNav = [
   { href: bizRoutes.work, label: "Work" },
-  { href: bizRoutes.capabilities, label: "Services" },
+  { href: bizRoutes.services, label: "Services" },
+  { href: bizRoutes.hosting, label: "Hosting" },
   { href: bizRoutes.about, label: "Company" },
   { href: bizRoutes.contact, label: "Contact" },
 ] as const;
 
 /** Hosting keeps its own page but reaches it through Services and the footer. */
-export const bizFooterNav = [...bizNav.slice(0, 2), { href: bizRoutes.hosting, label: "Hosting" }, ...bizNav.slice(2)];
+export const bizFooterNav = bizNav;
 
 /** The three-stage pipeline annotated beside the hero. */
 export const pipeline = [
@@ -66,97 +70,6 @@ export const ownership = [
   { n: "04", label: "Managed deployment" },
 ] as const;
 
-export type Service = {
-  id: string;
-  title: string;
-  summary: string;
-  /** Concrete deliverables, written as things you receive. */
-  detail: string[];
-  href: string;
-};
-
-export const services: Service[] = [
-  {
-    id: "rag",
-    title: "Private knowledge systems",
-    summary:
-      "Retrieval-augmented generation over your own documents, so answers cite your material instead of guessing.",
-    detail: [
-      "Document ingestion, chunking, and embedding pipelines",
-      "Vector and hybrid search tuned against your real queries",
-      "GraphRAG when relationships between entities matter more than passages",
-      "Answer evaluation, so you can prove quality before it ships",
-    ],
-    href: bizRoutes.capabilities,
-  },
-  {
-    id: "genai",
-    title: "Generative AI services",
-    summary:
-      "Assistants, extraction, summarisation, and classification built against your workflow rather than a demo.",
-    detail: [
-      "Model selection and prompt architecture with measured trade-offs",
-      "Structured extraction from documents, email, and forms",
-      "Agentic workflows with tool use, guardrails, and human review points",
-      "Cost and latency budgets set before a line is written",
-    ],
-    href: bizRoutes.capabilities,
-  },
-  {
-    id: "ml",
-    title: "Machine learning solutions",
-    summary:
-      "Forecasting, scoring, and classification where a trained model beats a prompt on cost and accuracy.",
-    detail: [
-      "Feature engineering against your historical data",
-      "Model training, validation, and honest error analysis",
-      "Batch and real-time inference services",
-      "Monitoring for drift once it is live",
-    ],
-    href: bizRoutes.capabilities,
-  },
-  {
-    id: "web",
-    title: "Web and product development",
-    summary:
-      "Full-stack applications with the AI parts built in, not bolted on afterwards.",
-    detail: [
-      "Next.js and TypeScript front ends",
-      "APIs, auth, background jobs, and data modelling",
-      "Admin tooling your team can actually operate",
-      "Static or server-rendered, chosen for the job",
-    ],
-    href: bizRoutes.capabilities,
-  },
-  {
-    id: "hosting",
-    title: "Managed VPS hosting",
-    summary:
-      "Your applications running on infrastructure we provision, harden, monitor, and keep patched.",
-    detail: [
-      "Provisioning, hardening, and TLS",
-      "Deploy pipelines and rollback",
-      "Backups, uptime monitoring, and alerting",
-      "Ongoing patching and capacity review",
-    ],
-    href: bizRoutes.hosting,
-  },
-  {
-    id: "smb",
-    title: "Small and mid-size business systems",
-    summary:
-      "Automation and internal tools for teams without an engineering department to lean on.",
-    detail: [
-      "Process automation across the tools you already pay for",
-      "Internal dashboards and reporting",
-      "Data cleanup and migration",
-      "Documentation and handover, so nothing depends on us forever",
-    ],
-    href: bizRoutes.capabilities,
-  },
-];
-
-
 export type Capability = {
   id: string;
   n: string;
@@ -168,6 +81,10 @@ export type Capability = {
   status: string;
   /** One or two sentences in the workbench. */
   blurb: string;
+  /** The same thing said without jargon, for a non-technical reader. */
+  plain: string;
+  /** Concrete situations, in the reader's own words. */
+  scenarios: [string, string, string];
   /** Left column of the workbench: what you receive. */
   delivers: string[];
   /** Right column: the technical shape of it. */
@@ -186,6 +103,13 @@ export const capabilities: Capability[] = [
     status: "indexed",
     blurb:
       "Answers drawn from your own documents, with citations back to the source. Graph retrieval when the relationships between entities matter more than the passages.",
+    plain:
+      "A search box that answers questions about your own documents, and shows you which page it took the answer from.",
+    scenarios: [
+      "Staff keep asking each other the same questions and digging through folders to answer them",
+      "You have years of contracts, reports or manuals and nobody can find anything in them",
+      "You tried a public chatbot and it confidently invented things about your business",
+    ],
     delivers: [
       "Ingestion, parsing, and chunking pipelines",
       "Vector and hybrid search tuned on your queries",
@@ -206,6 +130,13 @@ export const capabilities: Capability[] = [
     status: "connected",
     blurb:
       "Your systems exposed as tools any model can call. Built once against the protocol, then usable from Claude, an IDE, or your own application.",
+    plain:
+      "A standard plug that lets AI assistants use the systems you already have, safely, without handing your data over to them.",
+    scenarios: [
+      "You want staff to ask an assistant about live data sitting in your CRM or database",
+      "You keep paying to rebuild the same integration every time a new tool appears",
+      "You need a record of exactly what the assistant was allowed to see and do",
+    ],
     delivers: [
       "Tool, resource, and prompt definitions",
       "Auth, scoping, and audit trails",
@@ -226,6 +157,13 @@ export const capabilities: Capability[] = [
     status: "running",
     blurb:
       "Multi-step work that runs without a person driving it, with guardrails and human review at the points where being wrong is expensive.",
+    plain:
+      "Software that carries out multi-step jobs on its own, and stops to ask a person whenever being wrong would be expensive.",
+    scenarios: [
+      "Someone on your team spends hours moving information between systems",
+      "A process is well understood but tedious, repetitive and easy to get wrong",
+      "Work needs to happen overnight, on a schedule, or the moment something arrives",
+    ],
     delivers: [
       "Workflow design with explicit failure paths",
       "Tool use, retries, and budget ceilings",
@@ -246,6 +184,13 @@ export const capabilities: Capability[] = [
     status: "trained",
     blurb:
       "Trained models for the problems where a prompt is the wrong tool: forecasting, scoring, ranking, classification, anomaly detection.",
+    plain:
+      "Predictions built from your own history: what is likely to sell, who is likely to leave, which record looks wrong.",
+    scenarios: [
+      "You forecast demand, stock or staffing with a spreadsheet and experience",
+      "You want things ranked or scored automatically instead of by hand",
+      "You need unusual or suspicious activity flagged before a person sees it",
+    ],
     delivers: [
       "Feature engineering on your historical data",
       "Training, validation, and honest error analysis",
@@ -266,6 +211,13 @@ export const capabilities: Capability[] = [
     status: "shipped",
     blurb:
       "Complete applications, front to back. The AI parts built in from the start rather than bolted on to something that cannot carry them.",
+    plain:
+      "The application itself: what people see, what happens when they click, and everything running behind it.",
+    scenarios: [
+      "You need the thing built, not just advice about building it",
+      "Your current site cannot do what the business has grown into needing",
+      "You want the AI parts and the app around them built by the same people",
+    ],
     delivers: [
       "Next.js and TypeScript front ends",
       "Auth, billing, roles, and admin tooling",
@@ -286,6 +238,13 @@ export const capabilities: Capability[] = [
     status: "synced",
     blurb:
       "The plumbing under everything else: moving data between systems that were never designed to talk, and keeping it correct.",
+    plain:
+      "Getting your systems to talk to each other, and keeping the numbers right while they do.",
+    scenarios: [
+      "Two systems hold the same information and quietly disagree",
+      "Someone exports a spreadsheet by hand every week so a report can exist",
+      "You are moving off spreadsheets, or off software you have outgrown",
+    ],
     delivers: [
       "REST and typed API design",
       "ETL and sync between third-party systems",
@@ -306,6 +265,13 @@ export const capabilities: Capability[] = [
     status: "99.9%",
     blurb:
       "Servers we provision, harden, monitor, and keep patched, so the thing that was built stays running after the build ends.",
+    plain:
+      "We run the servers your software lives on: keeping it online, backed up, patched and watched.",
+    scenarios: [
+      "Nobody in-house owns the servers, and it shows when something breaks",
+      "You have backups but nobody has ever tried restoring one",
+      "You want one number to call when the site goes down at 2am",
+    ],
     delivers: [
       "Provisioning, hardening, and TLS",
       "Deploy pipelines with a tested rollback",
@@ -326,6 +292,13 @@ export const capabilities: Capability[] = [
     status: "in use",
     blurb:
       "Automation and internal software for companies without an engineering department, built so the team can operate it without us.",
+    plain:
+      "Small pieces of software shaped around how your team already works, instead of bending the team around someone else's product.",
+    scenarios: [
+      "Your process lives in one person's head and a spreadsheet only they understand",
+      "Off-the-shelf software does most of it and you work around the rest",
+      "You need reporting your team will actually open and use",
+    ],
     delivers: [
       "Automation across tools you already pay for",
       "Dashboards and reporting people actually open",

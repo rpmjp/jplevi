@@ -67,6 +67,7 @@ export default function CompanyPage() {
             {[
               ["Entity", site.legalName],
               ["Based", biz.location],
+              ["Founded", String(biz.founded)],
               ["Lead", `${biz.person}, ${biz.role}`],
               ["Availability", biz.availability],
               ["Contact", biz.email],

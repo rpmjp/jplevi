@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { capabilities } from "@/app/business";
+import { bizRoutes, capabilities } from "@/app/business";
 
 /**
  * Horizontal rail of capabilities driving a workbench panel beneath it.

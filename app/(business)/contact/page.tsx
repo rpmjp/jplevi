@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { biz, bizRoutes, services } from "../../business";
+import { biz, bizRoutes, capabilities } from "../../business";
 
 const description = `Start a conversation with ${biz.name}. What to include so the first reply is useful.`;
 
@@ -98,13 +98,13 @@ export default function ContactPage() {
       <div className="mt-16 border-t border-paper-3 pt-10">
         <h2 className="biz-label">Not sure what you need?</h2>
         <ul className="mt-6 flex flex-wrap gap-3">
-          {services.map((s) => (
+          {capabilities.map((s) => (
             <li key={s.id}>
               <Link
-                href={`${bizRoutes.capabilities}#${s.id}`}
+                href={`${bizRoutes.services}#${s.id}`}
                 className="inline-block border border-paper-3 px-3.5 py-2 font-mono text-[0.75rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
               >
-                {s.title}
+                {s.title.join(" ")}
               </Link>
             </li>
           ))}
