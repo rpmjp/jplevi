@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Saira, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Saira, Archivo, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "./site";
 
@@ -7,6 +7,16 @@ const display = Saira({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
   variable: "--font-display",
+  display: "swap",
+});
+
+// Business side display face: heavy neo-grotesque for poster-scale headlines.
+// Variable Archivo, loaded with its width axis so the display type can be
+// condensed to match the reference rather than faked with a transform.
+const grotesk = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-grotesk",
   display: "swap",
 });
 
@@ -56,11 +66,11 @@ export const viewport: Viewport = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${grotesk.variable} ${body.variable} ${mono.variable}`}>
       <body className="min-h-screen overflow-x-hidden">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-signal focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-hud focus:text-gun-900"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-brand focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-label focus:text-white"
         >
           Skip to content
         </a>

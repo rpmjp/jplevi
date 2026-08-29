@@ -1,56 +1,57 @@
 import Link from "next/link";
-import { Panel } from "@/components/Panel";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
-import { HudBackdrop } from "@/components/HudBackdrop";
-import { liveDivisions, site } from "./site";
+import { BizHeader } from "@/components/business/BizHeader";
+import { BizFooter } from "@/components/business/BizFooter";
+import { biz, bizNav } from "./business";
+import { site } from "./site";
 
 /**
- * Root-level 404 (exported as out/404.html). It renders inside the bare root
- * layout, so it carries the corporate chrome itself.
+ * Root 404, exported as out/404.html and served for every unmatched path by
+ * .htaccess. It wears the business chrome because that is the primary site.
  */
 export default function NotFound() {
   return (
-    <>
-      <HudBackdrop />
-      <div className="flex min-h-screen flex-col">
-        <SiteHeader />
-        <main id="main" className="flex-1">
-          <section className="mx-auto flex max-w-shell flex-col justify-center px-5 pb-24 pt-24 sm:px-8 sm:pt-32">
-            <Panel className="p-8 sm:p-12">
-              <div className="flex flex-wrap items-center gap-3">
-                <span
-                  aria-hidden="true"
-                  className="inline-block h-1.5 w-1.5 rounded-full bg-hazard"
-                />
-                <p className="font-mono text-[0.65rem] uppercase tracking-hud text-hazard">
-                  Signal lost · 404
-                </p>
-              </div>
+    <div className="biz-scope flex min-h-screen flex-col">
+      <BizHeader />
+      <main id="main" className="flex-1">
+        <section className="mx-auto max-w-biz px-5 pb-20 pt-20 sm:px-8 sm:pt-28">
+          <p className="biz-label !text-ember">Error 404</p>
+          <h1 className="biz-display mt-5 text-[2.8rem] sm:text-[4.4rem]">
+            No route to that page
+            <span className="ml-1 inline-block h-[0.18em] w-[0.18em] rounded-full bg-brand align-baseline" />
+          </h1>
+          <p className="biz-lead mt-8 max-w-lg">
+            Nothing is served at that address on {site.domain}. It may have moved, or it may never
+            have existed.
+          </p>
 
-              <h1 className="mt-6 font-display text-3xl font-bold tracking-tight text-ink sm:text-5xl">
-                This page isn&rsquo;t on the map.
-              </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-muted">
-                The address you followed doesn&rsquo;t match anything at {site.domain}. It may have
-                moved, or it may not exist yet.
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Link href="/" className="btn-primary">
-                  Return to {site.name}
+          <div className="mt-12 border-t border-paper-3 pt-8">
+            <h2 className="biz-label">Try one of these</h2>
+            <ul className="mt-6 flex flex-wrap gap-3">
+              <li>
+                <Link href="/" className="biz-btn">
+                  Home
                 </Link>
-                {liveDivisions.map((division) => (
-                  <Link key={division.id} href={division.href} className="btn-ghost">
-                    {division.name}
+              </li>
+              {bizNav.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="biz-btn-ghost">
+                    {item.label}
                   </Link>
-                ))}
-              </div>
-            </Panel>
-          </section>
-        </main>
-        <SiteFooter />
-      </div>
-    </>
+                </li>
+              ))}
+              <li>
+                <Link href="/mechablast/" className="biz-btn-ghost">
+                  MechaBlast
+                </Link>
+              </li>
+            </ul>
+            <p className="mt-8 font-mono text-[0.8rem] text-ink-soft">
+              Still stuck? {biz.email}
+            </p>
+          </div>
+        </section>
+      </main>
+      <BizFooter />
+    </div>
   );
 }

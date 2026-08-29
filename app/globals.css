@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    /* The business side is the default ground; dark sections opt in below. */
+    color-scheme: light;
   }
 
   html {
@@ -12,7 +13,13 @@
   }
 
   body {
-    @apply bg-gun-800 text-ink font-sans antialiased;
+    @apply bg-paper text-ink-body font-sans antialiased;
+  }
+
+  /* Dark scopes: gaming division and MechaBlast. */
+  .hud-scope,
+  .mecha-scope {
+    color-scheme: dark;
   }
 
   /* Visible, high-contrast keyboard focus everywhere. */
@@ -124,6 +131,106 @@
 
   .link-quiet {
     @apply text-ink-muted transition-colors hover:text-ink;
+  }
+
+
+  /* --- JP Levi AI (business): paper, ink, one blue ------------------------ */
+
+  /* Scope resets body colour so the gaming side keeps its dark ground. */
+  .biz-scope {
+    @apply bg-paper text-ink-body;
+  }
+
+  .biz-scope :focus-visible {
+    outline-color: theme("colors.brand.DEFAULT");
+  }
+
+  .biz-scope ::selection {
+    background: theme("colors.brand.DEFAULT");
+    color: #fff;
+  }
+
+  /* Poster-scale display type. */
+  .biz-display {
+    @apply font-grotesk font-black uppercase leading-[0.86] tracking-tight3 text-ink-ink;
+    /* Reference headline measures 1.25x narrower per unit cap height.
+       The face is loaded with its width axis (font-stretch: 62% 125%). */
+    font-stretch: 76%;
+  }
+
+  .biz-h2 {
+    @apply font-grotesk text-3xl font-extrabold uppercase leading-[0.95] tracking-tight2 text-ink-ink sm:text-4xl;
+  }
+
+  .biz-h3 {
+    @apply font-grotesk text-xl font-bold tracking-tight2 text-ink-ink;
+  }
+
+  /* Mono technical label, the connective tissue of the whole layout. */
+  .biz-label {
+    @apply font-mono text-[0.68rem] font-medium uppercase tracking-label text-ink-soft;
+  }
+
+  .biz-label-blue {
+    @apply biz-label text-brand;
+  }
+
+  /* Body copy is mono on this side - it reads as spec, not marketing. */
+  .biz-mono {
+    @apply font-mono text-[0.95rem] leading-[1.75] text-ink-body;
+  }
+
+  .biz-prose {
+    @apply max-w-prose2 text-[1.0rem] leading-[1.75] text-ink-body;
+  }
+
+  /* Quoted lead paragraph with the reference's left rule. */
+  .biz-lead {
+    @apply border-l-2 border-ink-ink pl-6 font-mono text-[0.95rem] leading-[1.56] text-ink-body;
+  }
+
+  .biz-link {
+    @apply font-mono text-[0.8rem] font-medium uppercase tracking-label text-brand
+      underline decoration-brand/30 underline-offset-[6px] transition-colors
+      hover:decoration-brand;
+  }
+
+  .biz-btn {
+    @apply inline-flex items-center justify-center gap-2 border border-ink-ink bg-ink-ink px-6 py-3.5
+      font-mono text-[0.75rem] font-semibold uppercase tracking-label text-paper
+      transition-colors hover:bg-brand hover:border-brand;
+  }
+
+  .biz-btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 border border-paper-4 bg-transparent px-6 py-3.5
+      font-mono text-[0.75rem] font-semibold uppercase tracking-label text-ink-ink
+      transition-colors hover:border-ink-ink;
+  }
+
+  /* Hairline card, no radius, no shadow - drafting-table feel. */
+  .biz-card {
+    @apply border border-paper-3 bg-white/50 p-7 transition-colors hover:border-paper-4;
+  }
+
+  .biz-rule {
+    @apply h-px w-full bg-paper-4;
+  }
+
+  /* Vertical rail text down the left edge. */
+  .biz-rail {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  /* Inverted band (the "ONE ENGINEER" section). */
+  .biz-invert {
+    @apply bg-night text-paper;
+  }
+
+  .biz-invert .biz-display,
+  .biz-invert .biz-h2,
+  .biz-invert .biz-h3 {
+    @apply text-paper;
   }
 
   /* --- MechaBlast: cel-shaded arcade -------------------------------------- */

@@ -21,11 +21,6 @@ const config: Config = {
           500: "#26333F", // hairline / border
           400: "#37485A", // strong border
         },
-        ink: {
-          DEFAULT: "#DCE4EC", // primary text
-          muted: "#93A2B1", // secondary text
-          dim: "#7C8B9C", // tertiary / labels — 5.2:1 on gun-800, AA
-        },
         signal: {
           DEFAULT: "#FF6A1F", // signal orange — CTAs, energy
           soft: "#FF8A4C",
@@ -39,6 +34,37 @@ const config: Config = {
         hazard: {
           DEFAULT: "#F5B33C", // amber — attention/hazard only
           deep: "#B87E15",
+        },
+        /**
+         * JP Levi AI (business) palette - warm paper, near-black ink, one blue.
+         */
+        paper: {
+          DEFAULT: "#F5F3EF", // page ground
+          2: "#EDEAE3", // panel
+          3: "#E2DED5", // hairline
+          4: "#CFC9BC", // strong rule
+        },
+        ink: {
+          DEFAULT: "#DCE4EC", // primary text (dark themes)
+          muted: "#93A2B1",
+          dim: "#7C8B9C",
+          ink: "#0B0B0C", // near-black, business headings
+          body: "#33343A", // business body copy
+          soft: "#5E6069", // business tertiary
+        },
+        brand: {
+          DEFAULT: "#1B3EF0", // electric blue - links, CTAs, accents
+          deep: "#1430B8",
+          soft: "#5A76FF",
+        },
+        ember: "#E4572E", // micro accent (ticks, brackets)
+        live: {
+          DEFAULT: "#16A34A", // on dark grounds
+          deep: "#146C33", // on paper - meets 3:1 non-text contrast
+        },
+        night: {
+          DEFAULT: "#0B0B0C", // inverted band ground
+          2: "#141416",
         },
         /**
          * MechaBlast section palette — cel-shaded arcade.
@@ -57,15 +83,21 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
+        grotesk: ["var(--font-grotesk)", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
       letterSpacing: {
         hud: "0.22em",
+        label: "0.18em",
+        tight2: "-0.03em",
+        tight3: "-0.045em",
         wordmark: "0.06em",
       },
       maxWidth: {
         shell: "78rem",
+        biz: "84rem",
+        prose2: "68ch",
       },
       boxShadow: {
         panel: "0 1px 0 0 rgba(255,255,255,0.03) inset, 0 24px 48px -32px rgba(0,0,0,0.9)",
