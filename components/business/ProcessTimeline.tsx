@@ -1,4 +1,4 @@
-import { process } from "@/app/business";
+import { process, stack } from "@/app/business";
 
 /**
  * Engagement phases on a timeline spine. The top rules of the columns join into
@@ -7,7 +7,7 @@ import { process } from "@/app/business";
  */
 export function ProcessTimeline() {
   return (
-    <section aria-labelledby="process-heading" className="w-full px-6 py-12 sm:px-10">
+    <section aria-labelledby="process-heading" className="w-full px-6 py-20 sm:px-10 sm:py-24">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 id="process-heading" className="biz-h2">
@@ -51,7 +51,7 @@ export function ProcessTimeline() {
               {phase.title}
             </h3>
 
-            <p className="mt-2.5 font-mono text-[0.8rem] leading-[1.6] text-ink-body">
+            <p className="mt-2.5 font-sans text-[0.9rem] leading-[1.6] text-ink-body">
               {phase.body}
             </p>
 
@@ -68,6 +68,18 @@ export function ProcessTimeline() {
           </li>
         ))}
       </ol>
+
+      {/* The tools those phases are carried out with. */}
+      <div className="mt-10 border-t border-paper-4 pt-5">
+        <h3 className="biz-label">Working stack</h3>
+        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+          {stack.map((item) => (
+            <li key={item} className="font-mono text-[0.75rem] text-ink-body">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

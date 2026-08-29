@@ -94,7 +94,7 @@ export function CapabilityRail() {
   const current = capabilities[active];
 
   return (
-    <section aria-labelledby="capabilities-heading" className="w-full py-10">
+    <section aria-labelledby="capabilities-heading" className="w-full py-20 sm:py-24">
       <div className="flex flex-wrap items-end justify-between gap-6 px-6 sm:px-10">
         <div>
           <h2 id="capabilities-heading" className="biz-h2">
@@ -102,6 +102,9 @@ export function CapabilityRail() {
           </h2>
         </div>
         <div className="flex items-center gap-5">
+          <p className="hidden font-mono text-[0.66rem] uppercase tracking-label text-ink-soft sm:block">
+            Drag or use arrows
+          </p>
           <p className="font-mono text-[0.72rem] uppercase tracking-label text-ink-soft">
             {current.n} / {String(capabilities.length).padStart(2, "0")}
           </p>
@@ -154,9 +157,9 @@ export function CapabilityRail() {
               aria-controls="cap-panel"
               tabIndex={on ? 0 : -1}
               onClick={() => focusCard(i)}
-              className={`w-[15.5rem] shrink-0 snap-center border p-4 text-left transition-colors sm:w-[17rem] ${
+              className={`w-[15.5rem] shrink-0 snap-center border p-4 text-left transition-[border-color,background-color,box-shadow] sm:w-[17rem] ${
                 on
-                  ? "border-ink-ink bg-white/70"
+                  ? "border-ink-ink bg-paper-2 shadow-[inset_0_3px_0_0_#1B3EF0]"
                   : "border-paper-3 bg-white/40 hover:border-paper-4"
               }`}
             >
@@ -165,7 +168,9 @@ export function CapabilityRail() {
               >
                 {c.n}
               </span>
-              <span className="mt-3 block font-grotesk text-[1.05rem] font-bold leading-[1.12] tracking-tight2 text-ink-ink">
+              <span
+                className={`mt-3 block font-grotesk text-[1.05rem] font-bold leading-[1.12] tracking-tight2 ${on ? "text-brand-deep" : "text-ink-ink"}`}
+              >
                 {c.title[0]}
                 <br />
                 {c.title[1]}
@@ -184,7 +189,7 @@ export function CapabilityRail() {
           id="cap-panel"
           role="tabpanel"
           aria-labelledby={`cap-tab-${current.id}`}
-          className="mt-3 border border-ink-ink bg-white/60"
+          className="mt-3 border border-ink-ink bg-white/60 shadow-[inset_0_3px_0_0_#1B3EF0]"
         >
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper-3 px-6 py-2.5">
             <p className="font-mono text-[0.7rem] uppercase tracking-label text-ink-ink">
@@ -198,14 +203,14 @@ export function CapabilityRail() {
 
           <div className="grid gap-6 p-5 sm:p-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
             <div>
-              <p className="max-w-prose2 font-mono text-[0.88rem] leading-[1.6] text-ink-body">
+              <p className="max-w-prose2 font-sans text-[0.96rem] leading-[1.65] text-ink-body">
                 {current.blurb}
               </p>
               <ul className="mt-4 space-y-1.5">
                 {current.delivers.map((d) => (
                   <li
                     key={d}
-                    className="flex gap-3 font-mono text-[0.82rem] leading-relaxed text-ink-body"
+                    className="flex gap-3 font-sans text-[0.9rem] leading-relaxed text-ink-body"
                   >
                     <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 bg-brand" />
                     {d}

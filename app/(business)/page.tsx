@@ -4,7 +4,7 @@ import { HeroArt } from "@/components/business/HeroArt";
 import { DocIntelligence } from "@/components/business/DocIntelligence";
 import { CapabilityRail } from "@/components/business/CapabilityRail";
 import { ProcessTimeline } from "@/components/business/ProcessTimeline";
-import { biz, bizRoutes, ownership, ownershipHeading, pipeline, stack } from "../business";
+import { biz, bizRoutes, ownership, ownershipHeading, pipeline } from "../business";
 
 const description = `${biz.lead} ${biz.person}, ${biz.role} in ${biz.location}.`;
 
@@ -26,28 +26,28 @@ export default function BusinessHome() {
       {/* ---- Hero ------------------------------------------------------- */}
       {/* Proportions taken from the reference at 1536x1024: rail 6%, artwork
           58% wide starting at 39%, headline cap heights 15.1% and 8.8%. */}
-      <section className="relative w-full overflow-hidden px-6 pb-2 pt-3 sm:px-10 lg:min-h-[41rem] lg:pt-[14px] xl:min-h-[722px]">
+      <section className="relative w-full overflow-hidden px-6 pb-12 pt-8 sm:px-10 lg:min-h-[41rem] lg:pb-0 lg:pt-[14px] xl:min-h-[722px]">
         {/* Artwork sits behind the type. It is transparent where the headline
             falls, so no scrim is needed. */}
-        <div className="pointer-events-none relative mt-10 lg:absolute lg:left-[36.7%] lg:top-[3px] lg:z-0 lg:mt-0 lg:w-[62%]">
+        <h1 className="biz-display relative z-10 tracking-[-0.056em]">
+          <span className="block text-[3.6rem] leading-[0.749] tracking-[0em] sm:text-[6rem] lg:text-[min(15.2vw,233px)]">
+            {biz.headline[0]}
+          </span>
+          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
+            {biz.headline[1]}
+          </span>
+          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
+            {biz.headline[2]}
+            <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
+          </span>
+        </h1>
+
+        <div className="pointer-events-none relative -mx-6 mt-6 w-[calc(100%+3rem)] sm:-mx-10 sm:w-[calc(100%+5rem)] lg:absolute lg:left-[36.7%] lg:top-[3px] lg:z-0 lg:mx-0 lg:mt-0 lg:w-[62%]">
           <HeroArt />
         </div>
 
-        <div className="relative z-10">
-          <h1 className="biz-display tracking-[-0.056em]">
-            <span className="block text-[3.6rem] leading-[0.749] tracking-[0em] sm:text-[6rem] lg:text-[min(15.2vw,233px)]">
-              {biz.headline[0]}
-            </span>
-            <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
-              {biz.headline[1]}
-            </span>
-            <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
-              {biz.headline[2]}
-              <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
-            </span>
-          </h1>
-
-          <p className="biz-lead mt-7 max-w-[26rem]">{biz.lead}</p>
+        <div className="relative z-10 -mt-3 sm:-mt-8 lg:mt-7">
+          <p className="biz-lead max-w-[26rem]">{biz.lead}</p>
 
           <div className="mt-4">
             <Link href={bizRoutes.contact} className="biz-link">
@@ -83,14 +83,11 @@ export default function BusinessHome() {
           ))}
         </ul>
 
-        <p className="relative z-10 mt-8 text-center font-mono text-[0.7rem] uppercase tracking-label text-ink-soft lg:mt-0">
-          Scroll to explore ↓
-        </p>
       </section>
 
       {/* ---- Inverted band ---------------------------------------------- */}
       <section className="biz-invert relative w-full" aria-labelledby="ownership-heading">
-        <div className="px-6 pb-16 pt-12 sm:px-[50px] sm:pb-20 sm:pt-8">
+        <div className="px-6 pb-16 pt-12 sm:px-10 sm:pb-20 sm:pt-10">
           <h2
             id="ownership-heading"
             className="biz-display max-w-[62rem] text-[2rem] tracking-[-0.03em] sm:text-[3rem] lg:text-[min(4.25vw,65px)]"
@@ -99,7 +96,7 @@ export default function BusinessHome() {
             <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
           </h2>
 
-          <ol className="mt-7 flex flex-wrap gap-x-[55px] gap-y-8 border-t border-white/20 pt-0">
+          <ol className="mt-8 flex flex-wrap gap-x-[42px] gap-y-8 border-t border-white/20 pt-0 xl:mr-[520px]">
             {ownership.map((item) => (
               <li key={item.n} className="relative pt-3">
                 {/* tick rising from the rule above, as in the reference */}
@@ -115,14 +112,14 @@ export default function BusinessHome() {
             ))}
           </ol>
 
-          <p className="mt-12 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-paper/70">
+          <p className="mt-12 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-paper/70 xl:max-w-[calc(100%-520px)]">
             No account layer, no handoff between the people who scope the work and the people who
             build it. You talk to the engineers who write the code and run the servers.
           </p>
         </div>
 
         {/* Product panel, overlapping up into the hero as in the reference. */}
-        <div className="pointer-events-none absolute left-[70.9%] top-0 hidden w-[500px] -translate-y-[4.5rem] lg:block">
+        <div className="pointer-events-none absolute right-10 top-0 hidden w-[min(32vw,500px)] -translate-y-[4.5rem] xl:block">
           <DocIntelligence />
         </div>
       </section>
@@ -130,45 +127,51 @@ export default function BusinessHome() {
       {/* ---- Capabilities: rail drives the workbench below it ---- */}
       <CapabilityRail />
 
+      {/* The phase timeline pins, then the sections below ride over it. */}
+      <div className="relative">
+        <div className="bg-paper lg:sticky lg:top-0 lg:z-0">
       {/* ---- Engagement ------------------------------------------------ */}
-      <ProcessTimeline />
+        <ProcessTimeline />
 
-      {/* ---- Stack ------------------------------------------------------ */}
-      <section aria-labelledby="stack-heading" className="w-full px-6 pb-4 sm:px-10">
-        <h2 id="stack-heading" className="biz-label">
-          Working stack
-        </h2>
-        <div className="biz-rule mt-3" />
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-          {stack.map((item) => (
-            <li key={item} className="font-mono text-[0.75rem] text-ink-body">
-              {item}
-            </li>
-          ))}
-        </ul>
-      </section>
+        </div>
 
+        <div className="relative z-10 bg-paper">
       {/* ---- Contact CTA -------------------------------------------------- */}
-      <section aria-labelledby="cta-heading" className="w-full px-6 py-20 sm:px-10">
-        <div className="border border-ink-ink p-9 sm:p-14">
-          <p className="biz-label-blue">Contact</p>
-          <h2 id="cta-heading" className="biz-display mt-5 text-[2rem] sm:text-[3rem]">
-            Tell me what is broken.
-          </h2>
-          <p className="mt-6 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-ink-body">
-            Describe the problem in a paragraph. If AI is the wrong tool for it, we will say so and
-            tell you what we would use instead.
-          </p>
-          <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a href={`mailto:${biz.email}`} className="biz-btn">
+      <section
+          aria-labelledby="cta-heading"
+          className="biz-invert relative w-full overflow-hidden px-6 py-20 sm:px-10 sm:py-24"
+        >
+        <div className="relative lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-12">
+          <span aria-hidden="true" className="absolute right-0 top-0 h-px w-28 bg-brand" />
+          <span aria-hidden="true" className="absolute right-0 top-0 h-28 w-px bg-brand" />
+          <div>
+            <p className="biz-label !text-brand-soft">Contact</p>
+            <h2 id="cta-heading" className="biz-display mt-5 text-[2.5rem] sm:text-[4rem]">
+              Tell me what is broken.
+            </h2>
+            <p className="mt-6 max-w-prose2 font-sans text-[1rem] leading-[1.65] text-paper/70">
+              Describe the problem in a paragraph. If AI is the wrong tool for it, we will say so and
+              tell you what we would use instead.
+            </p>
+          </div>
+          <div className="mt-10 flex flex-wrap items-center gap-4 lg:mt-0 lg:flex-col lg:items-stretch">
+            <a
+              href={`mailto:${biz.email}`}
+              className="biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
+            >
               {biz.email}
             </a>
-            <Link href={bizRoutes.contact} className="biz-btn-ghost">
+            <Link
+              href={bizRoutes.contact}
+              className="biz-btn-ghost !border-white/25 !text-paper hover:!border-paper"
+            >
               What to include
             </Link>
           </div>
         </div>
       </section>
+        </div>
+      </div>
     </>
   );
 }

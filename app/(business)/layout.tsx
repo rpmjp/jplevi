@@ -28,13 +28,21 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
         </span>
       </div>
 
-      <div className="flex min-h-screen flex-col xl:pl-[5.75rem]">
+      {/* Content rides above the footer and hides it until scrolled past. */}
+      <div className="relative z-10 flex min-h-screen flex-col bg-paper xl:pl-[5.75rem] lg:mb-[var(--footer-h)]">
         <BizHeader />
         <main id="main" className="flex-1">
           {children}
         </main>
-        <BizFooter />
       </div>
+      {/* Black backstop: anything the content does not cover reads as footer,
+          including the seam above it and rubber-band overscroll at the bottom. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-0 hidden bg-night lg:block"
+      />
+
+      <BizFooter />
     </div>
   );
 }

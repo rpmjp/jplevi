@@ -139,6 +139,14 @@
   /* Scope resets body colour so the gaming side keeps its dark ground. */
   .biz-scope {
     @apply bg-paper text-ink-body;
+    /* Height the footer occupies once revealed; 0 below lg, where it is in flow. */
+    --footer-h: 0px;
+  }
+
+  @media (min-width: 1024px) {
+    .biz-scope {
+      --footer-h: 22rem;
+    }
   }
 
   .biz-scope :focus-visible {
