@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroArt } from "@/components/business/HeroArt";
 import { DocIntelligence } from "@/components/business/DocIntelligence";
-import { biz, bizRoutes, ownership, ownershipHeading, pipeline, process, services, stack } from "../business";
+import { CapabilityRail } from "@/components/business/CapabilityRail";
+import { ProcessTimeline } from "@/components/business/ProcessTimeline";
+import { biz, bizRoutes, ownership, ownershipHeading, pipeline, stack } from "../business";
 
 const description = `${biz.lead} ${biz.person}, ${biz.role} in ${biz.location}.`;
 
@@ -32,14 +34,14 @@ export default function BusinessHome() {
         </div>
 
         <div className="relative z-10">
-          <h1 className="biz-display tracking-[-0.024em]">
-            <span className="block text-[3.6rem] leading-[0.749] sm:text-[6rem] lg:text-[min(15.2vw,233px)]">
+          <h1 className="biz-display tracking-[-0.056em]">
+            <span className="block text-[3.6rem] leading-[0.749] tracking-[0em] sm:text-[6rem] lg:text-[min(15.2vw,233px)]">
               {biz.headline[0]}
             </span>
-            <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.6vw,132px)]">
+            <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
               {biz.headline[1]}
             </span>
-            <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.6vw,132px)]">
+            <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
               {biz.headline[2]}
               <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
             </span>
@@ -91,8 +93,7 @@ export default function BusinessHome() {
         <div className="px-6 pb-16 pt-12 sm:px-[50px] sm:pb-20 sm:pt-8">
           <h2
             id="ownership-heading"
-            className="biz-display max-w-[62rem] text-[2rem] tracking-[-0.108em] sm:text-[3rem] lg:text-[min(5.3vw,81px)]"
-            style={{ fontStretch: "63%" }}
+            className="biz-display max-w-[62rem] text-[2rem] tracking-[-0.03em] sm:text-[3rem] lg:text-[min(4.25vw,65px)]"
           >
             {ownershipHeading}
             <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
@@ -126,75 +127,21 @@ export default function BusinessHome() {
         </div>
       </section>
 
-      {/* ---- Services ---------------------------------------------------- */}
-      <section aria-labelledby="services-heading" className="w-full px-6 py-20 sm:px-10">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p className="biz-label-blue">Capabilities</p>
-            <h2 id="services-heading" className="biz-h2 mt-4">
-              What we build
-            </h2>
-          </div>
-          <Link href={bizRoutes.capabilities} className="biz-link">
-            All capabilities ↗
-          </Link>
-        </div>
-        <div className="biz-rule mt-8" />
+      {/* ---- Capabilities: rail drives the workbench below it ---- */}
+      <CapabilityRail />
 
-        <ul className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => (
-            <li key={service.id} className="biz-card flex flex-col">
-              <span className="font-mono text-[0.7rem] text-ink-soft">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="biz-h3 mt-4">{service.title}</h3>
-              <p className="mt-3 flex-1 font-mono text-[0.82rem] leading-relaxed text-ink-body">
-                {service.summary}
-              </p>
-              <Link href={service.href} className="biz-link mt-6 self-start !text-[0.7rem]">
-                Detail ↗
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* ---- Engagement ------------------------------------------------ */}
+      <ProcessTimeline />
 
-      {/* ---- Process ----------------------------------------------------- */}
-      <section aria-labelledby="process-heading" className="w-full px-6 py-12 sm:px-10">
-        <p className="biz-label-blue">Engagement</p>
-        <h2 id="process-heading" className="biz-h2 mt-4">
-          How a project runs
-        </h2>
-        <div className="biz-rule mt-8" />
-
-        <ol className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {process.map((step) => (
-            <li key={step.n}>
-              <div className="flex items-center gap-3">
-                <span className="font-grotesk text-2xl font-black text-brand">{step.n}</span>
-                <span aria-hidden="true" className="h-px flex-1 bg-paper-4" />
-              </div>
-              <h3 className="biz-h3 mt-4">{step.title}</h3>
-              <p className="mt-3 font-mono text-[0.82rem] leading-relaxed text-ink-body">
-                {step.body}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      {/* ---- Stack ------------------------------------------------------- */}
-      <section aria-labelledby="stack-heading" className="w-full px-6 py-12 sm:px-10">
+      {/* ---- Stack ------------------------------------------------------ */}
+      <section aria-labelledby="stack-heading" className="w-full px-6 pb-4 sm:px-10">
         <h2 id="stack-heading" className="biz-label">
           Working stack
         </h2>
         <div className="biz-rule mt-3" />
-        <ul className="mt-6 flex flex-wrap gap-x-3 gap-y-3">
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
           {stack.map((item) => (
-            <li
-              key={item}
-              className="border border-paper-3 px-3 py-1.5 font-mono text-[0.72rem] text-ink-body"
-            >
+            <li key={item} className="font-mono text-[0.75rem] text-ink-body">
               {item}
             </li>
           ))}

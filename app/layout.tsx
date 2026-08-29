@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Saira, Archivo, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Saira, Archivo_Narrow, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "./site";
 
@@ -11,11 +11,10 @@ const display = Saira({
 });
 
 // Business side display face: heavy neo-grotesque for poster-scale headlines.
-// Variable Archivo, loaded with its width axis so the display type can be
-// condensed to match the reference rather than faked with a transform.
-const grotesk = Archivo({
+// Archivo Narrow: drawn narrow rather than squeezed. Measured against the
+// reference it matches at natural width (1.03x), so no font-stretch is needed.
+const grotesk = Archivo_Narrow({
   subsets: ["latin"],
-  axes: ["wdth"],
   variable: "--font-grotesk",
   display: "swap",
 });

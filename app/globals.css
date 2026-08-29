@@ -153,9 +153,6 @@
   /* Poster-scale display type. */
   .biz-display {
     @apply font-grotesk font-black uppercase leading-[0.86] tracking-tight3 text-ink-ink;
-    /* Reference headline measures 1.25x narrower per unit cap height.
-       The face is loaded with its width axis (font-stretch: 62% 125%). */
-    font-stretch: 76%;
   }
 
   .biz-h2 {
