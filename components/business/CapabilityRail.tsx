@@ -97,8 +97,7 @@ export function CapabilityRail() {
     <section aria-labelledby="capabilities-heading" className="w-full py-10">
       <div className="flex flex-wrap items-end justify-between gap-6 px-6 sm:px-10">
         <div>
-          <p className="biz-label-blue">Capabilities</p>
-          <h2 id="capabilities-heading" className="biz-h2 mt-4">
+          <h2 id="capabilities-heading" className="biz-h2">
             What we build
           </h2>
         </div>
@@ -129,7 +128,7 @@ export function CapabilityRail() {
         </div>
       </div>
 
-      <div className="biz-rule mx-6 mt-5 sm:mx-10" />
+      <div className="biz-rule mx-6 mt-4 sm:mx-10" />
 
       {/* ---- rail ---- */}
       <div
@@ -138,7 +137,7 @@ export function CapabilityRail() {
         aria-label="Capabilities"
         aria-orientation="horizontal"
         onKeyDown={onKeyDown}
-        className="mt-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
+        className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:px-10 [&::-webkit-scrollbar]:hidden"
       >
         {capabilities.map((c, i) => {
           const on = i === active;

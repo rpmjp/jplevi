@@ -10,8 +10,7 @@ export function ProcessTimeline() {
     <section aria-labelledby="process-heading" className="w-full px-6 py-12 sm:px-10">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="biz-label-blue">Engagement</p>
-          <h2 id="process-heading" className="biz-h2 mt-3">
+          <h2 id="process-heading" className="biz-h2">
             How a project runs
           </h2>
         </div>
@@ -20,7 +19,7 @@ export function ProcessTimeline() {
         </p>
       </div>
 
-      <ol className="mt-9 grid sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="mt-6 grid sm:grid-cols-2 lg:grid-cols-4">
         {process.map((phase, i) => (
           <li
             key={phase.n}
