@@ -40,10 +40,20 @@ export function BizHeader() {
           </ul>
         </nav>
 
-        <p className="col-start-3 row-start-1 ml-auto flex items-center gap-2.5">
-          <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-live-deep" />
-          <span className="hidden font-sans text-[0.88rem] text-ink-body sm:inline">{biz.availability}</span>
-        </p>
+        <div className="col-start-3 row-start-1 ml-auto flex items-center gap-x-6">
+          {/* The number stays visible at every width; the status line is the
+              first thing to go when space runs out. */}
+          <a
+            href={`tel:${biz.phoneHref}`}
+            className="font-grotesk text-[1.05rem] font-bold tracking-tight2 text-ink-ink transition-colors hover:text-brand"
+          >
+            {biz.phone}
+          </a>
+          <p className="hidden items-center gap-2.5 lg:flex">
+            <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-live-deep" />
+            <span className="font-sans text-[0.88rem] text-ink-body">{biz.availability}</span>
+          </p>
+        </div>
       </div>
     </header>
   );

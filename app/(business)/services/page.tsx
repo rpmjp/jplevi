@@ -145,6 +145,18 @@ export default function ServicesPage() {
                   ))}
                 </dl>
               </details>
+
+              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <Link href={bizRoutes.contact} className="biz-btn !px-5 !py-3">
+                  {biz.railCta} ↗
+                </Link>
+                <a
+                  href={`tel:${biz.phoneHref}`}
+                  className="font-mono text-[0.78rem] text-ink-body transition-colors hover:text-brand"
+                >
+                  or call {biz.phone}
+                </a>
+              </div>
             </div>
           </article>
         ))}

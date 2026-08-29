@@ -39,12 +39,12 @@ export const metadata: Metadata = {
   // Defaults describe the business site, which is what "/" now is. The gaming
   // side and MechaBlast override title, description, and openGraph themselves.
   title: {
-    default: `${biz.name}: AI without the theater.`,
+    default: `${biz.name}: AI that works for your business.`,
     template: `%s | ${biz.name}`,
   },
   description: biz.lead,
   openGraph: {
-    title: `${biz.name}: AI without the theater.`,
+    title: `${biz.name}: AI that works for your business.`,
     description: biz.lead,
     url: site.url,
     siteName: site.legalName,
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${biz.name}: AI without the theater.`,
+    title: `${biz.name}: AI that works for your business.`,
     description: biz.lead,
   },
 };

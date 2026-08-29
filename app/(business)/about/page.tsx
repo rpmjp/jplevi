@@ -82,6 +82,34 @@ export default function CompanyPage() {
       </div>
 
       <div className="mt-20">
+        <h2 className="biz-h2">Shipped</h2>
+        <div className="biz-rule mt-6" />
+        <ol className="mt-8 grid gap-8 sm:grid-cols-2">
+          <li className="border-t border-paper-4 pt-5">
+            <span className="font-mono text-[0.7rem] text-brand">01</span>
+            <h3 className="mt-2 font-grotesk text-lg font-bold tracking-tight2 text-ink-ink">
+              MechaBlast
+            </h3>
+            <p className="mt-2 font-sans text-[0.92rem] leading-relaxed text-ink-body">
+              A mobile game published end to end under {site.legalName}: gameplay, art pipeline,
+              economy, ads and in-app purchases, store compliance, and the legal documents behind
+              it.
+            </p>
+          </li>
+          <li className="border-t border-paper-4 pt-5">
+            <span className="font-mono text-[0.7rem] text-brand">02</span>
+            <h3 className="mt-2 font-grotesk text-lg font-bold tracking-tight2 text-ink-ink">
+              jplevi.com
+            </h3>
+            <p className="mt-2 font-sans text-[0.92rem] leading-relaxed text-ink-body">
+              This site. A static export deployed through a build gate on every push, carrying two
+              separate design systems and legal pages rendered verbatim from source.
+            </p>
+          </li>
+        </ol>
+      </div>
+
+      <div className="mt-20">
         <h2 className="biz-h2">How we work</h2>
         <div className="biz-rule mt-6" />
         <ul className="mt-10 grid gap-9 sm:grid-cols-2">

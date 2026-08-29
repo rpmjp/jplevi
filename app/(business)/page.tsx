@@ -4,16 +4,16 @@ import { HeroArt } from "@/components/business/HeroArt";
 import { DocIntelligence } from "@/components/business/DocIntelligence";
 import { CapabilityRail } from "@/components/business/CapabilityRail";
 import { ProcessTimeline } from "@/components/business/ProcessTimeline";
-import { biz, bizRoutes, ownership, ownershipHeading, pipeline } from "../business";
+import { biz, bizRoutes, guarantee, ownership, ownershipHeading, pipeline } from "../business";
 
 const description = `${biz.lead} ${biz.person}, ${biz.role} in ${biz.location}.`;
 
 export const metadata: Metadata = {
-  title: { absolute: `${biz.name}: AI without the theater.` },
+  title: { absolute: `${biz.name}: AI that works for your business.` },
   description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${biz.name}: AI without the theater.`,
+    title: `${biz.name}: AI that works for your business.`,
     description,
     url: biz.url,
     type: "website",
@@ -30,13 +30,13 @@ export default function BusinessHome() {
         {/* Artwork sits behind the type. It is transparent where the headline
             falls, so no scrim is needed. */}
         <h1 className="biz-display relative z-10 tracking-[-0.056em]">
-          <span className="block text-[3.6rem] leading-[0.749] tracking-[0em] sm:text-[6rem] lg:text-[min(15.2vw,233px)]">
+          <span className="block text-[3.6rem] leading-[0.749] tracking-[0em] sm:text-[6rem] lg:text-[min(10.4vw,159px)]">
             {biz.headline[0]}
           </span>
-          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
+          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(6.05vw,93px)]">
             {biz.headline[1]}
           </span>
-          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(8.15vw,125px)]">
+          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(6.05vw,93px)]">
             {biz.headline[2]}
             <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
           </span>
@@ -104,7 +104,7 @@ export default function BusinessHome() {
                 <span className="flex items-baseline gap-2">
                   <span className="font-grotesk text-[0.85rem] font-black text-paper">{item.n}</span>
                   <span aria-hidden="true" className="h-px w-3 bg-ember" />
-                  <span className="whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.08em] text-paper/85">
+                  <span className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-paper/85 sm:whitespace-nowrap">
                     {item.label}
                   </span>
                 </span>
@@ -112,10 +112,38 @@ export default function BusinessHome() {
             ))}
           </ol>
 
-          <p className="mt-12 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-paper/70 xl:max-w-[calc(100%-520px)]">
-            No account layer, no handoff between the people who scope the work and the people who
-            build it. You talk to the engineers who write the code and run the servers.
-          </p>
+          {/* The promise, where the differentiator used to sit on its own.
+              The xl width cap keeps it clear of the product panel. */}
+          <div className="mt-14 border-t border-white/20 pt-9 xl:grid xl:grid-cols-[minmax(0,1fr)_370px] xl:gap-x-12">
+            <div>
+            <h3 className="font-grotesk text-2xl font-bold tracking-tight2 text-paper sm:text-3xl">
+              {guarantee.question}
+            </h3>
+            <p className="mt-3 font-mono text-[0.82rem] uppercase tracking-label text-brand-soft">
+              {guarantee.subhead}
+            </p>
+            <p className="mt-6 max-w-prose2 font-sans text-[1.02rem] leading-[1.7] text-paper/75">
+              {guarantee.pitch}
+            </p>
+            </div>
+
+            {/* Sits under the product panel at xl, filling the space beside the
+                paragraph instead of stacking below it. */}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 xl:mt-0 xl:flex-col xl:items-start xl:justify-end xl:gap-y-5">
+              <Link
+                href={bizRoutes.contact}
+                className="biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
+              >
+                {biz.railCta} ↗
+              </Link>
+              <a
+                href={`tel:${biz.phoneHref}`}
+                className="font-grotesk text-[1.05rem] font-bold tracking-tight2 text-paper transition-colors hover:text-brand-soft"
+              >
+                {biz.phone}
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Product panel, overlapping up into the hero as in the reference. */}

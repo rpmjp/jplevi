@@ -7,7 +7,7 @@ import { process, stack } from "@/app/business";
  */
 export function ProcessTimeline() {
   return (
-    <section aria-labelledby="process-heading" className="w-full px-6 py-20 sm:px-10 sm:py-24">
+    <section aria-labelledby="process-heading" className="w-full px-6 pb-20 pt-0 sm:px-10 sm:pb-24 sm:pt-1">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 id="process-heading" className="biz-h2">

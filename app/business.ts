@@ -12,7 +12,8 @@ export const biz = {
   role: "ML + AI Engineer",
   location: "North Brunswick, NJ",
   /** Deliberately no coordinates: they resolve to a precise spot. */
-  region: "New Jersey, USA",
+  /** Persistent CTA in the left rail. */
+  railCta: "Consult with an expert",
   /** JP LEVI INC. incorporated in Newark, NJ on 2015-08-28. */
   founded: 2015,
   email: "hello@jplevi.com",
@@ -20,7 +21,7 @@ export const biz = {
   /** E.164 for the tel: link. */
   phoneHref: "+19293564644",
   /** Three lines, with the first set larger, as in the reference. */
-  headline: ["AI", "without the", "theater"],
+  headline: ["AI", "that works for", "your business."],
   lead:
     "We design, build, and operate useful AI systems: RAG, GraphRAG, machine learning, automation, full-stack products, and managed infrastructure.",
   /** The four phases named under the hero CTA. */
@@ -312,6 +313,41 @@ export const capabilities: Capability[] = [
     ],
   },
 ];
+
+/** The free entry point: written review first, a call only if it earns one. */
+export const feasibility = {
+  title: "Free feasibility review",
+  lead:
+    "Before anyone pays for anything, we will tell you in writing whether AI is the right tool for your problem, and what we would use instead if it is not.",
+  steps: [
+    {
+      n: "01",
+      title: "You send the problem",
+      body: "A paragraph on what is not working, and roughly what data or systems you already have.",
+    },
+    {
+      n: "02",
+      title: "We send a written review",
+      body: "An honest assessment: whether this is an AI problem, the shape of the work, and roughly what it would take. Yours to forward to whoever signs off.",
+    },
+    {
+      n: "03",
+      title: "A call, if it earns one",
+      body: "If there is something worth building, we book thirty minutes. If not, you have a written answer and owe us nothing.",
+    },
+  ],
+} as const;
+
+/** What we commit to in writing. Deliberately modest so it is always met. */
+export const guarantee = {
+  headline: "We reply within one business day.",
+  body: "Every serious enquiry gets a reply from a human within one business day, including the ones we turn down.",
+  /** Short form for the inverted band. Three sentences, no filler. */
+  question: "Why small businesses choose us",
+  subhead: "AI, software, and the infrastructure underneath",
+  pitch:
+    "A reply within one business day. No account managers, no handoffs, no taking one slice of the problem. You talk to the engineer who writes the code and sets up the server it lives on.",
+} as const;
 
 /**
  * How an engagement runs. Written to fit every capability on the rail: a hosting

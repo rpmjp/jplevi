@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { biz, bizRoutes, capabilities } from "../../business";
+import { biz, bizRoutes, capabilities, feasibility, guarantee } from "../../business";
 
 const description = `Start a conversation with ${biz.name}. What to include so the first reply is useful.`;
 
@@ -40,9 +40,20 @@ export default function ContactPage() {
         <span className="ml-1 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
       </h1>
       <p className="biz-lead mt-8 max-w-xl">
-        Email is the fastest route, and it reaches us directly rather than a queue. We reply to
-        every serious enquiry, including the ones we turn down.
+        Email is the fastest route, and it reaches us directly rather than a queue.
       </p>
+
+      {/* The commitment, stated plainly enough to be held to. */}
+      <div className="mt-8 flex max-w-xl items-start gap-4 border-l-2 border-brand pl-5">
+        <div>
+          <p className="font-grotesk text-lg font-bold tracking-tight2 text-ink-ink">
+            {guarantee.headline}
+          </p>
+          <p className="mt-1.5 font-sans text-[0.92rem] leading-relaxed text-ink-body">
+            {guarantee.body}
+          </p>
+        </div>
+      </div>
 
       <div className="mt-10 flex flex-wrap items-center gap-4">
         <a href={mailto} className="biz-btn">
@@ -55,6 +66,33 @@ export default function ContactPage() {
           {biz.phone}
         </a>
       </div>
+
+      {/* Low-friction entry: a written answer before anyone pays anything. */}
+      <section aria-labelledby="feasibility-heading" className="mt-16 border border-ink-ink p-8 sm:p-10">
+        <p className="biz-label-blue">No charge</p>
+        <h2 id="feasibility-heading" className="biz-h2 mt-4">
+          {feasibility.title}
+        </h2>
+        <p className="mt-5 max-w-prose2 font-sans text-[1.02rem] leading-[1.65] text-ink-body">
+          {feasibility.lead}
+        </p>
+        <ol className="mt-9 grid gap-8 sm:grid-cols-3">
+          {feasibility.steps.map((step) => (
+            <li key={step.n} className="border-t border-paper-4 pt-5">
+              <span className="font-grotesk text-lg font-bold text-brand">{step.n}</span>
+              <h3 className="mt-2 font-grotesk text-base font-bold tracking-tight2 text-ink-ink">
+                {step.title}
+              </h3>
+              <p className="mt-2 font-sans text-[0.9rem] leading-relaxed text-ink-body">
+                {step.body}
+              </p>
+            </li>
+          ))}
+        </ol>
+        <a href={mailto} className="biz-btn mt-9">
+          Request a review
+        </a>
+      </section>
 
       <div className="mt-16 grid gap-12 border-t border-paper-3 pt-10 lg:grid-cols-2">
         <div>
