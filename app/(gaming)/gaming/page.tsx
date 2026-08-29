@@ -4,7 +4,7 @@ import { Panel } from "@/components/Panel";
 import { site } from "@/app/site";
 
 export const metadata: Metadata = {
-  title: "Gaming",
+  title: { absolute: "Gaming | JP Levi" },
   description: "The gaming division of JP Levi Inc. Original games and the tooling behind them.",
   alternates: { canonical: "/gaming/" },
   openGraph: {

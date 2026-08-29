@@ -51,6 +51,9 @@ export default function ContactPage() {
         <a href={`mailto:${biz.email}`} className="biz-btn-ghost">
           Plain empty email
         </a>
+        <a href={`tel:${biz.phoneHref}`} className="biz-btn-ghost">
+          {biz.phone}
+        </a>
       </div>
 
       <div className="mt-16 grid gap-12 border-t border-paper-3 pt-10 lg:grid-cols-2">

@@ -13,8 +13,11 @@ export const biz = {
   location: "North Brunswick, NJ",
   coords: "40.3907° N, 74.4721° W",
   email: "hello@jplevi.com",
+  phone: "(929) 356-4644",
+  /** E.164 for the tel: link. */
+  phoneHref: "+19293564644",
   /** Three lines, with the first set larger, as in the reference. */
-  headline: ["AI", "without the", "theater."],
+  headline: ["AI", "without the", "theater"],
   lead:
     "We design, build, and operate useful AI systems: RAG, GraphRAG, machine learning, automation, full-stack products, and managed infrastructure.",
   /** The four phases named under the hero CTA. */
@@ -54,7 +57,7 @@ export const pipeline = [
 
 /** The inverted band: what one engineer owning the whole stack actually covers. */
 /** Inverted band heading. */
-export const ownershipHeading = "Small team. End-to-end delivery.";
+export const ownershipHeading = "Small team. End-to-end delivery";
 
 export const ownership = [
   { n: "01", label: "Private knowledge systems" },

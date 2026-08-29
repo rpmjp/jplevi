@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Saira, Archivo_Narrow, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "./site";
+import { biz } from "./business";
 
 const display = Saira({
   subsets: ["latin"],
@@ -35,22 +36,24 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
+  // Defaults describe the business site, which is what "/" now is. The gaming
+  // side and MechaBlast override title, description, and openGraph themselves.
   title: {
-    default: `${site.name}: ${site.tagline}`,
-    template: `%s | ${site.name}`,
+    default: `${biz.name}: AI without the theater.`,
+    template: `%s | ${biz.name}`,
   },
-  description: site.support,
+  description: biz.lead,
   openGraph: {
-    title: `${site.name}: ${site.tagline}`,
-    description: site.support,
+    title: `${biz.name}: AI without the theater.`,
+    description: biz.lead,
     url: site.url,
     siteName: site.legalName,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name}: ${site.tagline}`,
-    description: site.support,
+    title: `${biz.name}: AI without the theater.`,
+    description: biz.lead,
   },
 };
 

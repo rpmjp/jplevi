@@ -139,6 +139,8 @@
   /* Scope resets body colour so the gaming side keeps its dark ground. */
   .biz-scope {
     @apply bg-paper text-ink-body;
+    /* Body copy sits at 500 across the business side; headings set their own. */
+    font-weight: 500;
     /* Height the footer occupies once revealed; 0 below lg, where it is in flow. */
     --footer-h: 0px;
   }

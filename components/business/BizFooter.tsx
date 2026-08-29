@@ -23,12 +23,20 @@ export function BizFooter() {
             <p className="mt-4 max-w-sm font-mono text-[0.82rem] leading-relaxed text-paper/65">
               {biz.lead}
             </p>
-            <a
-              href={`mailto:${biz.email}`}
-              className="mt-6 inline-block font-mono text-[0.8rem] font-medium uppercase tracking-label text-brand-soft underline decoration-brand-soft/30 underline-offset-[6px] transition-colors hover:decoration-brand-soft"
-            >
-              {biz.email}
-            </a>
+            <div className="mt-6 flex flex-col gap-2">
+              <a
+                href={`mailto:${biz.email}`}
+                className="inline-block font-mono text-[0.8rem] font-medium uppercase tracking-label text-brand-soft underline decoration-brand-soft/30 underline-offset-[6px] transition-colors hover:decoration-brand-soft"
+              >
+                {biz.email}
+              </a>
+              <a
+                href={`tel:${biz.phoneHref}`}
+                className="inline-block font-mono text-[0.8rem] text-paper/65 transition-colors hover:text-brand-soft"
+              >
+                {biz.phone}
+              </a>
+            </div>
           </div>
 
           <nav aria-label="Footer">
