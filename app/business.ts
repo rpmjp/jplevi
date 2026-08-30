@@ -530,8 +530,9 @@ export type Person = {
   /** Cutout portrait, transparent background. Null until there is one. */
   photo: string | null;
   photoFallback?: string;
-  /** First person, because a company page written in the third person about
-   *  one person reads as a company hiding behind a pronoun. */
+  /** First person, spoken by this person rather than by the company. The
+   *  business is a small team; this is the lead introducing himself, which is
+   *  why the copy says "I lead" and not "I am the company". */
   line: string;
 };
 
@@ -543,7 +544,7 @@ export const people: Person[] = [
     location: "North Brunswick, NJ",
     photo: "/robert-jean-pierre.webp",
     photoFallback: "/robert-jean-pierre.png",
-    line: "I write the code, train the models, and set up the server it runs on. When you call the number on this site, I am who answers.",
+    line: "I lead the engineering here. We stay small on purpose: when you call the number on this site you get someone who writes the code, not an account manager.",
   },
 ];
 
@@ -566,7 +567,7 @@ export const colophon = [
   { k: "Framework", v: "Next.js, static export" },
   { k: "Type", v: "Archivo Narrow, IBM Plex Mono" },
   { k: "Delivery", v: "Build gate on every push" },
-  { k: "Runtime", v: "No server, no tracking" },
+  { k: "Runtime", v: "No tracking, no analytics" },
 ] as const;
 
 /**
@@ -614,3 +615,19 @@ export const hostingTiers = [
     ],
   },
 ] as const;
+
+/**
+ * Where the contact form posts.
+ *
+ * Empty until a key is set, and the composer degrades to mail draft and copy
+ * only when it is. Set `endpoint` and, for Web3Forms, `accessKey`, and the form
+ * becomes the primary path with the mail draft kept as the fallback.
+ *
+ * Works with any endpoint that accepts a JSON POST: Web3Forms, Formspree
+ * (https://formspree.io/f/<id>), Basin, or a handler on our own hosting.
+ */
+export const contactEndpoint = {
+  endpoint: "",
+  /** Web3Forms only. Formspree and Basin carry the id in the URL. */
+  accessKey: "",
+} as const;

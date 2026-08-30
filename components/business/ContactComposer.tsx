@@ -1,28 +1,33 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { biz, feasibilityProbes } from "@/app/business";
+import { biz, contactEndpoint, feasibilityProbes } from "@/app/business";
+
+type Status = "idle" | "sending" | "sent" | "error";
 
 /**
  * The contact page's composer.
  *
- * Three steps, because three fields convert about as well as one and every
- * field after that costs submissions. The message assembles in the open as it
- * is filled in, so nobody is asked to trust an invisible payload.
+ * Posting to a real endpoint is the primary path, because a mailto captures
+ * nothing: it leaves no record if the visitor never sends, and silently does
+ * nothing at all for the large share of desktop users with no mail client
+ * configured. The mail draft and the copyable message stay as fallbacks, which
+ * is what makes this safe rather than a single point of failure.
  *
- * Two ways out on purpose. A mailto opens the visitor's mail app, which wins
- * heavily on mobile, but silently does nothing for the large share of desktop
- * users with no mail client configured. So the finished message is also right
- * there to copy into webmail. No backend either way, which keeps the static
- * export and the "no server, no tracking" claim intact.
+ * With no endpoint configured the form hides itself and the page still works
+ * exactly as it did before, so nothing breaks while a key is pending.
  */
 export function ContactComposer() {
   const [picked, setPicked] = useState<string | null>(null);
   const [detail, setDetail] = useState("");
   const [from, setFrom] = useState("");
   const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** Bots fill hidden fields. People do not. */
+  const trap = useRef<HTMLInputElement | null>(null);
 
+  const live = contactEndpoint.endpoint.length > 0;
   const probe = feasibilityProbes.find((p) => p.id === picked) ?? null;
 
   const subject = probe ? `Enquiry: ${probe.label}` : "Project enquiry";
@@ -39,6 +44,8 @@ export function ContactComposer() {
   const mailto = `mailto:${biz.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   const plain = `To: ${biz.email}\nSubject: ${subject}\n\n${body}`;
 
+  const canSend = from.trim().length > 3 && from.includes("@") && detail.trim().length > 0;
+
   async function copy() {
     try {
       await navigator.clipboard.writeText(plain);
@@ -50,8 +57,32 @@ export function ContactComposer() {
     copyTimer.current = setTimeout(() => setCopied(false), 2600);
   }
 
+  async function send(e: React.FormEvent) {
+    e.preventDefault();
+    if (!canSend || status === "sending") return;
+    if (trap.current?.value) return; // honeypot tripped
+    setStatus("sending");
+    try {
+      const res = await fetch(contactEndpoint.endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...(contactEndpoint.accessKey ? { access_key: contactEndpoint.accessKey } : {}),
+          subject,
+          email: from.trim(),
+          topic: probe ? probe.label : "Not specified",
+          message: detail.trim(),
+        }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
-    <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-x-14">
+    <form onSubmit={send} className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] lg:gap-x-14">
       {/* ---- the three steps ---- */}
       <div>
         <fieldset className="border-t border-ink-ink pt-5">
@@ -91,6 +122,7 @@ export function ContactComposer() {
           </label>
           <textarea
             id="contact-detail"
+            name="message"
             rows={6}
             value={detail}
             onChange={(e) => setDetail(e.target.value)}
@@ -108,6 +140,7 @@ export function ContactComposer() {
           </label>
           <input
             id="contact-from"
+            name="email"
             type="email"
             inputMode="email"
             autoComplete="email"
@@ -117,6 +150,17 @@ export function ContactComposer() {
             className="mt-4 w-full border border-paper-4 bg-white/60 px-4 py-3.5 font-sans text-[0.92rem] text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"
           />
         </div>
+
+        {/* Not for people. Kept out of the tab order and off the screen. */}
+        <input
+          ref={trap}
+          type="text"
+          name="company_website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="absolute left-[-9999px] h-px w-px opacity-0"
+        />
       </div>
 
       {/* ---- the message, in the open ---- */}
@@ -133,24 +177,70 @@ export function ContactComposer() {
             {plain}
           </pre>
 
-          <div className="mt-5 flex flex-wrap gap-3">
-            <a
-              href={mailto}
-              className="biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
+          {status === "sent" ? (
+            <div
+              role="status"
+              className="mt-5 border border-brand bg-brand/5 px-5 py-4 font-sans text-[0.9rem] leading-relaxed text-ink-ink"
             >
-              Open in email app ↗
-            </a>
-            <button type="button" onClick={copy} className="biz-btn-ghost">
-              {copied ? "Copied" : "Copy message"}
-            </button>
-          </div>
+              <p className="font-grotesk text-[1.05rem] font-bold tracking-tight2">Sent.</p>
+              <p className="mt-1.5 text-ink-body">
+                {guaranteeLine} If you would rather have a copy for your own records, the message is
+                still above.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="mt-5 flex flex-wrap gap-3">
+                {live ? (
+                  <button
+                    type="submit"
+                    disabled={!canSend || status === "sending"}
+                    className="biz-btn !border-brand !bg-brand !text-white transition-opacity hover:!border-brand-soft hover:!bg-brand-soft disabled:!cursor-not-allowed disabled:!border-paper-4 disabled:!bg-transparent disabled:!text-ink-soft"
+                  >
+                    {status === "sending" ? "Sending" : "Send"}
+                  </button>
+                ) : null}
+                <a
+                  href={mailto}
+                  className={
+                    live
+                      ? "biz-btn-ghost"
+                      : "biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
+                  }
+                >
+                  Open in email app ↗
+                </a>
+              </div>
 
-          <p className="mt-4 font-mono text-[0.7rem] leading-relaxed text-ink-soft">
-            No mail app on this machine? Copy it and paste into webmail. Nothing here is submitted
-            anywhere, and nothing is stored.
-          </p>
+              <button
+                type="button"
+                onClick={copy}
+                className="mt-4 font-mono text-[0.72rem] uppercase tracking-label text-ink-soft underline decoration-paper-4 underline-offset-[6px] transition-colors hover:text-brand"
+              >
+                {copied ? "Copied to clipboard" : "Or copy the message"}
+              </button>
+
+              {status === "error" ? (
+                <p
+                  role="alert"
+                  className="mt-4 border-l-2 border-ember pl-4 font-sans text-[0.85rem] leading-relaxed text-ink-body"
+                >
+                  That did not go through. Use the mail draft or copy the message above and send it
+                  yourself, and it will still reach us.
+                </p>
+              ) : null}
+
+              <p className="mt-4 font-mono text-[0.7rem] leading-relaxed text-ink-soft">
+                {live
+                  ? "Sending delivers it straight to us. No mail app on this machine? Send is the one to use. Nothing is tracked, and the message is not stored anywhere else."
+                  : "No mail app on this machine? Copy it and paste into webmail."}
+              </p>
+            </>
+          )}
         </div>
       </div>
-    </div>
+    </form>
   );
 }
+
+const guaranteeLine = "You get a reply from a human within one business day.";

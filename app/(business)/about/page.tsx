@@ -50,7 +50,7 @@ export default function CompanyPage() {
       <section className="px-6 pb-24 pt-14 sm:px-10 sm:pt-20">
         <p className="biz-label-blue">Company</p>
         <h1 className="biz-display mt-5 max-w-[18ch] text-[clamp(2.6rem,7.5vw,6rem)]">
-          The engineer who writes the code
+          A small team that writes the code
           <span className="ml-3 inline-block h-[0.13em] w-[0.13em] rounded-full bg-brand align-baseline" />
         </h1>
       </section>
