@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ContactComposer } from "@/components/business/ContactComposer";
 import { biz, bizRoutes, capabilities, feasibility, guarantee } from "../../business";
 
 const description = `Start a conversation with ${biz.name}. What to include so the first reply is useful.`;
@@ -11,143 +12,118 @@ export const metadata: Metadata = {
   openGraph: { title: `Contact | ${biz.name}`, description, url: `${biz.url}/contact/`, type: "article" },
 };
 
-const include = [
-  "What the problem is, in your own words. Not a spec, just the situation.",
-  "What data you have, roughly, and where it lives.",
-  "What a good outcome looks like, and how you would know you got it.",
-  "Any hard constraints: deadline, budget range, compliance, on-premise requirements.",
-];
-
-const mailto = `mailto:${biz.email}?subject=${encodeURIComponent("Project enquiry")}&body=${encodeURIComponent(
-  [
-    "The problem:",
-    "",
-    "The data we would be working with:",
-    "",
-    "What a good outcome looks like:",
-    "",
-    "Constraints (deadline, budget range, compliance):",
-    "",
-  ].join("\n"),
-)}`;
-
 export default function ContactPage() {
   return (
-    <section className="mx-auto max-w-biz px-5 pb-16 pt-14 sm:px-8 sm:pt-20">
-      <p className="biz-label-blue">Contact</p>
-      <h1 className="biz-display mt-5 text-[2.6rem] sm:text-[4rem]">
-        Start a conversation
-        <span className="ml-1 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
-      </h1>
-      <p className="biz-lead mt-8 max-w-xl">
-        Email is the fastest route, and it reaches us directly rather than a queue.
-      </p>
-
-      {/* The commitment, stated plainly enough to be held to. */}
-      <div className="mt-8 flex max-w-xl items-start gap-4 border-l-2 border-brand pl-5">
-        <div>
-          <p className="font-grotesk text-lg font-bold tracking-tight2 text-ink-ink">
-            {guarantee.headline}
-          </p>
-          <p className="mt-1.5 font-sans text-[0.92rem] leading-relaxed text-ink-body">
-            {guarantee.body}
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-10 flex flex-wrap items-center gap-4">
-        <a href={mailto} className="biz-btn">
-          Email {biz.email}
-        </a>
-        <a href={`mailto:${biz.email}`} className="biz-btn-ghost">
-          Plain empty email
-        </a>
-        <a href={`tel:${biz.phoneHref}`} className="biz-btn-ghost">
-          {biz.phone}
-        </a>
-      </div>
-
-      {/* Low-friction entry: a written answer before anyone pays anything. */}
-      <section aria-labelledby="feasibility-heading" className="mt-16 border border-ink-ink p-8 sm:p-10">
-        <p className="biz-label-blue">No charge</p>
-        <h2 id="feasibility-heading" className="biz-h2 mt-4">
-          {feasibility.title}
-        </h2>
-        <p className="mt-5 max-w-prose2 font-sans text-[1.02rem] leading-[1.65] text-ink-body">
-          {feasibility.lead}
-        </p>
-        <ol className="mt-9 grid gap-8 sm:grid-cols-3">
-          {feasibility.steps.map((step) => (
-            <li key={step.n} className="border-t border-paper-4 pt-5">
-              <span className="font-grotesk text-lg font-bold text-brand">{step.n}</span>
-              <h3 className="mt-2 font-grotesk text-base font-bold tracking-tight2 text-ink-ink">
-                {step.title}
-              </h3>
-              <p className="mt-2 font-sans text-[0.9rem] leading-relaxed text-ink-body">
-                {step.body}
-              </p>
-            </li>
-          ))}
-        </ol>
-        <a href={mailto} className="biz-btn mt-9">
-          Request a review
-        </a>
+    <div className="w-full">
+      {/* ---- Masthead ---------------------------------------------------- */}
+      <section className="px-6 pb-14 pt-14 sm:px-10 sm:pt-20">
+        <p className="biz-label-blue">Contact</p>
+        <h1 className="biz-display mt-5 max-w-[16ch] text-[clamp(2.6rem,7.5vw,6rem)]">
+          Tell us what is broken
+          <span className="ml-3 inline-block h-[0.13em] w-[0.13em] rounded-full bg-brand align-baseline" />
+        </h1>
       </section>
 
-      <div className="mt-16 grid gap-12 border-t border-paper-3 pt-10 lg:grid-cols-2">
-        <div>
-          <h2 className="biz-h2">What to include</h2>
-          <p className="mt-4 font-mono text-[0.88rem] leading-[1.8] text-ink-body">
-            The first button above opens a mail draft with these as headings. Fill in what you can;
-            partial is fine.
-          </p>
-          <ul className="mt-7 space-y-3.5">
-            {include.map((line) => (
-              <li key={line} className="flex gap-3 font-mono text-[0.85rem] leading-relaxed text-ink-body">
-                <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 bg-brand" />
-                {line}
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* ---- The commitment, set at the size it deserves ------------------
+          This is the single strongest thing on the page, so it is the
+          biggest thing on the page. */}
+      <section className="bg-night px-6 py-16 sm:px-10 sm:py-20">
+        <p className="biz-label !text-paper/45">Our commitment</p>
+        <p className="mt-7 max-w-[20ch] font-grotesk text-[clamp(2.2rem,6.5vw,5rem)] font-black uppercase leading-[0.9] tracking-tight3 text-paper">
+          {guarantee.headline}
+        </p>
+        <p className="mt-8 max-w-prose2 font-sans text-[1.05rem] leading-[1.6] text-paper/70">
+          {guarantee.body}
+        </p>
 
-        <div>
-          <h2 className="biz-h2">What happens next</h2>
-          <ol className="mt-7 space-y-6">
-            {[
-              ["A reply", "A straight answer on whether this is something we can help with."],
-              ["A call", "Thirty minutes to pull the problem apart, at no charge."],
-              ["A scope", "A written recommendation and a price, or a referral elsewhere if we are the wrong fit."],
-            ].map(([t, b], i) => (
-              <li key={t} className="flex gap-4">
-                <span className="font-grotesk text-lg font-black text-brand">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h3 className="biz-h3">{t}</h3>
-                  <p className="mt-1.5 font-mono text-[0.84rem] leading-relaxed text-ink-body">{b}</p>
-                </div>
+        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/15 pt-8">
+          <a
+            href={`tel:${biz.phoneHref}`}
+            className="font-grotesk text-[clamp(1.4rem,3vw,2rem)] font-black tracking-tight2 text-paper transition-colors hover:text-brand-soft"
+          >
+            {biz.phone}
+          </a>
+          <a
+            href={`mailto:${biz.email}`}
+            className="font-mono text-[0.82rem] text-paper/70 underline decoration-white/30 underline-offset-[6px] transition-colors hover:text-paper"
+          >
+            {biz.email}
+          </a>
+        </div>
+      </section>
+
+      {/* ---- The composer -------------------------------------------------- */}
+      <section aria-labelledby="composer-heading" className="px-6 py-16 sm:px-10 sm:py-20">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <h2 id="composer-heading" className="biz-h2">
+            Write it here
+          </h2>
+          <p className="font-mono text-[0.7rem] uppercase tracking-label text-ink-soft">
+            Three steps
+          </p>
+        </div>
+        <div className="biz-rule-draw mt-5 bg-paper-4" />
+        <p className="mt-6 max-w-prose2 font-mono text-[0.88rem] leading-[1.8] text-ink-body">
+          Answer what you can. Partial is fine, and the message builds itself beside you so you can
+          see exactly what arrives.
+        </p>
+
+        <div className="mt-12">
+          <ContactComposer />
+        </div>
+      </section>
+
+      {/* ---- What happens next ---------------------------------------------
+          One list, not three. The composer above is now the "what to include",
+          so it does not need saying twice. */}
+      <section className="px-6 pb-16 sm:px-10 sm:pb-20">
+        <div className="border-t border-ink-ink pt-10">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 className="biz-h2">{feasibility.title}</h2>
+            <p className="font-mono text-[0.7rem] uppercase tracking-label text-brand">No charge</p>
+          </div>
+          <p className="mt-6 max-w-prose2 font-sans text-[1.02rem] leading-[1.65] text-ink-body">
+            {feasibility.lead}
+          </p>
+          <ol className="mt-12 space-y-10">
+            {feasibility.steps.map((step) => (
+              <li
+                key={step.n}
+                className="lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-baseline lg:gap-x-12"
+              >
+                <h3 className="font-grotesk text-[clamp(1.5rem,4vw,2.6rem)] font-black uppercase leading-[0.95] tracking-tight3 text-ink-ink">
+                  <span className="mr-4 align-top font-mono text-[0.7rem] font-medium tracking-label text-brand">
+                    {step.n}
+                  </span>
+                  {step.title}
+                </h3>
+                <p className="mt-3 max-w-prose2 font-mono text-[0.85rem] leading-[1.8] text-ink-body lg:mt-0">
+                  {step.body}
+                </p>
               </li>
             ))}
           </ol>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-16 border-t border-paper-3 pt-10">
-        <h2 className="biz-label">Not sure what you need?</h2>
-        <ul className="mt-6 flex flex-wrap gap-3">
-          {capabilities.map((s) => (
-            <li key={s.id}>
-              <Link
-                href={`${bizRoutes.services}#${s.id}`}
-                className="inline-block border border-paper-3 px-3.5 py-2 font-mono text-[0.75rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
-              >
-                {s.title.join(" ")}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+      {/* ---- Routing, for anyone who still is not sure --------------------- */}
+      <section className="px-6 pb-16 sm:px-10 sm:pb-20">
+        <div className="border-t border-paper-3 pt-8">
+          <h2 className="biz-label">Or read what we build first</h2>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {capabilities.map((s) => (
+              <li key={s.id}>
+                <Link
+                  href={`${bizRoutes.services}#${s.id}`}
+                  className="inline-block border border-paper-3 px-3.5 py-2 font-mono text-[0.75rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
+                >
+                  <span className="text-ink-soft">{s.n}</span> {s.title.join(" ")}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </div>
   );
 }
