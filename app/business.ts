@@ -516,3 +516,63 @@ export const feasibilityPanel = {
   ctaIdle: "Pick one to continue",
   foot: "You get a written answer, yours to forward. No call required, no cost, and we say so when the answer is no.",
 } as const;
+
+/**
+ * The people on the business side. A list, so partners and staff are a data
+ * change rather than a redesign. `photo` is a cutout with a transparent
+ * background; someone without one still renders, just without the portrait.
+ */
+export type Person = {
+  id: string;
+  name: string;
+  role: string;
+  location: string;
+  /** Cutout portrait, transparent background. Null until there is one. */
+  photo: string | null;
+  photoFallback?: string;
+  /** First person, because a company page written in the third person about
+   *  one person reads as a company hiding behind a pronoun. */
+  line: string;
+};
+
+export const people: Person[] = [
+  {
+    id: "robert",
+    name: "Robert Jean Pierre",
+    role: "ML + AI Engineer",
+    location: "North Brunswick, NJ",
+    photo: "/robert-jean-pierre.webp",
+    photoFallback: "/robert-jean-pierre.png",
+    line: "I write the code, train the models, and set up the server it runs on. When you call the number on this site, I am who answers.",
+  },
+];
+
+/** Dated facts. Nothing here is rounded up, inferred, or decorative. */
+export const milestones = [
+  { year: "1996", label: "First line of code" },
+  { year: "2015", label: "JP LEVI INC. incorporated" },
+  { year: "2020", label: "Into machine learning" },
+  { year: "2026", label: "MS Computer Science" },
+] as const;
+
+export const credentials = [
+  { label: "Masters", value: "Computer Science", where: "NJIT", note: "AI and machine learning" },
+  { label: "Bachelors", value: "Computer Science", where: "Rutgers", note: "AI and machine learning" },
+  { label: "Previously", value: "Verizon", where: "", note: "" },
+] as const;
+
+/** How this site is built. True of the page you are reading it on. */
+export const colophon = [
+  { k: "Framework", v: "Next.js, static export" },
+  { k: "Type", v: "Archivo Narrow, IBM Plex Mono" },
+  { k: "Delivery", v: "Build gate on every push" },
+  { k: "Runtime", v: "No server, no tracking" },
+] as const;
+
+/**
+ * Work worth showing. Empty on purpose: the About page renders this section
+ * only when there is something in it, so adding an entry is a data change.
+ */
+export type ShippedItem = { id: string; name: string; body: string };
+
+export const shipped: ShippedItem[] = [];

@@ -223,6 +223,12 @@
     @apply h-px w-full bg-paper-4;
   }
 
+  /* Hairline that draws itself as its section enters view. Native scroll-driven
+     animation, so no JavaScript and nothing happens where it is unsupported. */
+  .biz-rule-draw {
+    @apply h-px w-full origin-left;
+  }
+
   /* Vertical rail text down the left edge. */
   .biz-rail {
     writing-mode: vertical-rl;
@@ -366,5 +372,20 @@
   .cel-btn:active {
     transform: none;
     box-shadow: theme("boxShadow.cel");
+  }
+}
+
+@keyframes biz-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .biz-rule-draw {
+      animation: biz-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 12% cover 30%;
+    }
   }
 }
