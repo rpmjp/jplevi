@@ -43,14 +43,17 @@ export const bizRoutes = {
 } as const;
 
 export const bizNav = [
-  { href: bizRoutes.work, label: "Work" },
   { href: bizRoutes.services, label: "Services" },
   { href: bizRoutes.hosting, label: "Hosting" },
   { href: bizRoutes.about, label: "Company" },
   { href: bizRoutes.contact, label: "Contact" },
 ] as const;
 
-/** Hosting keeps its own page but reaches it through Services and the footer. */
+/**
+ * Hosting keeps its own page but reaches it through Services and the footer.
+ * Work is deliberately absent: the page still exists at bizRoutes.work, reached
+ * from the gaming section rather than from the business nav.
+ */
 export const bizFooterNav = bizNav;
 
 /** The three-stage pipeline annotated beside the hero. */
@@ -399,3 +402,117 @@ export const stack = [
   "Python", "TypeScript", "PyTorch", "Next.js", "Postgres", "pgvector",
   "Neo4j", "FastAPI", "Docker", "Linux", "Claude", "OpenAI",
 ];
+
+/**
+ * The self-serve half of the free feasibility review, rendered in the panel on
+ * the home page.
+ *
+ * Written as the complaint an owner would actually say out loud, not as the
+ * diagnosis we would write afterwards. Nobody arrives wanting RAG or MCP, so
+ * neither appears on a chip: those are how the work gets built, and they belong
+ * in the readout at most. The plain web, hosting and integration jobs lead the
+ * list on purpose, because they are the highest-volume asks and the usual first
+ * job before anyone buys anything with a model in it.
+ *
+ * `verdict` is only ever about which tool is right. Every answer is a yes.
+ */
+export type FeasibilityProbe = {
+  id: string;
+  /** Chip label, first person. Kept under ~36 characters so two sit per row. */
+  label: string;
+  verdict: "ai" | "not-ai";
+  /** The headline answer. Always opens with the yes. */
+  call: string;
+  /** One or two sentences in the same plain register as the chip. */
+  read: string;
+  /** Which capability on /services/ the readout links to. */
+  capabilityId: string;
+};
+
+export const feasibilityProbes: FeasibilityProbe[] = [
+  {
+    id: "website",
+    label: "I need a new website",
+    verdict: "not-ai",
+    call: "Full rebuild, front to back.",
+    read: "A site built front to back that your own team can update afterwards. If AI belongs in it later, it goes in properly rather than bolted onto something that cannot carry it.",
+    capabilityId: "web",
+  },
+  {
+    id: "hosting",
+    label: "My hosting is slow and overpriced",
+    verdict: "not-ai",
+    call: "Migrate it, keep the rankings.",
+    read: "Server, certificate, and a deploy that can be rolled back, then the move across with the redirects already in place so nothing that ranks today disappears tomorrow.",
+    capabilityId: "ops",
+  },
+  {
+    id: "fivesystems",
+    label: "The same details live in five systems",
+    verdict: "not-ai",
+    call: "One sync, running on schedule.",
+    read: "Your systems taught to hand information to each other on a schedule, safe to run twice, so one update lands everywhere instead of getting retyped four more times.",
+    capabilityId: "data",
+  },
+  {
+    id: "faq",
+    label: "Customers ask the same five questions",
+    verdict: "ai",
+    call: "Retrieval over your own material.",
+    read: "Hours, availability, order status and policy answered out of your own material with the source attached, and handed straight to a person the moment a question is not one of the easy five.",
+    capabilityId: "knowledge",
+  },
+  {
+    id: "chatbot",
+    label: "I need a custom chatbot",
+    verdict: "ai",
+    call: "Grounded in your own documents.",
+    read: "The hard part is never the chat box, it is what the thing is allowed to say. Built over your own material, citing its source, and handing over to a person the moment it is out of its depth.",
+    capabilityId: "knowledge",
+  },
+  {
+    id: "integration",
+    label: "AI integration in my company",
+    verdict: "ai",
+    call: "A connector layer, built once.",
+    read: "Your systems exposed once as tools an assistant can call, with scoping, auth and an audit trail, so it works from Claude or from your own app and your data never leaves where it lives.",
+    capabilityId: "mcp",
+  },
+  {
+    id: "automate",
+    label: "I want to automate my business",
+    verdict: "ai",
+    call: "Start with one repeatable job.",
+    read: "Automation across the tools you already pay for, built so your own team can run it unaided, with the runbook that keeps it working long after the handover.",
+    capabilityId: "smb",
+  },
+  {
+    id: "agentic",
+    label: "Agents, not another chat box",
+    verdict: "ai",
+    call: "Multi-step runs, with guardrails.",
+    read: "Multi-step work that runs without a person driving it, with budgets, retries and a record of what it did, stopping for review at the points where being wrong is expensive.",
+    capabilityId: "agents",
+  },
+  {
+    id: "predictions",
+    label: "Machine learning and forecasting",
+    verdict: "ai",
+    call: "Trained on your own history.",
+    read: "Forecasting, scoring and anomaly flags trained on your own numbers rather than on a generic model. If that history was never kept, you will hear that before spending anything.",
+    capabilityId: "ml",
+  },
+];
+
+/** Copy for the panel around the probes. */
+export const feasibilityPanel = {
+  title: "Free feasibility review",
+  status: "Reply in 1 business day",
+  step1: "What do you need help with?",
+  step2: "Anything you want to add",
+  placeholder: "A sentence or two. What you have tried, what data you hold.",
+  prompt: "Pick whichever sounds most like you. You get a straight answer, including when the answer is that you do not need AI for it.",
+  cta: "Send it to " + biz.email,
+  ctaIdle: "Pick one to continue",
+  foot: "You get a written answer, yours to forward. No call required, no cost, and we say so when the answer is no.",
+} as const;

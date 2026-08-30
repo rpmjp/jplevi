@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HeroArt } from "@/components/business/HeroArt";
-import { DocIntelligence } from "@/components/business/DocIntelligence";
+import { FeasibilityPanel } from "@/components/business/FeasibilityPanel";
 import { CapabilityRail } from "@/components/business/CapabilityRail";
 import { ProcessTimeline } from "@/components/business/ProcessTimeline";
 import { biz, bizRoutes, guarantee, ownership, ownershipHeading, pipeline } from "../business";
@@ -67,6 +67,12 @@ export default function BusinessHome() {
           </div>
         </div>
 
+        {/* Below xl the panel cannot overlap the hero, so it rides here
+            instead of being hidden from the traffic that matters most. */}
+        <div className="relative z-10 mt-10 xl:hidden">
+          <FeasibilityPanel />
+        </div>
+
         {/* The stage labels are baked into the artwork, so this copy is for
             screen readers and small screens only. */}
         <ul className="relative z-10 mt-12 grid gap-8 border-t border-paper-3 pt-8 sm:grid-cols-3 lg:sr-only">
@@ -114,7 +120,7 @@ export default function BusinessHome() {
 
           {/* The promise, where the differentiator used to sit on its own.
               The xl width cap keeps it clear of the product panel. */}
-          <div className="mt-14 border-t border-white/20 pt-9 xl:grid xl:grid-cols-[minmax(0,1fr)_370px] xl:gap-x-12">
+          <div className="mt-14 border-t border-white/20 pt-9 xl:max-w-[46rem]">
             <div>
             <h3 className="font-grotesk text-2xl font-bold tracking-tight2 text-paper sm:text-3xl">
               {guarantee.question}
@@ -127,9 +133,9 @@ export default function BusinessHome() {
             </p>
             </div>
 
-            {/* Sits under the product panel at xl, filling the space beside the
-                paragraph instead of stacking below it. */}
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 xl:mt-0 xl:flex-col xl:items-start xl:justify-end xl:gap-y-5">
+            {/* Kept in the left column and width-capped so it stays clear of
+                the feasibility panel rather than sitting behind it. */}
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link
                 href={bizRoutes.contact}
                 className="biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
@@ -146,9 +152,10 @@ export default function BusinessHome() {
           </div>
         </div>
 
-        {/* Product panel, overlapping up into the hero as in the reference. */}
-        <div className="pointer-events-none absolute right-10 top-0 hidden w-[min(32vw,500px)] -translate-y-[4.5rem] xl:block">
-          <DocIntelligence />
+        {/* The feasibility panel, overlapping up into the hero where the
+            product mock used to sit. Interactive, so no pointer-events-none. */}
+        <div className="absolute right-10 top-0 hidden w-[min(32vw,500px)] -translate-y-[4.5rem] xl:block">
+          <FeasibilityPanel />
         </div>
       </section>
 

@@ -131,7 +131,7 @@ export function CapabilityRail() {
         </div>
       </div>
 
-      <div className="biz-rule mx-6 mt-4 sm:mx-10" />
+      <div className="biz-rule mx-6 mt-4 !w-auto sm:mx-10" />
 
       {/* ---- rail ---- */}
       <div

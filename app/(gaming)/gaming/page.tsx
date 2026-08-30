@@ -81,6 +81,13 @@ export default function GamingPage() {
           </Link>
         </div>
       </Panel>
+
+      {/* Shipped work sits here rather than in the business nav. */}
+      <p className="mt-10 font-mono text-[0.7rem] uppercase tracking-hud text-ink-dim">
+        <Link href="/work/" className="transition-colors hover:text-hud">
+          Shipped work →
+        </Link>
+      </p>
     </section>
   );
 }
