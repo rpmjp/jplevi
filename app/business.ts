@@ -274,7 +274,7 @@ export const capabilities: Capability[] = [
     scenarios: [
       "Nobody in-house owns the servers, and it shows when something breaks",
       "You have backups but nobody has ever tried restoring one",
-      "You want one number to call when the site goes down at 2am",
+      "You want one place to call when something breaks, instead of three vendors pointing at each other",
     ],
     delivers: [
       "Provisioning, hardening, and TLS",
@@ -576,3 +576,41 @@ export const colophon = [
 export type ShippedItem = { id: string; name: string; body: string };
 
 export const shipped: ShippedItem[] = [];
+
+/**
+ * Hosting tiers, described by what they run rather than by the underlying
+ * product. The hardware sits with an infrastructure partner who is not named:
+ * that is ordinary practice, but it means nothing here may claim the metal is
+ * ours. Everything above it genuinely is.
+ */
+export const hostingTiers = [
+  {
+    n: "01",
+    name: "Website hosting",
+    forWhom: "A site, its forms, and its email. Brochure sites, landing pages, small shops.",
+    specs: [
+      ["Sites", "Up to 50"],
+      ["Storage", "50 GB NVMe"],
+      ["Backups", "Daily, plus on demand"],
+      ["Included", "CDN, SSL, email, domain"],
+    ],
+  },
+  {
+    n: "02",
+    name: "Private server",
+    forWhom:
+      "Anything that needs root: applications, retrieval systems, model inference, background jobs, databases.",
+    specs: [
+      ["Access", "Full root, yours alone"],
+      ["Resources", "Not shared with other tenants"],
+      ["Backups", "Weekly, plus live snapshots"],
+      ["Network", "1 Gbps, firewall managed"],
+    ],
+    /** Sizes, not product names. We move you between them as load changes. */
+    sizes: [
+      { label: "Standard", cpu: "2 vCPU", ram: "8 GB", disk: "100 GB NVMe", net: "8 TB transfer" },
+      { label: "Large", cpu: "4 vCPU", ram: "16 GB", disk: "200 GB NVMe", net: "16 TB transfer" },
+      { label: "Extra large", cpu: "8 vCPU", ram: "32 GB", disk: "400 GB NVMe", net: "32 TB transfer" },
+    ],
+  },
+] as const;
