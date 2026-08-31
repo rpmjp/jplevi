@@ -6,11 +6,14 @@
 set -euo pipefail
 
 PHP=/opt/alt/php83/usr/bin/php
-APP=~/domains/jplevi.com/blog-app
+# The repository holds the whole site; the Laravel app is the blog directory
+# inside it. Both sit outside public_html, so only public/ is ever reachable.
+REPO=~/domains/jplevi.com/app
+APP="$REPO/blog"
 
-cd "$APP"
-
+cd "$REPO"
 git pull --ff-only
+cd "$APP"
 $PHP /usr/local/bin/composer install --no-dev --optimize-autoloader --no-interaction
 
 $PHP artisan down --render="errors::503" || true
