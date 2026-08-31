@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Block;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\User;
+use App\Notifications\NewComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 
@@ -41,7 +43,7 @@ class CommentController extends Controller
             ? Comment::find($data['parent_id'])
             : null;
 
-        Comment::create([
+        $comment = Comment::create([
             'post_id' => $post->id,
             'user_id' => $user->id,
             'parent_id' => $parent?->parent_id ?? $parent?->id,
@@ -49,6 +51,12 @@ class CommentController extends Controller
             'author_ip' => $request->ip(),
             'status' => 'pending',
         ]);
+
+        // Moderators hear about everything; the person being replied to hears
+        // about it only once the reply is approved, which happens in the panel.
+        foreach (User::role(['admin', 'editor'])->get() as $moderator) {
+            $moderator->notify(new NewComment($comment));
+        }
 
         return back()->with('comment_status', 'Thanks, your comment is awaiting review.');
     }

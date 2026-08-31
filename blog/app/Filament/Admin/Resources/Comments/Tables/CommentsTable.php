@@ -49,7 +49,19 @@ class CommentsTable
                     ->icon('heroicon-m-check')
                     ->color('success')
                     ->visible(fn (Comment $c) => $c->status !== 'approved')
-                    ->action(fn (Comment $c) => $c->update(['status' => 'approved'])),
+                    ->action(function (Comment $c) {
+                        $c->update(['status' => 'approved']);
+
+                        // Only now is a reply visible, so only now is it worth
+                        // telling the person it answers.
+                        $parentAuthor = $c->parent_id
+                            ? Comment::find($c->parent_id)?->author
+                            : null;
+
+                        if ($parentAuthor && $parentAuthor->isNot($c->author)) {
+                            $parentAuthor->notify(new \App\Notifications\NewComment($c, isReply: true));
+                        }
+                    }),
 
                 Action::make('reject')
                     ->icon('heroicon-m-x-mark')

@@ -23,6 +23,11 @@ class Comment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
     public function replies(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id')->approved()->oldest();

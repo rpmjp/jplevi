@@ -18,6 +18,7 @@ Route::prefix('blog')->name('blog.')->middleware(\App\Http\Middleware\CacheRespo
     Route::get('/', [BlogController::class, 'index'])->name('index');
     Route::get('/feed.xml', [BlogController::class, 'feed'])->name('feed');
     Route::get('/sitemap.xml', [BlogController::class, 'sitemap'])->name('sitemap');
+    Route::get('/by/{user}', [BlogController::class, 'author'])->name('author');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('show')
         ->where('slug', '[a-z0-9\-]+');
 });
@@ -40,3 +41,10 @@ Route::post('/auth/logout', [SocialAuthController::class, 'logout'])->name('soci
 
 Route::post('/blog/{post}/comments', [CommentController::class, 'store'])
     ->middleware('auth')->name('comments.store');
+
+use App\Http\Controllers\AccountController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/account', [AccountController::class, 'show'])->name('account.show');
+    Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
+});

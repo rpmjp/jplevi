@@ -32,7 +32,7 @@
     @endif
 
     <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-paper-3 pt-6">
-        <span class="font-mono text-[0.72rem] text-ink-soft">By {{ $post->author->name }}</span>
+        <a href="{{ route('blog.author', $post->author) }}" class="font-mono text-[0.72rem] text-ink-soft transition-colors hover:text-brand">By {{ $post->author->name }}</a>
         @foreach($post->tags as $tag)
             <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
                class="border border-paper-3 px-2.5 py-1 font-mono text-[0.68rem] text-ink-body transition-colors hover:border-ink hover:text-brand">
@@ -41,7 +41,22 @@
         @endforeach
     </div>
 
-    <div class="prose-jp mt-12">{!! $post->body !!}</div>
+    @if(count($toc['items']) > 2)
+        <nav aria-label="Contents" class="mt-12 border-y border-paper-3 py-5">
+            <p class="biz-label">Contents</p>
+            <ol class="mt-3 space-y-1.5">
+                @foreach($toc['items'] as $i => $item)
+                    <li class="font-sans text-[0.9rem]">
+                        <a href="#{{ $item['id'] }}" class="text-ink-body transition-colors hover:text-brand">
+                            <span class="mr-2 font-mono text-[0.68rem] text-ink-soft">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>{{ $item['text'] }}
+                        </a>
+                    </li>
+                @endforeach
+            </ol>
+        </nav>
+    @endif
+
+    <div class="prose-jp mt-12">{!! $toc['html'] !!}</div>
 
     <div class="mt-16 border-t border-ink pt-8">
         <a href="{{ route('blog.index') }}" class="font-mono text-[0.75rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">

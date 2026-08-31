@@ -40,10 +40,14 @@ export const bizRoutes = {
   hosting: "/hosting/",
   about: "/about/",
   contact: "/contact/",
+  /* The blog is a Laravel app served from the same domain, not a page in this
+     export. A plain path is correct: Next never routes it. */
+  blog: "/blog/",
 } as const;
 
 export const bizNav = [
   { href: bizRoutes.services, label: "Services" },
+  { href: bizRoutes.blog, label: "Notes" },
   { href: bizRoutes.hosting, label: "Hosting" },
   { href: bizRoutes.about, label: "Company" },
   { href: bizRoutes.contact, label: "Contact" },

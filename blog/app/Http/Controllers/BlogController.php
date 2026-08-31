@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -79,7 +80,45 @@ class BlogController extends Controller
             ->oldest()
             ->get();
 
-        return view('blog.show', compact('post', 'related', 'schema', 'preview', 'comments'));
+        $toc = self::headings($post->body ?? '');
+
+        return view('blog.show', compact('post', 'related', 'schema', 'preview', 'comments', 'toc'));
+    }
+
+    /**
+     * Pulls h2s out of a post and gives each one an id, so a long piece gets a
+     * contents list and every heading is directly linkable.
+     *
+     * @return array{html:string, items:array<int,array{id:string,text:string}>}
+     */
+    public static function headings(string $html): array
+    {
+        if (! str_contains($html, '<h2')) {
+            return ['html' => $html, 'items' => []];
+        }
+
+        $items = [];
+
+        $html = preg_replace_callback('/<h2([^>]*)>(.*?)<\/h2>/is', function ($m) use (&$items) {
+            $text = trim(strip_tags($m[2]));
+            $id = \Illuminate\Support\Str::slug($text) ?: 'section-'.(count($items) + 1);
+            $items[] = ['id' => $id, 'text' => $text];
+
+            return '<h2 id="'.$id.'"'.$m[1].'>'.$m[2].'</h2>';
+        }, $html) ?? $html;
+
+        return ['html' => $html, 'items' => $items];
+    }
+
+    public function author(User $user)
+    {
+        $posts = Post::published()
+            ->where('user_id', $user->id)
+            ->with(['tags', 'author'])
+            ->latest('published_at')
+            ->paginate(15);
+
+        return view('blog.author', compact('user', 'posts'));
     }
 
     public function feed()
