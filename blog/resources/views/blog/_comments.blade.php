@@ -23,6 +23,7 @@
                         <button class="border border-brand bg-brand px-5 py-2.5 font-mono text-[0.72rem] uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">Post</button>
                         <span class="font-mono text-[0.72rem] text-ink-soft">
                             as {{ auth()->user()->name }} &middot;
+                            <a href="{{ route('legal.moderation') }}" class="underline underline-offset-[4px] hover:text-brand">rules</a> &middot;
                             <button form="logout-form" class="underline underline-offset-[4px] hover:text-brand">sign out</button>
                         </span>
                     </div>
@@ -30,7 +31,12 @@
                 <form id="logout-form" method="post" action="{{ route('social.logout') }}" class="hidden">@csrf</form>
             @else
                 <div class="mt-8 border border-paper-4 p-6">
-                    <p class="font-sans text-[0.95rem] text-ink-body">Sign in to comment. No password, and nothing is posted anywhere on your behalf.</p>
+                    <p class="font-sans text-[0.95rem] text-ink-body">
+                        Sign in to comment. No password, and nothing is posted anywhere on your behalf.
+                        We receive your name and email from the provider, nothing else. See
+                        <a href="{{ route('legal.privacy') }}" class="text-brand underline underline-offset-4">privacy</a>
+                        and the <a href="{{ route('legal.moderation') }}" class="text-brand underline underline-offset-4">comment rules</a>.
+                    </p>
                     <div class="mt-5 flex flex-wrap gap-3">
                         @foreach(['google' => 'Google', 'github' => 'GitHub', 'linkedin-openid' => 'LinkedIn'] as $slug => $label)
                             <a href="{{ route('social.redirect', $slug) }}"

@@ -48,3 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/account', [AccountController::class, 'show'])->name('account.show');
     Route::delete('/account', [AccountController::class, 'destroy'])->name('account.destroy');
 });
+
+Route::view('/legal/privacy', 'legal.privacy')->name('legal.privacy');
+Route::view('/legal/comment-rules', 'legal.moderation')->name('legal.moderation');

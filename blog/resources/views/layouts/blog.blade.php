@@ -32,7 +32,11 @@
 <footer class="mt-24 border-t border-paper-3">
     <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-6 py-8 sm:px-10">
         <p class="biz-label">JP LEVI INC. &middot; North Brunswick, NJ</p>
-        <a href="{{ route('blog.feed') }}" class="biz-label transition-colors hover:text-brand">RSS</a>
+        <nav class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <a href="{{ route('legal.privacy') }}" class="biz-label transition-colors hover:text-brand">Privacy</a>
+            <a href="{{ route('legal.moderation') }}" class="biz-label transition-colors hover:text-brand">Comment rules</a>
+            <a href="{{ route('blog.feed') }}" class="biz-label transition-colors hover:text-brand">RSS</a>
+        </nav>
     </div>
 </footer>
 
