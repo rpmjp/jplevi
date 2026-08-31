@@ -55,9 +55,9 @@ function forBlog(markup) {
     .replace(INACTIVE + '" href="/blog/"', ACTIVE + '" href="/blog/"')
     .replace('<a class="relative py-2 font-sans text-[0.92rem] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform hover:text-brand ' + ACTIVE + '" href="/blog/"',
              '<a aria-current="page" class="relative py-2 font-sans text-[0.92rem] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform hover:text-brand ' + ACTIVE + '" href="/blog/"')
-    // session controls sit ahead of the phone number, inside the existing cluster
-    .replace('<div class="col-start-3 row-start-1 ml-auto flex items-center gap-x-6"><a href="tel:',
-             '<div class="col-start-3 row-start-1 ml-auto flex items-center gap-x-6">@include(\'partials.session\')<a href="tel:');
+    // Nothing is added to the header itself: the session strip is rendered
+    // below it by the layout, so this bar stays identical to every other page.
+    ;
 }
 
 mkdirSync(OUT_DIR, { recursive: true });

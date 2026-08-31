@@ -27,6 +27,8 @@
 <div class="relative z-10 flex min-h-screen flex-col bg-paper xl:pl-[5.75rem]">
     @include('partials.site-header')
 
+    @include('partials.session')
+
     <main class="flex-1">@yield('content')</main>
 
     <footer class="mt-24 bg-night px-6 py-14 text-paper sm:px-10">
