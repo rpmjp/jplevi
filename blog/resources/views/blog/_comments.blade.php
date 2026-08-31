@@ -1,5 +1,5 @@
 <section id="comments" class="mx-auto mt-20 max-w-5xl px-6 sm:px-10">
-    <div class="border-t border-ink pt-8">
+    <div class="border-t border-ink-ink pt-8">
         <h2 class="biz-label">{{ $comments->count() }} {{ Str::plural('comment', $comments->count()) }}</h2>
 
         @if(session('comment_status'))
@@ -18,7 +18,7 @@
                     <label for="comment-body" class="biz-label">Add to the discussion</label>
                     <textarea id="comment-body" name="body" rows="4" required
                               placeholder="Disagreement is welcome. Rudeness is not."
-                              class="mt-3 w-full resize-y border border-paper-4 bg-white/60 px-4 py-3 font-sans text-[0.92rem] leading-relaxed text-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"></textarea>
+                              class="mt-3 w-full resize-y border border-paper-4 bg-white/60 px-4 py-3 font-sans text-[0.92rem] leading-relaxed text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"></textarea>
                     <div class="mt-4 flex flex-wrap items-center gap-4">
                         <button class="border border-brand bg-brand px-5 py-2.5 font-mono text-[0.72rem] uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">Post</button>
                         <span class="font-mono text-[0.72rem] text-ink-soft">
@@ -40,7 +40,7 @@
                     <div class="mt-5 flex flex-wrap gap-3">
                         @foreach(['google' => 'Google', 'github' => 'GitHub', 'linkedin-openid' => 'LinkedIn'] as $slug => $label)
                             <a href="{{ route('social.redirect', $slug) }}"
-                               class="border border-ink px-4 py-2.5 font-mono text-[0.72rem] uppercase tracking-label text-ink transition-colors hover:border-brand hover:text-brand">
+                               class="border border-ink-ink px-4 py-2.5 font-mono text-[0.72rem] uppercase tracking-label text-ink-ink transition-colors hover:border-brand hover:text-brand">
                                 Continue with {{ $label }}
                             </a>
                         @endforeach

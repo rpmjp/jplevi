@@ -26,7 +26,7 @@
     <h1 class="biz-display mt-5 max-w-[20ch] text-[clamp(2.2rem,6.5vw,4.6rem)]">{{ $post->title }}</h1>
 
     @if($post->excerpt)
-        <p class="mt-8 max-w-prose border-l-2 border-brand pl-5 font-sans text-[1.1rem] leading-[1.55] text-ink">
+        <p class="mt-8 max-w-prose border-l-2 border-brand pl-5 font-sans text-[1.1rem] leading-[1.55] text-ink-ink">
             {{ $post->excerpt }}
         </p>
     @endif
@@ -35,7 +35,7 @@
         <a href="{{ route('blog.author', $post->author) }}" class="font-mono text-[0.72rem] text-ink-soft transition-colors hover:text-brand">By {{ $post->author->name }}</a>
         @foreach($post->tags as $tag)
             <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
-               class="border border-paper-3 px-2.5 py-1 font-mono text-[0.68rem] text-ink-body transition-colors hover:border-ink hover:text-brand">
+               class="border border-paper-3 px-2.5 py-1 font-mono text-[0.68rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand">
                 {{ $tag->name }}
             </a>
         @endforeach
@@ -58,7 +58,7 @@
 
     <div class="prose-jp mt-12">{!! $toc['html'] !!}</div>
 
-    <div class="mt-16 border-t border-ink pt-8">
+    <div class="mt-16 border-t border-ink-ink pt-8">
         <a href="{{ route('blog.index') }}" class="font-mono text-[0.75rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">
             &larr; All notes
         </a>
@@ -77,7 +77,7 @@
                 <li>
                     <a href="{{ route('blog.show', $other) }}" class="group block">
                         <p class="font-mono text-[0.66rem] text-ink-soft">{{ $other->published_at?->format('d M y') }}</p>
-                        <p class="mt-1.5 font-display text-[1.05rem] font-bold uppercase leading-tight tracking-tight2 text-ink transition-colors group-hover:text-brand">
+                        <p class="mt-1.5 font-display text-[1.05rem] font-bold uppercase leading-tight tracking-tight2 text-ink-ink transition-colors group-hover:text-brand">
                             {{ $other->title }}
                         </p>
                     </a>

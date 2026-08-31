@@ -6,7 +6,7 @@
 <section class="mx-auto max-w-5xl px-6 py-20 sm:px-10 sm:py-28">
     <p class="biz-label">Readers</p>
     <h1 class="biz-display mt-5 text-[clamp(2.2rem,6vw,4.2rem)]">Sign in</h1>
-    <p class="mt-8 max-w-prose border-l-2 border-brand pl-5 font-sans text-[1.05rem] leading-[1.55] text-ink">
+    <p class="mt-8 max-w-prose border-l-2 border-brand pl-5 font-sans text-[1.05rem] leading-[1.55] text-ink-ink">
         Signing in lets you comment. There is no password to set, nothing is posted
         anywhere on your behalf, and you can delete your account and everything in it
         whenever you like.
@@ -19,7 +19,7 @@
     <div class="mt-10 flex flex-wrap gap-3">
         @foreach(['google' => 'Google', 'github' => 'GitHub', 'linkedin-openid' => 'LinkedIn'] as $slug => $label)
             <a href="{{ route('social.redirect', $slug) }}"
-               class="border border-ink px-5 py-3 font-mono text-[0.75rem] uppercase tracking-label text-ink transition-colors hover:border-brand hover:bg-brand hover:text-white">
+               class="border border-ink-ink px-5 py-3 font-mono text-[0.75rem] uppercase tracking-label text-ink-ink transition-colors hover:border-brand hover:bg-brand hover:text-white">
                 Continue with {{ $label }}
             </a>
         @endforeach

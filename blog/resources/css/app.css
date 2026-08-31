@@ -64,7 +64,7 @@
     text-transform: uppercase;
     line-height: 0.86;
     letter-spacing: var(--tracking-tight3);
-    color: var(--color-ink);
+    color: var(--color-ink-ink);
   }
 
   /* Vertical rail text down the left edge, as on the static pages. */
@@ -87,11 +87,11 @@
   .prose-jp p { margin-block: 1.15rem; line-height: 1.7; color: var(--color-ink-body); }
   .prose-jp h2 {
     font-family: var(--font-grotesk); font-weight: 800; text-transform: uppercase;
-    letter-spacing: var(--tracking-tight2); color: var(--color-ink);
+    letter-spacing: var(--tracking-tight2); color: var(--color-ink-ink);
     font-size: clamp(1.5rem, 3.5vw, 2.2rem); line-height: 1; margin-block: 2.6rem 0.9rem;
   }
   .prose-jp h3 {
-    font-family: var(--font-sans); font-weight: 600; color: var(--color-ink);
+    font-family: var(--font-sans); font-weight: 600; color: var(--color-ink-ink);
     font-size: 1.1rem; margin-block: 2rem 0.6rem;
   }
   .prose-jp a { color: var(--color-brand); text-decoration: underline; text-underline-offset: 5px; }
