@@ -1,3 +1,12 @@
+# The static site at the domain root sets DirectoryIndex to index.html only,
+# and that setting is inherited here. Laravel's entry point is index.php, so
+# without this Apache finds no index and returns 403 rather than the blog.
+DirectoryIndex index.php
+
+# The blog is served through a symlink from public_html, which Apache will only
+# follow when this is on.
+Options +FollowSymLinks
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
