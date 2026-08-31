@@ -45,6 +45,9 @@
                             </a>
                         @endforeach
                     </div>
+                    <p class="mt-4 font-mono text-[0.72rem] text-ink-soft">
+                        <a href="{{ route('sign-in') }}" class="underline underline-offset-4 hover:text-brand">More about signing in</a>
+                    </p>
                 </div>
             @endauth
         @else

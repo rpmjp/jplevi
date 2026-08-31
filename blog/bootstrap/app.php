@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // There is no login page: readers sign in through a provider. Sending
         // a guest back to the comments shows them the buttons that do exist.
-        $middleware->redirectGuestsTo(fn ($request) => url()->previous().'#comments');
+        $middleware->redirectGuestsTo(fn () => route('sign-in'));
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {

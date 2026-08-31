@@ -70,12 +70,23 @@
                 </ul>
             </nav>
 
-            <div class="col-start-3 row-start-1 ml-auto flex items-center gap-x-6">
-                <a href="tel:+19293564644" class="font-display text-[1.05rem] font-bold tracking-tight2 text-ink transition-colors hover:text-brand">(929) 356-4644</a>
-                <p class="hidden items-center gap-2.5 lg:flex">
-                    <span aria-hidden="true" class="inline-block h-2 w-2 rounded-full bg-[#146C33]"></span>
-                    <span class="font-sans text-[0.88rem] text-ink-body">Taking on select projects</span>
-                </p>
+            <div class="col-start-3 row-start-1 ml-auto flex items-center gap-x-5">
+                <a href="tel:+19293564644" class="hidden font-display text-[1.05rem] font-bold tracking-tight2 text-ink transition-colors hover:text-brand sm:inline">(929) 356-4644</a>
+
+                {{-- Signed out readers need a way in from every page, not only
+                     from the comment box at the foot of a post. --}}
+                @guest
+                    <a href="{{ route('sign-in') }}" class="font-mono text-[0.72rem] uppercase tracking-label text-ink-body transition-colors hover:text-brand">Sign in</a>
+                @else
+                    @if(auth()->user()->hasAnyRole(['admin', 'editor', 'author']))
+                        <a href="{{ url('/blog/admin') }}" class="border border-ink px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-label text-ink transition-colors hover:border-brand hover:text-brand">Dashboard</a>
+                    @endif
+                    <a href="{{ route('account.show') }}" class="font-mono text-[0.72rem] text-ink-body transition-colors hover:text-brand">{{ Str::before(auth()->user()->name, ' ') ?: 'Account' }}</a>
+                    <form method="post" action="{{ route('social.logout') }}">
+                        @csrf
+                        <button class="font-mono text-[0.72rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">Out</button>
+                    </form>
+                @endguest
             </div>
         </div>
     </header>

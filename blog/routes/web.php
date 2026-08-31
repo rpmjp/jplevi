@@ -51,3 +51,5 @@ Route::middleware('auth')->group(function () {
 
 Route::view('/legal/privacy', 'legal.privacy')->name('legal.privacy');
 Route::view('/legal/comment-rules', 'legal.moderation')->name('legal.moderation');
+
+Route::view('/sign-in', 'auth.sign-in')->name('sign-in');
