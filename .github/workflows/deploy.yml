@@ -26,3 +26,13 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/
           server-dir: ./
+          # Setting exclude replaces the action's defaults, so they are
+          # respecified here. blog/** keeps the Laravel blog out of the sync
+          # entirely: it is never in out/, and this states that intent rather
+          # than relying on the sync state file to remember it.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            blog/**
+            blog

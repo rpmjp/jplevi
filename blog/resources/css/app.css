@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+ * The site's design system, carried over so the blog is visibly the same
+ * company. Values are lifted from tailwind.config.ts in the main repository
+ * rather than eyeballed.
+ */
+@theme {
+  --color-paper: #F5F3EF;
+  --color-paper-2: #EDEAE3;
+  --color-paper-3: #E2DED5;
+  --color-paper-4: #CFC9BC;
+
+  --color-ink: #0B0B0C;
+  --color-ink-body: #33343A;
+  --color-ink-soft: #5E6069;
+
+  --color-brand: #1B3EF0;
+  --color-brand-soft: #5A76FF;
+  --color-ember: #E4572E;
+  --color-night: #0B0B0C;
+
+  --font-display: "Archivo Narrow", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: Archivo, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --tracking-label: 0.18em;
+  --tracking-tight2: -0.03em;
+  --tracking-tight3: -0.045em;
+}
+
+@layer components {
+  .biz-display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: var(--tracking-tight3);
+    color: var(--color-ink);
+  }
+
+  .biz-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-ink-soft);
+  }
+
+  /* Long-form reading. Measure capped so lines stay scannable. */
+  .prose-jp { max-width: 68ch; }
+  .prose-jp p { margin-block: 1.15rem; line-height: 1.7; color: var(--color-ink-body); }
+  .prose-jp h2 {
+    font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+    letter-spacing: var(--tracking-tight2); color: var(--color-ink);
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem); line-height: 1; margin-block: 2.6rem 0.9rem;
+  }
+  .prose-jp h3 {
+    font-family: var(--font-sans); font-weight: 600; color: var(--color-ink);
+    font-size: 1.1rem; margin-block: 2rem 0.6rem;
+  }
+  .prose-jp a { color: var(--color-brand); text-decoration: underline; text-underline-offset: 5px; }
+  .prose-jp ul, .prose-jp ol { margin-block: 1.15rem; padding-left: 1.3rem; color: var(--color-ink-body); line-height: 1.7; }
+  .prose-jp ul { list-style: disc; }
+  .prose-jp ol { list-style: decimal; }
+  .prose-jp blockquote {
+    border-left: 2px solid var(--color-brand); padding-left: 1.2rem; margin-block: 1.6rem;
+    font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.7; color: var(--color-ink-body);
+  }
+  .prose-jp pre {
+    background: var(--color-night); color: var(--color-paper); padding: 1.1rem 1.3rem;
+    overflow-x: auto; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.65;
+    margin-block: 1.6rem;
+  }
+  .prose-jp code { font-family: var(--font-mono); font-size: 0.88em; }
+  .prose-jp img { max-width: 100%; height: auto; margin-block: 1.8rem; }
+}
