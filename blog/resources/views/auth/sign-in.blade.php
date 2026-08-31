@@ -35,7 +35,7 @@
         <p class="biz-label">Writing here?</p>
         <p class="mt-3 max-w-prose font-sans text-[0.95rem] text-ink-body">
             Authors and editors sign in with an email and password at
-            <a href="{{ url('/blog/admin') }}" class="text-brand underline underline-offset-4">the panel</a>.
+            <a href="{{ route('filament.admin.pages.dashboard') }}" class="text-brand underline underline-offset-4">the panel</a>.
         </p>
     </div>
 </section>

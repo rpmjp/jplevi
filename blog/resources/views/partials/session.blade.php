@@ -14,7 +14,7 @@
             </a>
         @else
             @if(auth()->user()->hasAnyRole(['admin', 'editor', 'author']))
-                <a href="{{ url('/blog/admin') }}"
+                <a href="{{ route('filament.admin.pages.dashboard') }}"
                    class="border border-brand bg-brand px-4 py-1.5 font-mono text-[0.66rem] font-semibold uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
                     Dashboard
                 </a>
