@@ -11,6 +11,7 @@
  * rather than eyeballed.
  */
 @theme {
+  --max-width-biz: 84rem;
   --color-paper: #F5F3EF;
   --color-paper-2: #EDEAE3;
   --color-paper-3: #E2DED5;
@@ -42,6 +43,12 @@
     line-height: 0.86;
     letter-spacing: var(--tracking-tight3);
     color: var(--color-ink);
+  }
+
+  /* Vertical rail text down the left edge, as on the static pages. */
+  .biz-rail {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
   }
 
   .biz-label {
