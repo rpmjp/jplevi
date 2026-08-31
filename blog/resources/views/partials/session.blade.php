@@ -1,11 +1,10 @@
 {{-- The one thing the static site has no equivalent of. Sits inside the
      header's existing right-hand cluster, so nothing about the spacing of the
      rest of the bar changes. --}}
+{{-- Signed out, the header carries nothing at all: it stays byte for byte the
+     header every other page renders. Readers reach sign in from the comment
+     box on a post, which is the only place they need it. --}}
 @guest
-    <a href="{{ route('sign-in') }}"
-       class="border border-brand bg-brand px-4 py-2 font-mono text-[0.68rem] font-semibold uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
-        Sign in
-    </a>
 @else
     @if(auth()->user()->hasAnyRole(['admin', 'editor', 'author']))
         <a href="{{ url('/blog/admin') }}"
