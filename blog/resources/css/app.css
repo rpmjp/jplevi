@@ -4,6 +4,7 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
 
 /*
  * The site's design system, carried over so the blog is visibly the same
@@ -11,33 +12,54 @@
  * rather than eyeballed.
  */
 @theme {
-  --max-width-biz: 84rem;
+  /*
+   * Lifted from tailwind.config.ts in the site repository, names included.
+   * The chrome partials are extracted from the built static pages, so their
+   * class names have to resolve to the same values here or the blog renders
+   * the same markup at different sizes.
+   */
   --color-paper: #F5F3EF;
   --color-paper-2: #EDEAE3;
   --color-paper-3: #E2DED5;
   --color-paper-4: #CFC9BC;
 
-  --color-ink: #0B0B0C;
+  --color-ink: #DCE4EC;
+  --color-ink-muted: #93A2B1;
+  --color-ink-dim: #7C8B9C;
+  --color-ink-ink: #0B0B0C;
   --color-ink-body: #33343A;
   --color-ink-soft: #5E6069;
 
   --color-brand: #1B3EF0;
+  --color-brand-deep: #1430B8;
   --color-brand-soft: #5A76FF;
-  --color-ember: #E4572E;
-  --color-night: #0B0B0C;
 
-  --font-display: "Archivo Narrow", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: Archivo, ui-sans-serif, system-ui, sans-serif;
+  --color-ember: #E4572E;
+  --color-live: #16A34A;
+  --color-live-deep: #146C33;
+  --color-night: #0B0B0C;
+  --color-night-2: #141416;
+
+  /* Saira, Archivo Narrow, Space Grotesk, IBM Plex Mono, as the site loads. */
+  --font-display: Saira, ui-sans-serif, system-ui, sans-serif;
+  --font-grotesk: "Archivo Narrow", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
+  --tracking-hud: 0.22em;
   --tracking-label: 0.18em;
   --tracking-tight2: -0.03em;
   --tracking-tight3: -0.045em;
+  --tracking-wordmark: 0.06em;
+
+  --container-shell: 78rem;
+  --container-biz: 84rem;
+  --container-prose2: 68ch;
 }
 
 @layer components {
   .biz-display {
-    font-family: var(--font-display);
+    font-family: var(--font-grotesk);
     font-weight: 900;
     text-transform: uppercase;
     line-height: 0.86;
@@ -64,7 +86,7 @@
   .prose-jp { max-width: 68ch; }
   .prose-jp p { margin-block: 1.15rem; line-height: 1.7; color: var(--color-ink-body); }
   .prose-jp h2 {
-    font-family: var(--font-display); font-weight: 800; text-transform: uppercase;
+    font-family: var(--font-grotesk); font-weight: 800; text-transform: uppercase;
     letter-spacing: var(--tracking-tight2); color: var(--color-ink);
     font-size: clamp(1.5rem, 3.5vw, 2.2rem); line-height: 1; margin-block: 2.6rem 0.9rem;
   }
