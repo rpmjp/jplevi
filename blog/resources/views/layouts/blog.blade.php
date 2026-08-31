@@ -27,32 +27,7 @@
     <span aria-hidden="true" class="biz-rail shrink-0 font-mono text-[0.56rem] uppercase tracking-label text-ink-soft">
         AI Engineering / Software / Infrastructure
     </span>
-    <div class="flex shrink-0 flex-col items-center gap-5">
-        {{-- The reader's way in lives on the rail rather than in the header, so
-             the header stays identical to every other page on the site. --}}
-        @guest
-            <a href="{{ route('sign-in') }}"
-               class="biz-rail pointer-events-auto shrink-0 border border-paper-4 px-2 py-3 font-mono text-[0.58rem] font-medium uppercase tracking-label text-ink-soft transition-colors hover:border-ink hover:text-brand">
-                Sign in
-            </a>
-        @else
-            <a href="{{ route('account.show') }}"
-               title="{{ auth()->user()->name }}"
-               class="pointer-events-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-ink font-mono text-[0.6rem] font-semibold uppercase text-ink transition-colors hover:border-brand hover:text-brand">
-                {{ Str::of(auth()->user()->name)->explode(' ')->take(2)->map(fn ($w) => Str::substr($w, 0, 1))->implode('') }}
-            </a>
-            @if(auth()->user()->hasAnyRole(['admin', 'editor', 'author']))
-                <a href="{{ url('/blog/admin') }}"
-                   class="biz-rail pointer-events-auto shrink-0 border border-ink px-2 py-3 font-mono text-[0.58rem] font-medium uppercase tracking-label text-ink transition-colors hover:border-brand hover:text-brand">
-                    Dashboard
-                </a>
-            @endif
-            <form method="post" action="{{ route('social.logout') }}" class="pointer-events-auto">
-                @csrf
-                <button class="biz-rail shrink-0 font-mono text-[0.58rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">Sign out</button>
-            </form>
-        @endguest
-
+    <div class="flex shrink-0 flex-col items-center gap-4">
         <a href="tel:+19293564644" class="biz-rail pointer-events-auto shrink-0 font-display text-[1rem] font-bold tracking-tight2 text-ink transition-colors hover:text-brand">
             (929) 356-4644
         </a>
@@ -95,7 +70,30 @@
                 </ul>
             </nav>
 
-            <div class="col-start-3 row-start-1 ml-auto flex items-center gap-x-6">
+            <div class="col-start-3 row-start-1 ml-auto flex items-center gap-x-5">
+                @guest
+                    <a href="{{ route('sign-in') }}"
+                       class="border border-brand bg-brand px-4 py-2 font-mono text-[0.68rem] font-semibold uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
+                        Sign in
+                    </a>
+                @else
+                    @if(auth()->user()->hasAnyRole(['admin', 'editor', 'author']))
+                        <a href="{{ url('/blog/admin') }}"
+                           class="border border-brand bg-brand px-4 py-2 font-mono text-[0.68rem] font-semibold uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
+                            Dashboard
+                        </a>
+                    @endif
+                    <a href="{{ route('account.show') }}"
+                       title="{{ auth()->user()->name }}"
+                       class="flex h-8 w-8 items-center justify-center rounded-full border border-ink font-mono text-[0.6rem] font-semibold uppercase text-ink transition-colors hover:border-brand hover:text-brand">
+                        {{ Str::of(auth()->user()->name)->explode(' ')->take(2)->map(fn ($w) => Str::substr($w, 0, 1))->implode('') }}
+                    </a>
+                    <form method="post" action="{{ route('social.logout') }}">
+                        @csrf
+                        <button class="font-mono text-[0.68rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">Out</button>
+                    </form>
+                @endguest
+
                 <a href="tel:+19293564644" class="font-display text-[1.05rem] font-bold tracking-tight2 text-ink transition-colors hover:text-brand">(929) 356-4644</a>
                 <p class="hidden items-center gap-2.5 lg:flex">
                     <span aria-hidden="true" class="inline-block h-2 w-2 rounded-full bg-[#146C33]"></span>
