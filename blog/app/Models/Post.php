@@ -107,6 +107,28 @@ class Post extends Model
      * written opening reads better than a sentence cut off mid word. Falls back
      * to the excerpt, then to a trim of the body.
      */
+    /**
+     * Whether a comment may still be posted.
+     *
+     * The per post switch, and then the age limit from settings: a thread that
+     * has been quiet for months attracts spam far more reliably than it
+     * attracts conversation.
+     */
+    public function acceptsComments(): bool
+    {
+        if (! $this->comments_open) {
+            return false;
+        }
+
+        $days = (int) \App\Settings::get('comments_close_after_days');
+
+        if ($days > 0 && $this->published_at && $this->published_at->addDays($days)->isPast()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function lead(): string
     {
         if (str_contains((string) $this->body, '<!--more-->')) {

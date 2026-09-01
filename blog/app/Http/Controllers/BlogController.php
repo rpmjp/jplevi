@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,8 +14,9 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         $posts = Post::published()
-            ->with(['tags', 'author'])
-            ->when($request->string('tag')->toString(), fn ($q, $slug) => $q->whereHas('tags', fn ($t) => $t->where('slug', $slug)))
+            ->with(['categories', 'author'])
+            ->when($request->string('topic')->toString(), fn ($q, $slug) => $q->whereHas('categories', fn ($c) => $c->where('slug', $slug)))
+            ->when($request->string('audience')->toString(), fn ($q, $a) => $q->whereIn('audience', [$a, 'both']))
             ->when($request->string('q')->toString(), function ($q, $term) {
                 // MySQL full text would be faster, but LIKE keeps this working
                 // identically on SQLite locally and MySQL in production.
@@ -24,13 +26,13 @@ class BlogController extends Controller
                     ->orWhere('body', 'like', $like));
             })
             ->latest('published_at')
-            ->paginate(15);
+            ->paginate(\App\Settings::get('posts_per_page'));
 
         // Filtered in PHP rather than with HAVING: the tag list is small, and
         // HAVING without GROUP BY is a MySQL nicety that SQLite rejects.
-        $tags = Tag::withCount(['posts' => fn ($q) => $q->published()])
+        $tags = Category::withCount(['posts' => fn ($q) => $q->published()])
             ->get()
-            ->filter(fn (Tag $tag) => $tag->posts_count > 0)
+            ->filter(fn (Category $c) => $c->posts_count > 0)
             ->sortByDesc('posts_count')
             ->values();
 
@@ -39,7 +41,7 @@ class BlogController extends Controller
 
     public function show(Request $request, string $slug)
     {
-        $post = Post::with(['tags', 'author'])->where('slug', $slug)->firstOrFail();
+        $post = Post::with(['categories', 'author'])->where('slug', $slug)->firstOrFail();
 
         // A draft is readable only with its own preview token, so a link can be
         // shared for review without the post being public.
@@ -56,7 +58,7 @@ class BlogController extends Controller
 
         $related = Post::published()
             ->whereKeyNot($post->id)
-            ->whereHas('tags', fn ($q) => $q->whereIn('tags.id', $post->tags->pluck('id')))
+            ->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $post->categories->pluck('id')))
             ->latest('published_at')
             ->limit(4)
             ->get();
@@ -111,11 +113,29 @@ class BlogController extends Controller
         return ['html' => $html, 'items' => $items];
     }
 
+    public function topic(Category $category)
+    {
+        $posts = Post::published()
+            ->whereHas('categories', fn ($q) => $q->whereKey($category->id))
+            ->with(['categories', 'author'])
+            ->latest('published_at')
+            ->paginate(15);
+
+        return view('blog.topic', [
+            'category' => $category,
+            'posts' => $posts,
+            'children' => $category->children()->withCount(['posts' => fn ($q) => $q->published()])->get(),
+            // Held back until the archive is worth landing on, which is the
+            // whole reason this page does not simply always get indexed.
+            'indexed' => $category->shouldBeIndexed(),
+        ]);
+    }
+
     public function author(User $user)
     {
         $posts = Post::published()
             ->where('user_id', $user->id)
-            ->with(['tags', 'author'])
+            ->with(['categories', 'author'])
             ->latest('published_at')
             ->paginate(15);
 
@@ -134,7 +154,11 @@ class BlogController extends Controller
     {
         $posts = Post::published()->latest('published_at')->get();
 
-        return response()->view('blog.sitemap', compact('posts'))
+        // Only archives worth landing on. A thin one in the sitemap is an
+        // explicit invitation to index a page we asked not to be indexed.
+        $topics = Category::all()->filter->shouldBeIndexed();
+
+        return response()->view('blog.sitemap', compact('posts', 'topics'))
             ->header('Content-Type', 'application/xml; charset=utf-8');
     }
 }

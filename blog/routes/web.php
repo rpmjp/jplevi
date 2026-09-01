@@ -19,6 +19,7 @@ Route::prefix('blog')->name('blog.')->middleware(\App\Http\Middleware\CacheRespo
     Route::get('/feed.xml', [BlogController::class, 'feed'])->name('feed');
     Route::get('/sitemap.xml', [BlogController::class, 'sitemap'])->name('sitemap');
     Route::get('/by/{user}', [BlogController::class, 'author'])->name('author');
+    Route::get('/topic/{category}', [BlogController::class, 'topic'])->name('topic');
     Route::get('/{slug}', [BlogController::class, 'show'])->name('show')
         ->where('slug', '[a-z0-9\-]+');
 });

@@ -4,6 +4,12 @@
         <loc>{{ route('blog.index') }}</loc>
         <changefreq>weekly</changefreq>
     </url>
+    @foreach($topics as $topic)
+    <url>
+        <loc>{{ route('blog.topic', $topic) }}</loc>
+        <changefreq>weekly</changefreq>
+    </url>
+    @endforeach
     @foreach($posts as $post)
     <url>
         <loc>{{ route('blog.show', $post) }}</loc>

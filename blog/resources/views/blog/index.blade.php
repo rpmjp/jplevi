@@ -10,15 +10,15 @@
     </h1>
     <p class="mt-8 max-w-xl border-l-2 border-ink-ink pl-5 font-mono text-[0.9rem] leading-relaxed">
         Machine learning experiments, build write-ups, and opinions about where AI actually helps a
-        business. Some of it is for engineers, some for owners. The tags say which.
+        business. Some of it is for engineers, some for owners.
     </p>
 
     <form method="get" class="mt-10 flex flex-wrap items-center gap-3">
         <input type="search" name="q" value="{{ request('q') }}" placeholder="Search notes"
                class="w-full max-w-xs border border-paper-4 bg-white/60 px-4 py-2.5 font-sans text-[0.9rem] text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none">
-        @if(request('tag'))<input type="hidden" name="tag" value="{{ request('tag') }}">@endif
+        @if(request('topic'))<input type="hidden" name="topic" value="{{ request('topic') }}">@endif
         <button class="border border-ink-ink bg-ink-ink px-5 py-2.5 font-mono text-[0.72rem] uppercase tracking-label text-paper transition-colors hover:border-brand hover:bg-brand">Search</button>
-        @if(request('q') || request('tag'))
+        @if(request('q') || request('topic'))
             <a href="{{ route('blog.index') }}" class="font-mono text-[0.72rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">Clear</a>
         @endif
     </form>
@@ -27,11 +27,11 @@
         <ul class="mt-6 flex flex-wrap gap-2">
             @foreach($tags as $tag)
                 <li>
-                    <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
+                    <a href="{{ route('blog.topic', $tag) }}"
                        class="inline-block border px-3 py-1.5 font-mono text-[0.7rem] transition-colors
-                              {{ request('tag') === $tag->slug ? 'border-brand bg-brand text-white' : 'border-paper-3 text-ink-body hover:border-ink-ink' }}">
+                              {{ request()->is('blog/topic/'.$tag->slug) ? 'border-brand bg-brand text-white' : 'border-paper-3 text-ink-body hover:border-ink-ink' }}">
                         {{ $tag->name }}
-                        <span class="{{ request('tag') === $tag->slug ? 'text-white/70' : 'text-ink-soft' }}">{{ $tag->posts_count }}</span>
+                        <span class="{{ request()->is('blog/topic/'.$tag->slug) ? 'text-white/70' : 'text-ink-soft' }}">{{ $tag->posts_count }}</span>
                     </a>
                 </li>
             @endforeach

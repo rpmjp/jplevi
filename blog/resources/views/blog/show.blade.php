@@ -33,8 +33,8 @@
 
     <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-paper-3 pt-6">
         <a href="{{ route('blog.author', $post->author) }}" class="font-mono text-[0.72rem] text-ink-soft transition-colors hover:text-brand">By {{ $post->author->name }}</a>
-        @foreach($post->tags as $tag)
-            <a href="{{ route('blog.index', ['tag' => $tag->slug]) }}"
+        @foreach($post->categories as $tag)
+            <a href="{{ route('blog.topic', $tag) }}"
                class="border border-paper-3 px-2.5 py-1 font-mono text-[0.68rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand">
                 {{ $tag->name }}
             </a>

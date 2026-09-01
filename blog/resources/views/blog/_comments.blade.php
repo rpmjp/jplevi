@@ -9,7 +9,7 @@
             <p class="mt-6 border-l-2 border-ember pl-4 font-mono text-[0.82rem] text-ink-body">{{ $message }}</p>
         @enderror
 
-        @if($post->comments_open)
+        @if($post->acceptsComments())
             @auth
                 <form method="post" action="{{ route('comments.store', $post) }}" class="mt-8">
                     @csrf

@@ -14,7 +14,7 @@ class CommentController extends Controller
 {
     public function store(Request $request, Post $post)
     {
-        abort_unless($post->comments_open, 403, 'Comments are closed on this post.');
+        abort_unless($post->acceptsComments(), 403, 'Comments are closed on this post.');
 
         $user = $request->user();
 

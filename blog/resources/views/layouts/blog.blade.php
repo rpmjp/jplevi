@@ -27,7 +27,7 @@
 <div class="relative z-10 flex min-h-screen flex-col bg-paper xl:pl-[5.75rem]">
     @include('partials.site-header')
 
-    @include('partials.session')
+    @include('partials.session', ['post' => $post ?? null])
 
     <main class="flex-1">@yield('content')</main>
 

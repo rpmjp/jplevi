@@ -109,6 +109,71 @@ class PhaseTwoTest extends TestCase
         $this->get('/blog')->assertSee('Back from the dead');
     }
 
+    public function test_settings_change_behaviour_without_a_deploy(): void
+    {
+        \App\Settings::put(['posts_per_page' => 5]);
+
+        for ($i = 0; $i < 8; $i++) {
+            $this->makePost(['title' => "Post {$i}"]);
+        }
+
+        $this->get('/blog')->assertSee('Post 7')->assertDontSee('Post 0');
+    }
+
+    public function test_comments_close_on_their_own_once_a_post_is_old_enough(): void
+    {
+        \App\Settings::put(['comments_close_after_days' => 30]);
+
+        $fresh = $this->makePost(['title' => 'Recent', 'published_at' => now()->subDays(5)]);
+        $old = $this->makePost(['title' => 'Ancient', 'published_at' => now()->subDays(90)]);
+
+        $this->assertTrue($fresh->acceptsComments());
+        $this->assertFalse($old->acceptsComments());
+
+        $reader = User::factory()->create();
+        $reader->syncRoles(['subscriber']);
+        $this->actingAs($reader)
+            ->post(route('comments.store', $old), ['body' => 'Too late.'])
+            ->assertForbidden();
+    }
+
+    public function test_the_staff_bar_is_invisible_to_readers_and_useful_to_staff(): void
+    {
+        $post = $this->makePost(['title' => 'A live note']);
+
+        // A reader's page carries none of it.
+        $anonymous = $this->get('/blog/'.$post->slug)->getContent();
+        $this->assertStringNotContainsString('Edit this post', $anonymous);
+        $this->assertStringNotContainsString('Dashboard', $anonymous);
+
+        $reader = User::factory()->create();
+        $reader->syncRoles(['subscriber']);
+        $asReader = $this->actingAs($reader)->get('/blog/'.$post->slug)->getContent();
+        $this->assertStringNotContainsString('Edit this post', $asReader);
+        $this->assertStringNotContainsString('Dashboard', $asReader);
+
+        $editor = User::factory()->create();
+        $editor->syncRoles(['editor']);
+        $asEditor = $this->actingAs($editor)->get('/blog/'.$post->slug)->getContent();
+        $this->assertStringContainsString('Edit this post', $asEditor);
+        $this->assertStringContainsString('Dashboard', $asEditor);
+        $this->assertStringContainsString('New post', $asEditor);
+    }
+
+    public function test_the_staff_bar_flags_an_unpublished_post_so_a_preview_is_never_mistaken_for_live(): void
+    {
+        $draft = $this->makePost(['title' => 'Not yet', 'status' => 'draft', 'published_at' => null]);
+
+        $editor = User::factory()->create();
+        $editor->syncRoles(['editor']);
+
+        $html = $this->actingAs($editor)
+            ->get('/blog/'.$draft->slug.'?preview='.$draft->preview_token)
+            ->getContent();
+
+        $this->assertStringContainsString('draft', $html);
+    }
+
     public function test_the_last_admin_cannot_be_removed(): void
     {
         $admin = User::factory()->create();

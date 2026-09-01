@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Post;
-use App\Models\Tag;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -59,15 +59,42 @@ class PublicBlogTest extends TestCase
             ->assertSee('Preview of an unpublished draft');
     }
 
-    public function test_search_and_tag_filtering_narrow_the_index(): void
+    public function test_search_and_topic_filtering_narrow_the_index(): void
     {
-        $ml = Tag::create(['name' => 'Machine learning', 'audience' => 'engineers']);
+        $ml = Category::create(['name' => 'Machine learning']);
         $a = $this->publish('Forecasting demand');
-        $a->tags()->attach($ml);
+        $a->categories()->attach($ml);
         $this->publish('Hosting migrations');
 
-        $this->get('/blog?tag=machine-learning')->assertSee('Forecasting demand')->assertDontSee('Hosting migrations');
+        $this->get('/blog?topic=machine-learning')->assertSee('Forecasting demand')->assertDontSee('Hosting migrations');
         $this->get('/blog?q=migrations')->assertSee('Hosting migrations')->assertDontSee('Forecasting demand');
+    }
+
+    public function test_an_archive_lists_its_own_posts_and_is_held_out_of_search_while_thin(): void
+    {
+        $ml = Category::create(['name' => 'Machine learning', 'intro' => 'Notes on models.']);
+        $this->publish('In the topic')->categories()->attach($ml);
+        $this->publish('Somewhere else');
+
+        $response = $this->get('/blog/topic/machine-learning')
+            ->assertOk()
+            ->assertSee('In the topic')
+            ->assertDontSee('Somewhere else')
+            ->assertSee('Notes on models.');
+
+        // One post is not a page worth landing on.
+        $this->assertStringContainsString('noindex', $response->getContent());
+    }
+
+    public function test_an_archive_with_enough_posts_is_indexed(): void
+    {
+        $ml = Category::create(['name' => 'Hosting']);
+
+        for ($i = 0; $i < \App\Models\Category::INDEX_THRESHOLD; $i++) {
+            $this->publish("Post {$i}")->categories()->attach($ml);
+        }
+
+        $this->assertStringNotContainsString('noindex', $this->get('/blog/topic/hosting')->getContent());
     }
 
     public function test_feed_and_sitemap_are_valid_xml(): void
