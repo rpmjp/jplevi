@@ -1,5 +1,13 @@
 # Blog build roadmap
 
+> **Status: complete and deployed.** All ten phases are built and live at
+> jplevi.com/blog. Kept as a record of what was decided and why. The follow up
+> work is in [BLOG-PHASE-TWO.md](BLOG-PHASE-TWO.md).
+>
+> Still waiting on credentials rather than code: a Resend key plus SPF, DKIM and
+> DMARC for the newsletter, OAuth for reader sign in, and a social posting key.
+> Each is wired, tested, and inert until set.
+
 A blog we built ourselves. Laravel on the Hostinger Business plan, at
 `jplevi.com/blog`. Own admin, own editor, own comments, own subscriber list.
 The static site is never touched: it gains one nav link and nothing else.

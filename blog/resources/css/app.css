@@ -112,10 +112,19 @@
 
   /* Editor blocks on the public page. Tables, collapsibles and grids come from
      the editor's own markup, so they are styled here rather than inline. */
+  /* A wide table scrolls inside itself rather than pushing the page sideways.
+     display:block is what gives the element its own scroll container; the cells
+     keep their own widths, so nothing is squeezed into unreadability. */
   .prose-jp table {
-    width: 100%; border-collapse: collapse; margin-block: 1.8rem;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin-block: 1.8rem;
     font-size: 0.9rem;
   }
+  .prose-jp table > * { width: max-content; min-width: 100%; }
   .prose-jp th, .prose-jp td {
     border: 1px solid var(--color-paper-4); padding: 0.6rem 0.8rem; text-align: left;
     vertical-align: top;

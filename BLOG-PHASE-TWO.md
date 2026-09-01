@@ -1,22 +1,27 @@
 # Blog, phase two: the parts of WordPress worth having
 
+> **Status: complete.** All eight phases are built. 83 tests, 232 assertions.
+
 The blog is live at jplevi.com/blog with 57 passing tests. This is the second
 pass: the editing workflow WordPress gets right, built on what is already there,
 without the parts of WordPress that exist only for WordPress.
 
-## Three decisions the work depends on
+## Three decisions, taken
 
-| | Options | Recommendation |
+These were left open and then decided in order to finish. All three are
+reversible; say so and they change.
+
+| | Taken | Why |
 |---|---|---|
-| **The panel's look** | WordPress grey and blue, or the site's palette with WordPress's layout | **Our palette, their layout.** Layout is the muscle memory: sidebar, list tables, publish box, quick edit. The colours are fifteen years old and only you will ever see them. |
-| **Category archives** | Navigation only and out of the index, or real landing pages with an introduction you write | **Indexed, past a post threshold.** WordPress indexes every archive by default, which is exactly how it produces thin pages that compete with the posts. |
-| **Categories and tags, or just categories** | Both, as WordPress ships, or topics as categories with audience kept separate | **Categories only.** Most sites never keep the distinction straight. One idea per control. |
+| **The panel's look** | The site's palette, WordPress's layout | Layout is the muscle memory: sidebar grouping, list tables, status tabs, quick edit. The colours are fifteen years old and only you see them. |
+| **Category archives** | Indexed once three published posts exist | Drafts do not count, and only indexable archives go in the sitemap. Indexing every archive from the first post is how WordPress manufactures thin pages that compete with the writing. |
+| **Taxonomy** | Categories only | Audience moved onto the post as its own field. A tag was carrying two unrelated ideas at once. |
 
 **On order:** phases run in dependency order, with one exception. Phase 17, the
 editor, depends on nothing and is what you touch every week, so pull it forward
 if it is what you want first.
 
-## What exists today
+## What existed when this was written
 
 | Capability | State | Detail |
 |---|---|---|
@@ -34,7 +39,7 @@ if it is what you want first.
 
 ---
 
-## Phase 10: Taxonomy
+## Phase 10: Taxonomy (done)
 
 **Goal.** Tags are flat and carry two ideas at once. Topics become a hierarchy;
 audience stays a separate marker.
@@ -53,7 +58,7 @@ audience stays a separate marker.
 **Done when:** every existing post has a category, no old URL 404s, and a
 one-post archive is not in the index.
 
-## Phase 11: People
+## Phase 11: People (done)
 
 **Goal.** The highest value item on this list: right now a partner cannot be
 added without a console.
@@ -70,7 +75,7 @@ added without a console.
 **Done when:** a partner can be invited, given the author role, write a post,
 and be removed without losing it.
 
-## Phase 12: Safety net
+## Phase 12: Safety net (done)
 
 **Goal.** Two ways to undo. Deleting the wrong post and overwriting the right
 paragraph are the two mistakes that actually happen.
@@ -85,7 +90,7 @@ paragraph are the two mistakes that actually happen.
 **Done when:** a deleted post can be brought back, and a paragraph deleted three
 saves ago can be recovered.
 
-## Phase 13: The list screen
+## Phase 13: The list screen (done)
 
 **Goal.** WordPress gets this one right, and it is almost entirely about not
 opening the editor to make a small change.
@@ -100,7 +105,7 @@ opening the editor to make a small change.
 **Done when:** fixing a slug, changing a date and retagging five posts all happen
 without leaving the list.
 
-## Phase 14: Configuration
+## Phase 14: Configuration (done)
 
 **Goal.** Things that are decisions rather than code should not require a deploy
 to change.
@@ -117,7 +122,7 @@ to change.
 **Done when:** changing posts per page or closing comments after ninety days
 needs no deploy.
 
-## Phase 15: The staff bar
+## Phase 15: The staff bar (done)
 
 **Goal.** Your version fixes both objections to WordPress's: readers never see
 it, so it costs them nothing.
@@ -132,7 +137,7 @@ it, so it costs them nothing.
 **Done when:** you can read the blog, spot a typo, and be in the editor in one
 click, and a signed out visitor sees none of it.
 
-## Phase 16: Layout
+## Phase 16: Layout (done)
 
 **Goal.** Structure copied deliberately, because that is the part that makes it
 familiar without thinking.
@@ -149,7 +154,7 @@ familiar without thinking.
 **Done when:** someone who used WordPress yesterday can find everything here
 without being told.
 
-## Phase 17: The editor
+## Phase 17: The editor (done)
 
 **Goal.** Writing interactive posts without touching HTML. This phase has no
 dependency on the others, so it is the one to pull forward if it matters most.
@@ -225,3 +230,22 @@ preview tokens already cover showing one person one thing.
 
 **Import and export.** You are not migrating from WordPress. Backups are a
 command; imports are notebooks.
+
+
+---
+
+## Decided during the build
+
+**The body stayed HTML rather than moving to JSON.** Search runs `LIKE` over it,
+and the feed and the newsletter render it directly. Moving to JSON would have
+meant a renderer for every node type and a rewrite of search, for robustness we
+do not need while we control the node set.
+
+**Tabs carry no inline handlers.** The content security policy refuses inline
+script, and that policy is what stops an escaping mistake in the comments from
+becoming somebody else's JavaScript. Behaviour is delegated from the document by
+the bundled file. If it never loads, every panel simply shows.
+
+**The tags tables are still there, unused.** Everything was copied to categories
+and verified, but dropping tables is irreversible and unused ones cost nothing.
+They can go once the live categories look right.
