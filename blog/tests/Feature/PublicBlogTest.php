@@ -24,6 +24,20 @@ class PublicBlogTest extends TestCase
         ], $attrs));
     }
 
+    public function test_the_index_shows_a_posts_categories_not_a_dead_relation(): void
+    {
+        $category = Category::create(['name' => 'Machine learning']);
+        $this->publish('Categorised')->categories()->attach($category);
+        $this->publish('Bare');
+
+        $html = $this->get('/blog')->getContent();
+
+        $this->assertStringContainsString('Machine learning', $html);
+        // The row used to read a relation that is always empty now.
+        $this->assertStringNotContainsString('Untagged', $html);
+        $this->assertStringContainsString('Uncategorised', $html);
+    }
+
     public function test_index_lists_published_posts_only(): void
     {
         $this->publish('Live one');

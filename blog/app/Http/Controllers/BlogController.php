@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
-use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,13 +29,13 @@ class BlogController extends Controller
 
         // Filtered in PHP rather than with HAVING: the tag list is small, and
         // HAVING without GROUP BY is a MySQL nicety that SQLite rejects.
-        $tags = Category::withCount(['posts' => fn ($q) => $q->published()])
+        $topics = Category::withCount(['posts' => fn ($q) => $q->published()])
             ->get()
             ->filter(fn (Category $c) => $c->posts_count > 0)
             ->sortByDesc('posts_count')
             ->values();
 
-        return view('blog.index', compact('posts', 'tags'));
+        return view('blog.index', compact('posts', 'topics'));
     }
 
     public function show(Request $request, string $slug)

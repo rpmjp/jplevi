@@ -23,15 +23,15 @@
         @endif
     </form>
 
-    @if($tags->isNotEmpty())
+    @if($topics->isNotEmpty())
         <ul class="mt-6 flex flex-wrap gap-2">
-            @foreach($tags as $tag)
+            @foreach($topics as $topic)
                 <li>
-                    <a href="{{ route('blog.topic', $tag) }}"
+                    <a href="{{ route('blog.topic', $topic) }}"
                        class="inline-block border px-3 py-1.5 font-mono text-[0.7rem] transition-colors
-                              {{ request()->is('blog/topic/'.$tag->slug) ? 'border-brand bg-brand text-white' : 'border-paper-3 text-ink-body hover:border-ink-ink' }}">
-                        {{ $tag->name }}
-                        <span class="{{ request()->is('blog/topic/'.$tag->slug) ? 'text-white/70' : 'text-ink-soft' }}">{{ $tag->posts_count }}</span>
+                              {{ request()->is('blog/topic/'.$topic->slug) ? 'border-brand bg-brand text-white' : 'border-paper-3 text-ink-body hover:border-ink-ink' }}">
+                        {{ $topic->name }}
+                        <span class="{{ request()->is('blog/topic/'.$topic->slug) ? 'text-white/70' : 'text-ink-soft' }}">{{ $topic->posts_count }}</span>
                     </a>
                 </li>
             @endforeach
@@ -54,7 +54,7 @@
                     </span>
                     <span class="hidden lg:grid">
                         <span class="[grid-area:1/1] self-center font-mono text-[0.66rem] uppercase tracking-label text-ink-soft transition-opacity duration-200 group-hover:opacity-0">
-                            {{ $post->tags->pluck('name')->implode(' &middot; ') ?: 'Untagged' }}
+                            {{ $post->categories->pluck('name')->implode(' &middot; ') ?: 'Uncategorised' }}
                         </span>
                         <span class="[grid-area:1/1] line-clamp-2 self-center font-sans text-[0.8rem] leading-[1.4] text-paper/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                             {{ $post->excerpt }}

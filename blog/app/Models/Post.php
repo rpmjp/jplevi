@@ -173,11 +173,6 @@ class Post extends Model
         return $this->hasMany(Revision::class)->latest('created_at');
     }
 
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(Tag::class);
-    }
-
     /** Live to the public: published, and not dated in the future. */
     public function scopePublished(Builder $query): Builder
     {
