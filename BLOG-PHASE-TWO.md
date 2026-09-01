@@ -12,6 +12,10 @@ without the parts of WordPress that exist only for WordPress.
 | **Category archives** | Navigation only and out of the index, or real landing pages with an introduction you write | **Indexed, past a post threshold.** WordPress indexes every archive by default, which is exactly how it produces thin pages that compete with the posts. |
 | **Categories and tags, or just categories** | Both, as WordPress ships, or topics as categories with audience kept separate | **Categories only.** Most sites never keep the distinction straight. One idea per control. |
 
+**On order:** phases run in dependency order, with one exception. Phase 17, the
+editor, depends on nothing and is what you touch every week, so pull it forward
+if it is what you want first.
+
 ## What exists today
 
 | Capability | State | Detail |
@@ -144,6 +148,61 @@ familiar without thinking.
 
 **Done when:** someone who used WordPress yesterday can find everything here
 without being told.
+
+## Phase 17: The editor
+
+**Goal.** Writing interactive posts without touching HTML. This phase has no
+dependency on the others, so it is the one to pull forward if it matters most.
+
+The current toolbar is bold, italic, link, two heading levels, quote, code,
+lists and file attach. Everything below is missing. WordPress groups its blocks
+into Text, Media, Design and Embeds; the Widget and Theme blocks are for
+building templates rather than writing, so they are not in scope.
+
+**Text**
+
+- Tables, with header row, alignment, and adding or removing rows and columns.
+- Collapsible details, which is WordPress's Details block. The one people actually use for long technical asides.
+- Pull quotes, distinct from block quotes, for a line worth setting large.
+- Footnotes, numbered automatically and linked both ways.
+- Callouts: note, warning, and result, since a research write up needs to flag a caveat without shouting.
+
+**Media**
+
+- Images with caption, alt text, alignment, and width, chosen from the media library rather than uploaded again.
+- Galleries, for a set of charts from one experiment.
+- Media and text side by side, for a figure with its explanation beside it rather than under it.
+- File downloads, for a dataset or a notebook.
+- Video by embed. Self hosted video stays out, for bandwidth reasons rather than upload limits.
+
+**Design**
+
+- Columns, so two things can sit side by side.
+- Buttons, for a call to action inside a post.
+- Tabs and accordions, for showing three approaches without three screens of scrolling.
+- Separator and spacer, for deliberate breathing room.
+- A read more break, so the index can show a lead paragraph rather than a truncated excerpt.
+
+**Embeds**
+
+- YouTube, Vimeo, X, Bluesky, SoundCloud, Spotify, GitHub gists, CodePen.
+- Paste a URL and have it become the embed, which is the part that makes embeds feel effortless.
+- Everything served through the existing frame policy, which already allows only YouTube's no cookie domain and Vimeo. Any new provider is a deliberate addition to that list, not an accident.
+
+> **Two decisions inside this phase.**
+>
+> **Storage format.** The body is HTML today. Structured blocks are far more
+> robust stored as JSON, which is what the editor works in natively. Converting
+> is a migration, and it is much cheaper now than after fifty posts.
+>
+> **Interactive blocks need JavaScript on the public page.** Tabs and accordions
+> cannot be inline handlers, because the content security policy forbids inline
+> script and that policy is what protects the comment section. They will be
+> driven by the bundled script reading data attributes.
+
+**Done when:** a Kaggle write up can be published with a table, a collapsible
+appendix, a two column figure, a YouTube embed and footnotes, without opening a
+code view once.
 
 ---
 
