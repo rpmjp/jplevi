@@ -35,6 +35,14 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::hex('#1B3EF0'),
             ])
             ->font('Archivo')
+            // Grouped the way WordPress groups it, because that is the part
+            // that makes a panel findable without being explained.
+            ->navigationGroups([
+                'Content',
+                'Audience',
+                'People',
+                'Configuration',
+            ])
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')
             ->pages([

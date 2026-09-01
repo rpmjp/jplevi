@@ -16,6 +16,10 @@ use Filament\Tables\Table;
 
 class SubscriberResource extends Resource
 {
+    protected static string | \UnitEnum | null $navigationGroup = 'Audience';
+
+    protected static ?int $navigationSort = 2;
+
     protected static ?string $model = Subscriber::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

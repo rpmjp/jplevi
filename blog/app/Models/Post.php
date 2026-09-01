@@ -15,7 +15,7 @@ class Post extends Model
 
     protected $fillable = [
         'user_id', 'title', 'slug', 'excerpt', 'body', 'cover_path', 'cover_alt',
-        'status', 'published_at', 'meta_title', 'meta_description', 'canonical_url', 'comments_open', 'social_message', 'share_socially',
+        'status', 'published_at', 'meta_title', 'meta_description', 'canonical_url', 'comments_open', 'social_message', 'share_socially', 'audience',
     ];
 
     /**
@@ -27,6 +27,7 @@ class Post extends Model
      */
     protected $attributes = [
         'status' => 'draft',
+        'audience' => 'both',
         'comments_open' => true,
         'share_socially' => true,
     ];
@@ -60,6 +61,26 @@ class Post extends Model
             }
         });
         static::deleted(fn () => \App\Http\Middleware\CacheResponse::flush());
+
+        // A revision records what the post was, not what it is about to be, so
+        // restoring one puts back the version that existed before this save.
+        static::updating(function (Post $post) {
+            if (! $post->isDirty(['title', 'excerpt', 'body'])) {
+                return;
+            }
+
+            Revision::create([
+                'post_id' => $post->id,
+                'user_id' => auth()->id(),
+                'title' => $post->getOriginal('title'),
+                'excerpt' => $post->getOriginal('excerpt'),
+                'body' => $post->getOriginal('body'),
+                'created_at' => now(),
+            ]);
+
+            $keep = $post->revisions()->limit(Revision::KEEP_PER_POST)->pluck('id');
+            Revision::where('post_id', $post->id)->whereNotIn('id', $keep)->delete();
+        });
 
         static::saving(function (Post $post) {
             $post->slug ??= Str::slug($post->title);
@@ -118,6 +139,16 @@ class Post extends Model
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function revisions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Revision::class)->latest('created_at');
     }
 
     public function tags(): BelongsToMany

@@ -25,6 +25,11 @@ class User extends Authenticatable implements FilamentUser
      * never reach the panel; authors, editors and admins do, and what they can
      * do once inside is decided by permissions rather than by this gate.
      */
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class);
