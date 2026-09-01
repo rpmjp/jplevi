@@ -56,6 +56,12 @@ class PostForm
                             \App\Filament\RichBlocks\CalloutBlock::class,
                             \App\Filament\RichBlocks\EmbedBlock::class,
                             \App\Filament\RichBlocks\ButtonBlock::class,
+                            \App\Filament\RichBlocks\PullQuoteBlock::class,
+                            \App\Filament\RichBlocks\GalleryBlock::class,
+                            \App\Filament\RichBlocks\MediaTextBlock::class,
+                            \App\Filament\RichBlocks\FileBlock::class,
+                            \App\Filament\RichBlocks\TabsBlock::class,
+                            \App\Filament\RichBlocks\AccordionBlock::class,
                             \App\Filament\RichBlocks\ReadMoreBlock::class,
                         ])
                         ->toolbarButtons([
@@ -92,17 +98,19 @@ class PostForm
                         ->default(fn () => auth()->id())
                         ->label('Author'),
 
-                    Select::make('tags')
-                        ->relationship('tags', 'name')
+                    Select::make('categories')
+                        ->relationship('categories', 'name')
                         ->multiple()
                         ->preload()
                         ->createOptionForm([
                             TextInput::make('name')->required(),
-                            Select::make('audience')
-                                ->options(['buyers' => 'Buyers', 'engineers' => 'Engineers', 'both' => 'Both'])
-                                ->default('both')
-                                ->required(),
                         ]),
+
+                    Select::make('audience')
+                        ->options(['buyers' => 'Buyers', 'engineers' => 'Engineers', 'both' => 'Both'])
+                        ->default(fn () => \App\Settings::get('default_audience'))
+                        ->required()
+                        ->helperText('Who this is written for. Readers can filter by it.'),
 
                     FileUpload::make('cover_path')
                         ->image()
