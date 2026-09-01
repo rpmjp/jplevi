@@ -80,7 +80,8 @@ class BlogController extends Controller
             ->oldest()
             ->get();
 
-        $toc = self::headings($post->body ?? '');
+        // The break is an instruction to the index, not content.
+        $toc = self::headings(str_replace('<!--more-->', '', $post->body ?? ''));
 
         return view('blog.show', compact('post', 'related', 'schema', 'preview', 'comments', 'toc'));
     }

@@ -52,12 +52,21 @@ class PostForm
 
                     RichEditor::make('body')
                         ->columnSpanFull()
+                        ->customBlocks([
+                            \App\Filament\RichBlocks\CalloutBlock::class,
+                            \App\Filament\RichBlocks\EmbedBlock::class,
+                            \App\Filament\RichBlocks\ButtonBlock::class,
+                            \App\Filament\RichBlocks\ReadMoreBlock::class,
+                        ])
                         ->toolbarButtons([
-                            ['bold', 'italic', 'strike', 'link'],
-                            ['h2', 'h3', 'blockquote', 'codeBlock'],
+                            ['bold', 'italic', 'strike', 'underline', 'highlight', 'link'],
+                            ['h2', 'h3', 'lead', 'small'],
+                            ['blockquote', 'codeBlock', 'details'],
                             ['bulletList', 'orderedList'],
-                            ['attachFiles'],
-                            ['undo', 'redo'],
+                            ['table', 'grid', 'horizontalRule'],
+                            ['alignStart', 'alignCenter', 'alignEnd'],
+                            ['attachFiles', 'customBlocks'],
+                            ['clearFormatting', 'undo', 'redo'],
                         ]),
                 ])->columns(2),
 

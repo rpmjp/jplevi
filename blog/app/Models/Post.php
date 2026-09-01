@@ -79,6 +79,24 @@ class Post extends Model
         });
     }
 
+    /**
+     * What the index shows.
+     *
+     * Everything above a read more break, if the author placed one, because a
+     * written opening reads better than a sentence cut off mid word. Falls back
+     * to the excerpt, then to a trim of the body.
+     */
+    public function lead(): string
+    {
+        if (str_contains((string) $this->body, '<!--more-->')) {
+            return Str::before($this->body, '<!--more-->');
+        }
+
+        return filled($this->excerpt)
+            ? '<p>'.e($this->excerpt).'</p>'
+            : Str::limit(strip_tags((string) $this->body), 220);
+    }
+
     /** Roughly 220 words a minute, floored at one. */
     public static function readingMinutes(string $html): int
     {

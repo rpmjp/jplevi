@@ -109,4 +109,53 @@
   }
   .prose-jp code { font-family: var(--font-mono); font-size: 0.88em; }
   .prose-jp img { max-width: 100%; height: auto; margin-block: 1.8rem; }
+
+  /* Editor blocks on the public page. Tables, collapsibles and grids come from
+     the editor's own markup, so they are styled here rather than inline. */
+  .prose-jp table {
+    width: 100%; border-collapse: collapse; margin-block: 1.8rem;
+    font-size: 0.9rem;
+  }
+  .prose-jp th, .prose-jp td {
+    border: 1px solid var(--color-paper-4); padding: 0.6rem 0.8rem; text-align: left;
+    vertical-align: top;
+  }
+  .prose-jp th {
+    background: var(--color-paper-2);
+    font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: var(--tracking-label);
+    color: var(--color-ink-soft);
+  }
+  .prose-jp .table-wrap { overflow-x: auto; }
+
+  .prose-jp details {
+    border-top: 1px solid var(--color-paper-4); margin-block: 1.6rem; padding-top: 0.9rem;
+  }
+  .prose-jp summary {
+    cursor: pointer; list-style: none;
+    font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: var(--tracking-label); color: var(--color-ink-soft);
+  }
+  .prose-jp summary::-webkit-details-marker { display: none; }
+  .prose-jp summary::before { content: "+ "; color: var(--color-brand); }
+  .prose-jp details[open] summary::before { content: "\2212 "; }
+  .prose-jp summary:hover { color: var(--color-brand); }
+
+  .prose-jp [style*="grid"], .prose-jp .grid {
+    display: grid; gap: 1.5rem; margin-block: 1.8rem;
+  }
+  @media (min-width: 48rem) {
+    .prose-jp .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .prose-jp .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .prose-jp hr {
+    border: 0; height: 1px; background: var(--color-paper-4); margin-block: 2.4rem;
+  }
+  .prose-jp mark {
+    background: color-mix(in oklab, var(--color-brand) 18%, transparent);
+    color: var(--color-ink-ink); padding: 0.05em 0.2em;
+  }
+  .prose-jp .not-prose p { margin: 0; }
+
 }
