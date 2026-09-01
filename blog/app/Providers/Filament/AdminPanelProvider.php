@@ -26,15 +26,19 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->id('admin')
             ->path('admin')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->login()
             ->profile()
             ->brandName('JP Levi')
             ->colors([
-                // The site's electric blue, so the panel reads as the same
-                // company rather than as a generic admin tool.
-                'primary' => Color::hex('#1B3EF0'),
+                // WordPress admin blue, not the site's electric blue. This is
+                // the one screen deliberately not in the public palette.
+                'primary' => Color::hex('#2271b1'),
             ])
-            ->font('Archivo')
+            ->font('Inter')
+            // WordPress has no dark mode, and half a WordPress is worse than
+            // either whole one.
+            ->darkMode(false)
             // Grouped the way WordPress groups it, because that is the part
             // that makes a panel findable without being explained.
             ->navigationGroups([
