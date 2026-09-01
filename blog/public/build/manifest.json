@@ -268,13 +268,41 @@
     "src": "node_modules/katex/dist/fonts/KaTeX_Typewriter-Regular.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BnfFosYL.css",
+    "file": "assets/app-kFb9vLBb.css",
     "name": "app",
     "names": [
       "app.css"
     ],
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-Bswjrgc7.js",
+    "name": "app",
+    "src": "resources/js/app.js",
     "isEntry": true,
+    "dynamicImports": [
+      "resources/js/code.js",
+      "resources/js/math.js"
+    ]
+  },
+  "resources/js/code.js": {
+    "file": "assets/code-DdCbC-5U.js",
+    "name": "code",
+    "src": "resources/js/code.js",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/code-Z5exjX_n.css"
+    ]
+  },
+  "resources/js/math.js": {
+    "file": "assets/math-Cy2YVBF-.js",
+    "name": "math",
+    "src": "resources/js/math.js",
+    "isDynamicEntry": true,
+    "css": [
+      "assets/math-8hSt6HMQ.css"
+    ],
     "assets": [
       "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
       "assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
@@ -337,11 +365,5 @@
       "assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
       "assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf"
     ]
-  },
-  "resources/js/app.js": {
-    "file": "assets/app-DLIjYnZR.js",
-    "name": "app",
-    "src": "resources/js/app.js",
-    "isEntry": true
   }
 }

@@ -1,44 +1,16 @@
-import katex from 'katex';
-import renderMathInElement from 'katex/contrib/auto-render';
-import hljs from 'highlight.js/lib/common';
-
 /*
- * Maths and code highlighting.
+ * Everything here is either tiny or loaded on demand.
  *
- * Both are bundled rather than pulled from a CDN, because the content security
- * policy only allows script and styles from this origin. That also means a post
- * renders the same whether or not a third party is up.
+ * KaTeX and highlight.js are together about 400KB, and most posts contain
+ * neither maths nor code. Importing them dynamically means a reader downloads
+ * them only on a page that needs them, which on a content site is the
+ * difference between a fast page and a slow one.
  */
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.prose-jp pre code').forEach((block) => {
-        hljs.highlightElement(block);
-    });
 
-    const article = document.querySelector('.prose-jp');
-    if (!article) return;
-
-    renderMathInElement(article, {
-        delimiters: [
-            { left: '$$', right: '$$', display: true },
-            { left: '\\[', right: '\\]', display: true },
-            { left: '$', right: '$', display: false },
-            { left: '\\(', right: '\\)', display: false },
-        ],
-        // A dollar sign in prose must not silently become maths.
-        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'option'],
-        throwOnError: false,
-    });
-});
-
-/*
- * Tabs.
- *
- * Delegated from the document and driven by data attributes, because the
- * content security policy forbids inline handlers and that policy is what keeps
- * an escaping mistake in the comments from becoming somebody else's script.
- * If this file never loads, every panel is simply visible: uglier, still
- * readable, nothing lost.
- */
+/* Tabs. Delegated from the document and driven by data attributes, because the
+   content security policy forbids inline handlers and that policy is what keeps
+   an escaping mistake in the comments from becoming somebody else's script. If
+   this file never loads, every panel is simply visible. */
 document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-tab-target]');
     if (!trigger) return;
@@ -72,4 +44,24 @@ document.addEventListener('keydown', (event) => {
 
     next.focus();
     next.click();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const article = document.querySelector('.prose-jp');
+    if (!article) return;
+
+    const blocks = article.querySelectorAll('pre code');
+    if (blocks.length) {
+        import('./code.js').then((m) => m.default(blocks));
+    }
+
+    /* Cheap test before a 260KB download. Deliberately stricter than a bare
+       dollar sign: a post that mentions $500 has no maths in it, and would
+       otherwise pay for the whole typesetter to find that out. A pair is
+       required, on one line, with something between them. */
+    const hasMath = /\$\$[^]+?\$\$|\$[^$\n]+\$|\\\([^]+?\\\)|\\\[[^]+?\\\]/;
+
+    if (hasMath.test(article.textContent)) {
+        import('./math.js').then((m) => m.default(article));
+    }
 });
