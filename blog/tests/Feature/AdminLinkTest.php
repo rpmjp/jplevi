@@ -19,16 +19,39 @@ class AdminLinkTest extends TestCase
 
     public function test_the_dashboard_link_is_not_doubled_under_a_subdirectory_app_url(): void
     {
-        // The app is served from /blog, so APP_URL already carries it and a
-        // hardcoded url('/blog/admin') produced /blog/blog/admin. Using the
-        // panel's own route name means the path is generated, never assembled.
+        // The app is mounted at /blog in production, so a hardcoded
+        // url('/blog/admin') produced /blog/blog/admin. Using the panel's own
+        // route name means the path is generated, never assembled.
         $admin = User::factory()->create();
         $admin->syncRoles(['admin']);
 
-        $html = $this->actingAs($admin)->get('/blog')->getContent();
+        $html = $this->actingAs($admin)->get('/')->getContent();
 
         $this->assertStringNotContainsString('/blog/blog/', $html);
         $this->assertStringContainsString(route('filament.admin.pages.dashboard'), $html);
+    }
+
+    public function test_a_link_the_index_prints_is_a_link_the_app_answers_on(): void
+    {
+        // The bug this guards was not a broken link in a template; it was every
+        // blog route sitting one level deeper than the mount, so the pages
+        // pointed at /blog/blog/{slug} and the posts 404'd. Nothing that reads
+        // a single template catches that. Following the link does.
+        $post = \App\Models\Post::create([
+            'user_id' => User::factory()->create()->id,
+            'title' => 'Round trip',
+            'body' => '<p>Body.</p>',
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        $html = $this->get('/')->assertOk()->getContent();
+
+        $this->assertMatchesRegularExpression('#href="[^"]*/round-trip"#', $html);
+
+        preg_match('#href="([^"]*/round-trip)"#', $html, $matches);
+
+        $this->get($matches[1])->assertOk()->assertSee('Round trip');
     }
 
     public function test_readers_never_see_the_dashboard_link(): void
@@ -36,6 +59,6 @@ class AdminLinkTest extends TestCase
         $reader = User::factory()->create();
         $reader->syncRoles(['subscriber']);
 
-        $this->actingAs($reader)->get('/blog')->assertDontSee('Dashboard');
+        $this->actingAs($reader)->get('/')->assertDontSee('Dashboard');
     }
 }

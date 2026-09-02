@@ -2,10 +2,15 @@
 
 namespace App\Filament\Admin\Resources\Users\Schemas;
 
+use App\Models\Rendition;
+use App\Services\ImageIngest;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Illuminate\Support\Str;
 
 class UserForm
@@ -14,6 +19,33 @@ class UserForm
     {
         return $schema->components([
             TextInput::make('name')->required()->maxLength(120),
+
+            // Shown beside every post they write and every comment they leave.
+            // Cut to three small widths rather than the cover set, and with no
+            // 1.91:1 crop: a face is never a link preview.
+            FileUpload::make('avatar_path')
+                ->label('Profile photo')
+                ->image()
+                ->avatar()
+                ->imageEditor()
+                ->maxSize(4096)
+                ->helperText('Square works best. Left empty, their initials are used instead.')
+                ->saveUploadedFileUsing(fn (TemporaryUploadedFile $file) => app(ImageIngest::class)->store(
+                    $file,
+                    'avatars',
+                    ImageIngest::AVATAR_WIDTHS,
+                    social: false,
+                    square: true,
+                )['path'])
+                ->getUploadedFileUsing(fn (?string $file) => filled($file) ? [
+                    'name' => basename($file),
+                    'url' => Rendition::url($file, 192),
+                ] : null)
+                ->deleteUploadedFileUsing(function (?string $file) {
+                    foreach (ImageIngest::AVATAR_WIDTHS as $width) {
+                        Storage::disk('media')->delete("{$file}-{$width}.webp");
+                    }
+                }),
 
             TextInput::make('email')
                 ->email()

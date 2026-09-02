@@ -30,7 +30,7 @@ class PublicBlogTest extends TestCase
         $this->publish('Categorised')->categories()->attach($category);
         $this->publish('Bare');
 
-        $html = $this->get('/blog')->getContent();
+        $html = $this->get('/')->getContent();
 
         $this->assertStringContainsString('Machine learning', $html);
         // The row used to read a relation that is always empty now.
@@ -49,7 +49,7 @@ class PublicBlogTest extends TestCase
         $this->publish('Not yet', ['status' => 'draft', 'published_at' => null]);
         $this->publish('Tomorrow', ['published_at' => now()->addDay()]);
 
-        $this->get('/blog')
+        $this->get('/')
             ->assertOk()
             ->assertSee('Live one')
             ->assertDontSee('Not yet')
@@ -60,7 +60,7 @@ class PublicBlogTest extends TestCase
     {
         $post = $this->publish('Retrieval over your own documents');
 
-        $this->get('/blog/'.$post->slug)
+        $this->get('/'.$post->slug)
             ->assertOk()
             ->assertSee('Retrieval over your own documents')
             ->assertSee('"@type":"BlogPosting"', false)
@@ -71,9 +71,9 @@ class PublicBlogTest extends TestCase
     {
         $post = $this->publish('Unfinished', ['status' => 'draft', 'published_at' => null]);
 
-        $this->get('/blog/'.$post->slug)->assertNotFound();
+        $this->get('/'.$post->slug)->assertNotFound();
 
-        $this->get('/blog/'.$post->slug.'?preview='.$post->preview_token)
+        $this->get('/'.$post->slug.'?preview='.$post->preview_token)
             ->assertOk()
             ->assertSee('Preview of an unpublished draft');
     }
@@ -85,8 +85,8 @@ class PublicBlogTest extends TestCase
         $a->categories()->attach($ml);
         $this->publish('Hosting migrations');
 
-        $this->get('/blog?topic=machine-learning')->assertSee('Forecasting demand')->assertDontSee('Hosting migrations');
-        $this->get('/blog?q=migrations')->assertSee('Hosting migrations')->assertDontSee('Forecasting demand');
+        $this->get('/?topic=machine-learning')->assertSee('Forecasting demand')->assertDontSee('Hosting migrations');
+        $this->get('/?q=migrations')->assertSee('Hosting migrations')->assertDontSee('Forecasting demand');
     }
 
     public function test_an_archive_lists_its_own_posts_and_is_held_out_of_search_while_thin(): void
@@ -95,7 +95,7 @@ class PublicBlogTest extends TestCase
         $this->publish('In the topic')->categories()->attach($ml);
         $this->publish('Somewhere else');
 
-        $response = $this->get('/blog/topic/machine-learning')
+        $response = $this->get('/topic/machine-learning')
             ->assertOk()
             ->assertSee('In the topic')
             ->assertDontSee('Somewhere else')
@@ -113,17 +113,17 @@ class PublicBlogTest extends TestCase
             $this->publish("Post {$i}")->categories()->attach($ml);
         }
 
-        $this->assertStringNotContainsString('noindex', $this->get('/blog/topic/hosting')->getContent());
+        $this->assertStringNotContainsString('noindex', $this->get('/topic/hosting')->getContent());
     }
 
     public function test_feed_and_sitemap_are_valid_xml(): void
     {
         $this->publish('In the feed');
 
-        $feed = $this->get('/blog/feed.xml')->assertOk();
+        $feed = $this->get('/feed.xml')->assertOk();
         $this->assertNotFalse(simplexml_load_string($feed->getContent()));
 
-        $map = $this->get('/blog/sitemap.xml')->assertOk();
+        $map = $this->get('/sitemap.xml')->assertOk();
         $this->assertNotFalse(simplexml_load_string($map->getContent()));
     }
 }

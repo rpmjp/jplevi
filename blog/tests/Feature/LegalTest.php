@@ -32,7 +32,7 @@ class LegalTest extends TestCase
             'status' => 'published', 'published_at' => now()->subHour(),
         ]);
 
-        $this->get('/blog')
+        $this->get('/')
             ->assertSee(route('legal.privacy'), false)
             ->assertSee(route('legal.moderation'), false);
     }
@@ -45,7 +45,7 @@ class LegalTest extends TestCase
             'status' => 'published', 'published_at' => now()->subHour(),
         ]);
 
-        $html = $this->get('/blog/'.$post->slug)->getContent();
+        $html = $this->get('/'.$post->slug)->getContent();
 
         $this->assertStringContainsString(route('legal.privacy'), $html);
         $this->assertStringContainsString(route('legal.moderation'), $html);

@@ -64,8 +64,8 @@ class AdminPanelTest extends TestCase
         $post->update(['slug' => 'second-title']);
 
         $this->assertDatabaseHas('redirects', [
-            'from' => '/blog/first-title',
-            'to' => '/blog/second-title',
+            'from' => '/first-title',
+            'to' => '/second-title',
             'status' => 301,
         ]);
     }

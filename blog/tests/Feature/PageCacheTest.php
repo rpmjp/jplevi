@@ -26,13 +26,13 @@ class PageCacheTest extends TestCase
     {
         $this->makePost('First note');
 
-        $this->get('/blog')->assertHeader('X-Cache', 'miss');
-        $this->get('/blog')->assertHeader('X-Cache', 'hit');
+        $this->get('/')->assertHeader('X-Cache', 'miss');
+        $this->get('/')->assertHeader('X-Cache', 'hit');
 
         // Publishing must not leave readers looking at yesterday's index.
         $this->makePost('Second note');
 
-        $this->get('/blog')->assertHeader('X-Cache', 'miss')->assertSee('Second note');
+        $this->get('/')->assertHeader('X-Cache', 'miss')->assertSee('Second note');
     }
 
     public function test_draft_previews_are_never_cached(): void
@@ -40,7 +40,7 @@ class PageCacheTest extends TestCase
         $draft = $this->makePost('Hidden');
         $draft->update(['status' => 'draft', 'published_at' => null]);
 
-        $this->get('/blog/hidden?preview='.$draft->preview_token)
+        $this->get('/hidden?preview='.$draft->preview_token)
             ->assertOk()
             ->assertHeaderMissing('X-Cache');
     }
@@ -48,10 +48,10 @@ class PageCacheTest extends TestCase
     public function test_signed_in_readers_are_not_served_a_cached_page(): void
     {
         $this->makePost('Public note');
-        $this->get('/blog');
+        $this->get('/');
 
         $this->actingAs(User::factory()->create())
-            ->get('/blog')
+            ->get('/')
             ->assertHeaderMissing('X-Cache');
     }
 }

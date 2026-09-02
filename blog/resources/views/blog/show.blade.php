@@ -5,11 +5,11 @@
 
 @php
     $shareUrl = $post->canonical_url ?: route('blog.show', $post);
-    $shareImage = \App\Models\PostCover::social($post->cover_path);
+    $shareImage = \App\Models\Rendition::social($post->cover_path);
     $shareText = $post->meta_description ?: $post->excerpt ?: $post->title;
-    $hero = \App\Models\PostCover::url($post->cover_path, 1200);
-    $heroSet = \App\Models\PostCover::srcset($post->cover_path);
-    $heroSize = \App\Models\PostCover::dimensions($post->cover_path);
+    $hero = \App\Models\Rendition::url($post->cover_path, 1200);
+    $heroSet = \App\Models\Rendition::srcset($post->cover_path);
+    $heroSize = \App\Models\Rendition::dimensions($post->cover_path);
 @endphp
 
 @push('head')
@@ -79,7 +79,7 @@
          own band of whitespace. --}}
     <div class="mt-9 flex flex-wrap items-center justify-between gap-x-8 gap-y-5 border-y border-paper-3 py-5">
         <div class="flex items-center gap-3">
-            <x-avatar :name="$post->author->name" :size="40" />
+            <x-avatar :user="$post->author" :size="40" />
             <div>
                 <a href="{{ route('blog.author', $post->author) }}"
                    class="block font-sans text-[0.95rem] font-medium text-ink-ink transition-colors hover:text-brand">{{ $post->author->name }}</a>

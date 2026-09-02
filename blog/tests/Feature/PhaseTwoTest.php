@@ -91,13 +91,13 @@ class PhaseTwoTest extends TestCase
     {
         $post = $this->makePost(['title' => 'Published then trashed']);
 
-        $this->get('/blog')->assertSee('Published then trashed');
+        $this->get('/')->assertSee('Published then trashed');
 
         $post->delete();
 
-        $this->get('/blog')->assertDontSee('Published then trashed');
-        $this->get('/blog/'.$post->slug)->assertNotFound();
-        $this->assertStringNotContainsString($post->slug, $this->get('/blog/sitemap.xml')->getContent());
+        $this->get('/')->assertDontSee('Published then trashed');
+        $this->get('/'.$post->slug)->assertNotFound();
+        $this->assertStringNotContainsString($post->slug, $this->get('/sitemap.xml')->getContent());
     }
 
     public function test_a_restored_post_comes_back(): void
@@ -106,7 +106,7 @@ class PhaseTwoTest extends TestCase
         $post->delete();
         $post->restore();
 
-        $this->get('/blog')->assertSee('Back from the dead');
+        $this->get('/')->assertSee('Back from the dead');
     }
 
     public function test_settings_change_behaviour_without_a_deploy(): void
@@ -117,7 +117,7 @@ class PhaseTwoTest extends TestCase
             $this->makePost(['title' => "Post {$i}"]);
         }
 
-        $this->get('/blog')->assertSee('Post 7')->assertDontSee('Post 0');
+        $this->get('/')->assertSee('Post 7')->assertDontSee('Post 0');
     }
 
     public function test_comments_close_on_their_own_once_a_post_is_old_enough(): void
@@ -142,19 +142,19 @@ class PhaseTwoTest extends TestCase
         $post = $this->makePost(['title' => 'A live note']);
 
         // A reader's page carries none of it.
-        $anonymous = $this->get('/blog/'.$post->slug)->getContent();
+        $anonymous = $this->get('/'.$post->slug)->getContent();
         $this->assertStringNotContainsString('Edit this post', $anonymous);
         $this->assertStringNotContainsString('Dashboard', $anonymous);
 
         $reader = User::factory()->create();
         $reader->syncRoles(['subscriber']);
-        $asReader = $this->actingAs($reader)->get('/blog/'.$post->slug)->getContent();
+        $asReader = $this->actingAs($reader)->get('/'.$post->slug)->getContent();
         $this->assertStringNotContainsString('Edit this post', $asReader);
         $this->assertStringNotContainsString('Dashboard', $asReader);
 
         $editor = User::factory()->create();
         $editor->syncRoles(['editor']);
-        $asEditor = $this->actingAs($editor)->get('/blog/'.$post->slug)->getContent();
+        $asEditor = $this->actingAs($editor)->get('/'.$post->slug)->getContent();
         $this->assertStringContainsString('Edit this post', $asEditor);
         $this->assertStringContainsString('Dashboard', $asEditor);
         $this->assertStringContainsString('New post', $asEditor);
@@ -168,7 +168,7 @@ class PhaseTwoTest extends TestCase
         $editor->syncRoles(['editor']);
 
         $html = $this->actingAs($editor)
-            ->get('/blog/'.$draft->slug.'?preview='.$draft->preview_token)
+            ->get('/'.$draft->slug.'?preview='.$draft->preview_token)
             ->getContent();
 
         $this->assertStringContainsString('draft', $html);

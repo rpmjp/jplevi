@@ -27,7 +27,7 @@ class HardeningTest extends TestCase
     {
         $this->live();
 
-        $this->get('/blog')
+        $this->get('/')
             ->assertHeader('X-Frame-Options', 'DENY')
             ->assertHeader('X-Content-Type-Options', 'nosniff')
             ->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -37,7 +37,7 @@ class HardeningTest extends TestCase
     {
         $this->live();
 
-        $csp = $this->get('/blog')->headers->get('Content-Security-Policy');
+        $csp = $this->get('/')->headers->get('Content-Security-Policy');
 
         $this->assertStringContainsString("script-src 'self'", $csp);
         $this->assertStringNotContainsString("script-src 'self' 'unsafe-inline'", $csp);
@@ -48,8 +48,8 @@ class HardeningTest extends TestCase
     {
         $post = $this->live();
 
-        $this->withHeaders(['User-Agent' => 'Mozilla/5.0 (Macintosh)'])->get('/blog/'.$post->slug);
-        $this->withHeaders(['User-Agent' => 'Mozilla/5.0 (Macintosh)'])->get('/blog/'.$post->slug);
+        $this->withHeaders(['User-Agent' => 'Mozilla/5.0 (Macintosh)'])->get('/'.$post->slug);
+        $this->withHeaders(['User-Agent' => 'Mozilla/5.0 (Macintosh)'])->get('/'.$post->slug);
 
         $row = PageView::where('post_id', $post->id)->first();
 
@@ -63,8 +63,8 @@ class HardeningTest extends TestCase
     {
         $post = $this->live();
 
-        $this->withHeaders(['User-Agent' => 'Googlebot/2.1'])->get('/blog/'.$post->slug);
-        $this->withHeaders(['User-Agent' => 'Mozilla/5.0', 'Sec-Purpose' => 'prefetch'])->get('/blog/'.$post->slug);
+        $this->withHeaders(['User-Agent' => 'Googlebot/2.1'])->get('/'.$post->slug);
+        $this->withHeaders(['User-Agent' => 'Mozilla/5.0', 'Sec-Purpose' => 'prefetch'])->get('/'.$post->slug);
 
         $this->assertSame(0, PageView::count());
     }

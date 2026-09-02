@@ -2,7 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Posts\Schemas;
 
-use App\Models\PostCover;
+use App\Models\Rendition;
 use App\Services\ImageIngest;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -184,7 +184,7 @@ class PostForm
                                 )
                                 ->getUploadedFileUsing(fn (?string $file) => filled($file) ? [
                                     'name' => basename($file),
-                                    'url' => PostCover::url($file, 800),
+                                    'url' => Rendition::url($file, 800),
                                 ] : null)
                                 ->deleteUploadedFileUsing(function (?string $file) {
                                     // Every rendition of one upload, including the crop.

@@ -47,10 +47,10 @@ class CommentTest extends TestCase
         $comment = Comment::first();
         $this->assertSame('pending', $comment->status);
 
-        $this->get('/blog/'.$this->post->slug)->assertDontSee('This is wrong, and here is why.');
+        $this->get('/'.$this->post->slug)->assertDontSee('This is wrong, and here is why.');
 
         $comment->update(['status' => 'approved']);
-        $this->get('/blog/'.$this->post->slug)->assertSee('This is wrong, and here is why.');
+        $this->get('/'.$this->post->slug)->assertSee('This is wrong, and here is why.');
     }
 
     public function test_signed_out_readers_cannot_post(): void

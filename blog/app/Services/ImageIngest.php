@@ -43,13 +43,32 @@ class ImageIngest
      */
     public const SOCIAL = [1200, 630];
 
+    /**
+     * Widths for a portrait.
+     *
+     * An avatar is never painted larger than about 96 CSS pixels here, so the
+     * cover widths would ship a file several times bigger than the box it goes
+     * in. 192 covers a retina byline, 400 the largest place a face appears.
+     */
+    public const AVATAR_WIDTHS = [96, 192, 400];
+
     public function __construct(private ImageManager $images) {}
 
     /**
+     * @param  array<int,int>  $widths  Renditions to write. Never upscaled.
+     * @param  bool  $square  Crop to a square rather than preserving the shape.
+     *                        An avatar is painted in a circle, so a portrait
+     *                        that is not square arrives with its sides sliced
+     *                        off by the mask instead of by us.
+     * @param  bool  $social  Whether to cut the 1200x630 link preview. Wanted
+     *                        for anything that gets shared, pointless for a
+     *                        face that only ever appears inside the page.
      * @return array{basename:string, path:string, width:int, height:int, sizes:array<int,string>}
      */
-    public function store(UploadedFile $file, string $directory = 'posts'): array
+    public function store(UploadedFile $file, string $directory = 'posts', ?array $widths = null, bool $social = true, bool $square = false): array
     {
+        $widths ??= self::WIDTHS;
+
         // Read the magic bytes rather than asking the upload what it is.
         // getMimeType() can be led by the extension; finfo looks at content.
         $head = (string) file_get_contents($file->getRealPath(), length: 4096);
@@ -68,31 +87,37 @@ class ImageIngest
         $basename = Str::ulid()->toString();
         $sizes = [];
 
-        foreach (self::WIDTHS as $width) {
+        foreach ($widths as $width) {
             // Never upscale. A 900px original gets 400 and 800 and stops there,
             // so srcset never offers the browser a blurrier file as a bigger
             // one. The smallest width is always written, so there is something
             // to serve even from a tiny original.
-            if ($image->width() < $width && $width !== self::WIDTHS[0]) {
+            $source = $square ? min($image->width(), $image->height()) : $image->width();
+
+            if ($source < $width && $width !== $widths[0]) {
                 continue;
             }
 
-            $resized = (clone $image)->scaleDown(width: $width);
+            $resized = $square
+                ? (clone $image)->cover($width, $width)
+                : (clone $image)->scaleDown(width: $width);
+
             $path = "{$directory}/{$basename}-{$width}.webp";
 
             Storage::disk('media')->put($path, (string) $resized->encode(new WebpEncoder(quality: 82)));
             $sizes[$width] = $path;
         }
 
-        // cover() fills the box and trims the overflow, so the preview is
-        // always exactly 1.91:1 whatever shape the original was.
-        [$w, $h] = self::SOCIAL;
-        $social = (clone $image)->cover($w, $h);
+        if ($social) {
+            // cover() fills the box and trims the overflow, so the preview is
+            // always exactly 1.91:1 whatever shape the original was.
+            [$w, $h] = self::SOCIAL;
 
-        Storage::disk('media')->put(
-            "{$directory}/{$basename}-social.webp",
-            (string) $social->encode(new WebpEncoder(quality: 84)),
-        );
+            Storage::disk('media')->put(
+                "{$directory}/{$basename}-social.webp",
+                (string) (clone $image)->cover($w, $h)->encode(new WebpEncoder(quality: 84)),
+            );
+        }
 
         return [
             'basename' => $basename,

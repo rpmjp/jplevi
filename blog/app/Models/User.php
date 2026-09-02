@@ -13,7 +13,7 @@ use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 use Spatie\Permission\Traits\HasRoles;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'avatar_path'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser
 {
@@ -25,6 +25,23 @@ class User extends Authenticatable implements FilamentUser
      * never reach the panel; authors, editors and admins do, and what they can
      * do once inside is decided by permissions rather than by this gate.
      */
+    /**
+     * The author's photograph, if they have uploaded one.
+     *
+     * Null is a perfectly good answer: the avatar component falls back to
+     * initials on a coloured disc, which is better than a grey silhouette and
+     * better than reaching out to Gravatar with a hash of somebody's email.
+     */
+    public function avatarUrl(int $size = 96): ?string
+    {
+        return Rendition::url($this->avatar_path, $size);
+    }
+
+    public function avatarSrcset(): ?string
+    {
+        return Rendition::srcset($this->avatar_path);
+    }
+
     public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Post::class);

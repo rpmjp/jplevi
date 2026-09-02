@@ -6,7 +6,7 @@ use App\Services\ImageIngest;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * URLs for a post's featured image.
+ * URLs for an uploaded image.
  *
  * One value is stored on the post: the directory and basename of the upload,
  * with no width and no extension. Every rendition is derived from it, which is
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
  * social crop is a separate file, not the largest width, because a preview has
  * to be 1.91:1 and an article hero rarely is.
  */
-class PostCover
+class Rendition
 {
     public static function has(?string $path): bool
     {
@@ -116,11 +116,19 @@ class PostCover
         return $size ? [$size[0], $size[1]] : null;
     }
 
-    /** Widths actually written for this image, smallest first. */
+    /**
+     * Widths actually written for this image, smallest first.
+     *
+     * Both sets are checked because covers and avatars are generated at
+     * different widths, and the stored path does not say which it is.
+     */
     public static function available(string $path): array
     {
+        $candidates = array_unique([...ImageIngest::AVATAR_WIDTHS, ...ImageIngest::WIDTHS]);
+        sort($candidates);
+
         return array_values(array_filter(
-            ImageIngest::WIDTHS,
+            $candidates,
             fn (int $w) => self::exists("{$path}-{$w}.webp"),
         ));
     }

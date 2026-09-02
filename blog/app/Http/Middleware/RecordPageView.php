@@ -65,10 +65,13 @@ class RecordPageView
         // insert a fresh row on every single view instead of incrementing.
         $host = ($host && $host !== $request->getHost()) ? $host : '';
 
-        // Only blog URLs can belong to a post, so everything else avoids the
-        // lookup entirely rather than querying on every request to the site.
-        $postId = str_starts_with($path, '/blog/')
-            ? Post::where('slug', basename($path))->value('id')
+        // Ask the router what was matched rather than reading the path. The
+        // path used to be sniffed for a /blog/ prefix, which silently stopped
+        // attributing any read to any post the moment the app's mount changed.
+        $route = $request->route();
+
+        $postId = $route?->getName() === 'blog.show'
+            ? Post::where('slug', $route->parameter('slug'))->value('id')
             : null;
 
         $view = PageView::firstOrCreate(

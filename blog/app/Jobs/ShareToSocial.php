@@ -62,7 +62,7 @@ class ShareToSocial implements ShouldQueue
                     ->post($endpoint, [
                         'platforms' => [$channel],
                         'post' => $record->message,
-                        'mediaUrls' => array_filter([\App\Models\PostCover::url($this->post->cover_path)]),
+                        'mediaUrls' => array_filter([\App\Models\Rendition::url($this->post->cover_path)]),
                     ])
                     ->throw();
 

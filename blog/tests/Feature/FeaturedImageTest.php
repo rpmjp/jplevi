@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Models\Post;
-use App\Models\PostCover;
+use App\Models\Rendition;
 use App\Models\User;
 use App\Services\ImageIngest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -83,7 +83,7 @@ class FeaturedImageTest extends TestCase
         // file is how srcset makes a page slower and blurrier at once.
         $path = $this->upload(900, 600);
 
-        $srcset = PostCover::srcset($path);
+        $srcset = Rendition::srcset($path);
 
         $this->assertStringContainsString('400w', $srcset);
         $this->assertStringContainsString('800w', $srcset);
@@ -119,7 +119,7 @@ class FeaturedImageTest extends TestCase
         // A crawler fetches this URL with no cookies. If the media route ever
         // ends up behind auth, every link preview breaks and nothing on the
         // site would show it.
-        $this->get(PostCover::social($post->cover_path))
+        $this->get(Rendition::social($post->cover_path))
             ->assertOk()
             ->assertHeader('Content-Type', 'image/webp');
     }

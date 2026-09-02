@@ -11,8 +11,8 @@
     another link and the byline has to stay clickable.
 --}}
 @php
-    $cover = \App\Models\PostCover::url($post->cover_path, 400);
-    $srcset = \App\Models\PostCover::srcset($post->cover_path);
+    $cover = \App\Models\Rendition::url($post->cover_path, 400);
+    $srcset = \App\Models\Rendition::srcset($post->cover_path);
     $primary = $post->categories->first();
 @endphp
 
@@ -22,7 +22,7 @@
 
             {{-- Byline --}}
             <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[0.82rem] text-ink-body">
-                <x-avatar :name="$post->author->name" :size="24" />
+                <x-avatar :user="$post->author" :size="24" />
                 @if($primary)
                     <span class="text-ink-soft">In</span>
                     <a href="{{ route('blog.topic', $primary) }}" class="font-medium text-ink-ink transition-colors hover:text-brand">{{ $primary->name }}</a>

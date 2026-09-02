@@ -46,6 +46,8 @@ class TechUpdatesSeeder extends Seeder
             ),
         ]);
 
+        $this->portrait($author);
+
         foreach ($this->posts() as $i => $entry) {
             $post = Post::withTrashed()->firstOrNew(['slug' => $entry['slug']]);
 
@@ -77,6 +79,68 @@ class TechUpdatesSeeder extends Seeder
             );
 
             $this->discuss($post, $entry['comments']);
+        }
+    }
+
+    /**
+     * The author's own photograph, taken from the site repository.
+     *
+     * The cutout on the company page is the same person at the same crop, so
+     * there is no reason to ask for it twice. Skipped silently if the file is
+     * not there, because the seeder has to work from a checkout of the blog
+     * alone.
+     */
+    private function portrait(User $author): void
+    {
+        if (filled($author->avatar_path)) {
+            return;
+        }
+
+        $source = base_path('../public/robert-jean-pierre.png');
+
+        if (! is_file($source)) {
+            return;
+        }
+
+        /*
+         * Cropped to the head before it is ingested.
+         *
+         * The file is a full head and shoulders on a transparent ground, made
+         * for the company page where it is a metre tall. Dropped whole into a
+         * 40px circle the face is a smudge. The crop is taken from the alpha
+         * bounds rather than from measured pixel coordinates, so it frames the
+         * subject of any cutout rather than only this one.
+         *
+         * Copied to a temporary file either way: a seeder has no business
+         * writing anywhere near another project's assets.
+         */
+        $copy = tempnam(sys_get_temp_dir(), 'portrait').'.png';
+
+        // trim() removes the uniform border, which on a cutout is exactly the
+        // transparent margin, leaving the subject filling the frame.
+        $image = app(ImageManager::class)->decodePath($source)->trim();
+
+        // A conventional headshot: a square a little under two thirds the width
+        // of the subject, centred on them, taken from the crown down.
+        $side = (int) round($image->width() * 0.58);
+        $x = max(0, (int) round(($image->width() - $side) / 2));
+
+        $image->crop($side, min($side, $image->height()), $x, 0)
+            ->encode(new PngEncoder())
+            ->save($copy);
+
+        try {
+            $author->avatar_path = app(ImageIngest::class)->store(
+                new UploadedFile($copy, 'portrait.png', 'image/png', test: true),
+                'avatars',
+                ImageIngest::AVATAR_WIDTHS,
+                social: false,
+                square: true,
+            )['path'];
+
+            $author->save();
+        } finally {
+            @unlink($copy);
         }
     }
 

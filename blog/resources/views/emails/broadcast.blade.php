@@ -43,7 +43,7 @@
 
     {{-- The posts themselves --}}
     @foreach($broadcast->posts as $post)
-        @php($cover = \App\Models\PostCover::url($post->cover_path))
+        @php($cover = \App\Models\Rendition::url($post->cover_path))
         <tr><td style="padding:34px 0 0;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #CFC9BC;">
                 @if($cover)

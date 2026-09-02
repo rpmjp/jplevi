@@ -70,7 +70,7 @@ class BlogController extends Controller
             'mainEntityOfPage' => route('blog.show', $post),
         ];
 
-        if ($image = \App\Models\PostCover::social($post->cover_path)) {
+        if ($image = \App\Models\Rendition::social($post->cover_path)) {
             $schema['image'] = [$image];
         }
 

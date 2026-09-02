@@ -44,7 +44,7 @@ class CompletenessTest extends TestCase
         $body = '<h2>First part</h2><p>x</p><h2>Second part</h2><p>y</p><h2>Third part</h2><p>z</p>';
         $post = $this->live(User::factory()->create(), 'Long one', $body);
 
-        $this->get('/blog/'.$post->slug)
+        $this->get('/'.$post->slug)
             ->assertOk()
             ->assertSee('Contents')
             ->assertSee('id="first-part"', false)
@@ -55,7 +55,7 @@ class CompletenessTest extends TestCase
     {
         $post = $this->live(User::factory()->create(), 'Short one', '<h2>Only heading</h2><p>x</p>');
 
-        $this->get('/blog/'.$post->slug)->assertOk()->assertDontSee('Contents');
+        $this->get('/'.$post->slug)->assertOk()->assertDontSee('Contents');
     }
 
     public function test_a_reader_can_see_and_delete_everything_held_about_them(): void

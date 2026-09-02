@@ -1,10 +1,26 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+ * The application is already mounted at /blog.
+ *
+ * public_html/blog is a symlink to this app's public directory, so Apache hands
+ * Laravel a base path of /blog and every route here is relative to it. The blog
+ * routes used to carry a "blog" prefix on top of that, which put the whole site
+ * one level too deep: posts answered on /blog/blog/{slug} and every link the
+ * pages emitted pointed there. Nothing else in this file was prefixed, which is
+ * why media, sign in and the newsletter always worked.
+ *
+ * So the blog lives at the root of this file. Order matters at the bottom: the
+ * post route is a single loose segment and would otherwise swallow /sign-in and
+ * /account, so it is registered last, after every fixed path.
+ */
 
 // Media is served from outside the web root. The patterns keep the parameters
 // to safe characters, so no request can traverse beyond the media directory.
@@ -12,19 +28,13 @@ Route::get('/media/{directory}/{file}', \App\Http\Controllers\MediaController::c
     ->where(['directory' => '[a-z0-9\-]+', 'file' => '[A-Za-z0-9\-]+\.webp'])
     ->name('media');
 
-use App\Http\Controllers\BlogController;
-
-Route::prefix('blog')->name('blog.')->middleware(\App\Http\Middleware\CacheResponse::class)->group(function () {
+Route::name('blog.')->middleware(\App\Http\Middleware\CacheResponse::class)->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');
     Route::get('/feed.xml', [BlogController::class, 'feed'])->name('feed');
     Route::get('/sitemap.xml', [BlogController::class, 'sitemap'])->name('sitemap');
     Route::get('/by/{user}', [BlogController::class, 'author'])->name('author');
     Route::get('/topic/{category}', [BlogController::class, 'topic'])->name('topic');
-    Route::get('/{slug}', [BlogController::class, 'show'])->name('show')
-        ->where('slug', '[a-z0-9\-]+');
 });
-
-use App\Http\Controllers\NewsletterController;
 
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 Route::get('/newsletter/confirm/{token}', [NewsletterController::class, 'confirm'])->name('newsletter.confirm');
@@ -33,17 +43,12 @@ Route::get('/newsletter/confirm/{token}', [NewsletterController::class, 'confirm
 Route::match(['get', 'post'], '/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])
     ->name('newsletter.unsubscribe')->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\SocialAuthController;
-
 Route::get('/auth/{provider}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
 Route::get('/auth/{provider}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 Route::post('/auth/logout', [SocialAuthController::class, 'logout'])->name('social.logout');
 
-Route::post('/blog/{post}/comments', [CommentController::class, 'store'])
+Route::post('/{post}/comments', [CommentController::class, 'store'])
     ->middleware('auth')->name('comments.store');
-
-use App\Http\Controllers\AccountController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/account', [AccountController::class, 'show'])->name('account.show');
@@ -54,3 +59,24 @@ Route::view('/legal/privacy', 'legal.privacy')->name('legal.privacy');
 Route::view('/legal/comment-rules', 'legal.moderation')->name('legal.moderation');
 
 Route::view('/sign-in', 'auth.sign-in')->name('sign-in');
+
+/*
+ * The old doubled paths.
+ *
+ * Anything already shared or indexed as /blog/blog/{slug} keeps working and
+ * says permanently where the post actually lives now.
+ */
+Route::permanentRedirect('/blog', '/');
+Route::get('/blog/{path}', fn (string $path) => redirect('/'.$path, 301))
+    ->where('path', '.*');
+
+/*
+ * Registered last on purpose.
+ *
+ * {slug} matches any single lowercase segment, so it would answer for /sign-in
+ * and /account if it came first. Everything with a fixed path is above it.
+ */
+Route::get('/{slug}', [BlogController::class, 'show'])
+    ->middleware(\App\Http\Middleware\CacheResponse::class)
+    ->name('blog.show')
+    ->where('slug', '[a-z0-9\-]+');

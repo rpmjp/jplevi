@@ -17,8 +17,8 @@
         <ul class="mt-8 grid gap-x-7 gap-y-10 sm:grid-cols-2 {{ $related->count() >= 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3' }}">
             @foreach($related as $other)
                 @php
-                    $cover = \App\Models\PostCover::url($other->cover_path, 400);
-                    $srcset = \App\Models\PostCover::srcset($other->cover_path);
+                    $cover = \App\Models\Rendition::url($other->cover_path, 400);
+                    $srcset = \App\Models\Rendition::srcset($other->cover_path);
                     $topic = $other->categories->first();
                 @endphp
                 <li class="group">

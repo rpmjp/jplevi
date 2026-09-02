@@ -92,9 +92,12 @@ class Post extends Model
         // URL, so the old path is kept and redirected rather than dropped.
         static::updating(function (Post $post) {
             if ($post->isDirty('slug') && filled($post->getOriginal('slug'))) {
+                // Paths are relative to where the app is mounted, which is
+                // /blog in production. Storing the mount in the row would make
+                // these break the moment the mount changed.
                 Redirect::updateOrCreate(
-                    ['from' => '/blog/'.$post->getOriginal('slug')],
-                    ['to' => '/blog/'.$post->slug, 'status' => 301],
+                    ['from' => '/'.$post->getOriginal('slug')],
+                    ['to' => '/'.$post->slug, 'status' => 301],
                 );
             }
         });

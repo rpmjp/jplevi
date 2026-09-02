@@ -22,20 +22,20 @@ class RedirectTest extends TestCase
             'published_at' => now()->subHour(),
         ]);
 
-        $this->get('/blog/original-heading')->assertOk();
+        $this->get('/original-heading')->assertOk();
 
         $post->update(['slug' => 'better-heading']);
         Cache::forget('redirects.map');
 
-        $this->get('/blog/original-heading')
+        $this->get('/original-heading')
             ->assertStatus(301)
-            ->assertRedirect('/blog/better-heading');
+            ->assertRedirect('/better-heading');
 
-        $this->get('/blog/better-heading')->assertOk();
+        $this->get('/better-heading')->assertOk();
     }
 
     public function test_an_unknown_url_still_404s(): void
     {
-        $this->get('/blog/never-existed')->assertNotFound();
+        $this->get('/never-existed')->assertNotFound();
     }
 }
