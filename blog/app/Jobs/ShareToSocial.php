@@ -16,6 +16,14 @@ use Illuminate\Support\Str;
  * API overnight can never stop a post from going live. Every attempt is
  * recorded per channel, so a failure is visible and retryable rather than
  * silently absent.
+ *
+ * Worth being precise about what this produces, because it is not the same
+ * thing the share buttons on a post produce. Attaching the image makes this a
+ * native image post: the writing runs first, folds behind a "more" link, and
+ * the picture sits under it full width. Handing a network a bare URL instead,
+ * which is all a share button can do, gets a link card with a thumbnail beside
+ * a title and a domain. Only the first shape is ours to decide, and this is
+ * where it is decided.
  */
 class ShareToSocial implements ShouldQueue
 {
@@ -62,7 +70,13 @@ class ShareToSocial implements ShouldQueue
                     ->post($endpoint, [
                         'platforms' => [$channel],
                         'post' => $record->message,
-                        'mediaUrls' => array_filter([\App\Models\Rendition::url($this->post->cover_path)]),
+                        // The 1.91:1 crop, not the article hero. It is the
+                        // shape every feed lays an image out at, so the post
+                        // arrives framed the way it was cropped rather than
+                        // the way the network decided to trim it. With no
+                        // cover there is no image, and the network falls back
+                        // to a link card built from the URL in the text.
+                        'mediaUrls' => array_filter([\App\Models\Rendition::social($this->post->cover_path)]),
                     ])
                     ->throw();
 
@@ -81,6 +95,15 @@ class ShareToSocial implements ShouldQueue
         }
     }
 
+    /**
+     * Roughly where a feed puts the "more" link.
+     *
+     * LinkedIn folds a post at about this point and the others are close
+     * enough. Anything past it is only read by somebody who has already decided
+     * to expand, so the opening has to carry the post on its own.
+     */
+    private const FOLD = 200;
+
     private function message(): string
     {
         $written = trim((string) $this->post->social_message);
@@ -93,6 +116,36 @@ class ShareToSocial implements ShouldQueue
         // Fallback only. The excerpt reads better than a bare headline.
         $lead = $this->post->excerpt ?: $this->post->title;
 
-        return Str::limit($lead, 220)."\n\n".$url;
+        return self::hook($lead)."\n\n".$url;
+    }
+
+    /**
+     * The opening, cut where a reader would not notice the cut.
+     *
+     * Ends on a full stop where there is one before the fold, because a
+     * sentence that finishes reads as writing and an ellipsis mid-clause reads
+     * as a truncated database field. Falls back to a word boundary.
+     */
+    private static function hook(string $lead): string
+    {
+        $lead = trim(preg_replace('/\s+/', ' ', strip_tags($lead)));
+
+        if (mb_strlen($lead) <= self::FOLD) {
+            return $lead;
+        }
+
+        $window = mb_substr($lead, 0, self::FOLD);
+
+        foreach (['. ', '? ', '! '] as $ending) {
+            $at = mb_strrpos($window, $ending);
+
+            // Only if the sentence is long enough to be worth reading on its
+            // own. Cutting at the first full stop can leave three words.
+            if ($at !== false && $at > self::FOLD / 2) {
+                return mb_substr($window, 0, $at + 1);
+            }
+        }
+
+        return Str::limit($window, self::FOLD - 1, '…');
     }
 }

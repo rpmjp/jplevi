@@ -244,7 +244,7 @@ class PostForm
                                 ->rows(3)
                                 ->maxLength(400)
                                 ->label('What to say')
-                                ->helperText('A good headline is rarely a good social post. The link is appended automatically. Left empty, the excerpt is used.'),
+                                ->helperText('A good headline is rarely a good social post. Feeds fold at roughly 200 characters behind a "more" link, so the first two lines have to carry it. The article link is appended for you, and the featured image is posted with it. Left empty, the excerpt is used.'),
                         ]),
                 ]),
             ]),

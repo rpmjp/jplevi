@@ -26,13 +26,20 @@
 <meta property="og:url" content="{{ $shareUrl }}">
 <meta property="og:title" content="{{ $post->meta_title ?: $post->title }}">
 <meta property="og:description" content="{{ $shareText }}">
+<meta property="og:locale" content="en_US">
 @if($shareImage)
+    {{-- Both spellings of the URL. Some scrapers read only the secure one, and
+         one that finds no image it can use posts the link with no picture at
+         all rather than falling back to another tag. --}}
     <meta property="og:image" content="{{ $shareImage }}">
+    <meta property="og:image:secure_url" content="{{ $shareImage }}">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="{{ $post->cover_alt ?: $post->title }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="{{ $shareImage }}">
+    <meta name="twitter:image:alt" content="{{ $post->cover_alt ?: $post->title }}">
 @else
     {{-- No picture, so ask for the compact card rather than letting the network
          pick something arbitrary off the page. --}}
@@ -43,9 +50,15 @@
 <meta property="article:published_time" content="{{ $post->published_at?->toIso8601String() }}">
 <meta property="article:modified_time" content="{{ $post->updated_at?->toIso8601String() }}">
 <meta property="article:author" content="{{ $post->author->name }}">
+@if($primaryCategory = $post->categories->first())
+    <meta property="article:section" content="{{ $primaryCategory->name }}">
+@endif
 @foreach($post->categories as $category)
     <meta property="article:tag" content="{{ $category->name }}">
 @endforeach
+{{-- The plain document-level author, which search engines read and og: does
+     not replace. --}}
+<meta name="author" content="{{ $post->author->name }}">
 <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush
 

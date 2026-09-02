@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Encoders\JpegEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\ImageManager;
 
@@ -40,8 +41,20 @@ class ImageIngest
      * Facebook, X, LinkedIn, Slack, Discord and iMessage all unfurl at 1.91:1,
      * so one 1200x630 rendition satisfies every one of them. Cropped rather
      * than scaled, because a letterboxed preview reads as a mistake.
+     *
+     * Written as JPEG, alone among everything here. The site itself is served
+     * WebP because every browser reads it, but a link preview is fetched by a
+     * scraper rather than a browser, and WebP support across those is still
+     * uneven: LinkedIn's in particular is unreliable, and older WhatsApp
+     * clients drop it. A scraper that cannot read the image does not fall back
+     * to another one, it just posts the link with no picture at all. JPEG is
+     * read by all of them, and a few tens of kilobytes is a cheap price for a
+     * preview that always renders.
      */
     public const SOCIAL = [1200, 630];
+
+    /** The extension of the preview crop. Deliberately not webp. */
+    public const SOCIAL_EXTENSION = 'jpg';
 
     /**
      * Widths for a portrait.
@@ -114,8 +127,12 @@ class ImageIngest
             [$w, $h] = self::SOCIAL;
 
             Storage::disk('media')->put(
-                "{$directory}/{$basename}-social.webp",
-                (string) (clone $image)->cover($w, $h)->encode(new WebpEncoder(quality: 84)),
+                "{$directory}/{$basename}-social.".self::SOCIAL_EXTENSION,
+                // Flattened onto white first: JPEG has no alpha, and a cutout
+                // encoded straight to it comes out with a black background.
+                (string) (clone $image)->cover($w, $h)
+                    ->fillTransparentAreas('ffffff')
+                    ->encode(new JpegEncoder(quality: 82, progressive: true)),
             );
         }
 

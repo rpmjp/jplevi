@@ -56,7 +56,7 @@ class FeaturedImageTest extends TestCase
             Storage::disk('media')->assertExists("{$path}-{$expected}.webp");
         }
 
-        Storage::disk('media')->assertExists("{$path}-social.webp");
+        Storage::disk('media')->assertExists("{$path}-social.jpg");
     }
 
     public function test_the_social_crop_is_exactly_the_size_every_network_unfurls(): void
@@ -68,7 +68,7 @@ class FeaturedImageTest extends TestCase
         $path = $this->upload(1200, 1800);
 
         [$width, $height] = getimagesize(
-            Storage::disk('media')->path("{$path}-social.webp"),
+            Storage::disk('media')->path("{$path}-social.jpg"),
         );
 
         $this->assertSame([1200, 630], [$width, $height]);
@@ -103,7 +103,7 @@ class FeaturedImageTest extends TestCase
         $html = $this->get(route('blog.show', $post))->assertOk()->getContent();
 
         $this->assertStringContainsString('property="og:image"', $html);
-        $this->assertStringContainsString('-social.webp', $html);
+        $this->assertStringContainsString('-social.jpg', $html);
         $this->assertStringContainsString('content="summary_large_image"', $html);
         $this->assertStringContainsString('content="1200"', $html);
         $this->assertStringContainsString('content="630"', $html);
@@ -121,7 +121,10 @@ class FeaturedImageTest extends TestCase
         // site would show it.
         $this->get(Rendition::social($post->cover_path))
             ->assertOk()
-            ->assertHeader('Content-Type', 'image/webp');
+            // JPEG, not WebP. Scraper support for WebP is still uneven, and a
+            // scraper that cannot read the image posts the link with no picture
+            // rather than reaching for another tag.
+            ->assertHeader('Content-Type', 'image/jpeg');
     }
 
     public function test_a_post_without_a_cover_asks_for_the_small_card(): void

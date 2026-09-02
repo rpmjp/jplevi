@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 // Media is served from outside the web root. The patterns keep the parameters
 // to safe characters, so no request can traverse beyond the media directory.
 Route::get('/media/{directory}/{file}', \App\Http\Controllers\MediaController::class)
-    ->where(['directory' => '[a-z0-9\-]+', 'file' => '[A-Za-z0-9\-]+\.webp'])
+    // jpg as well as webp: the site is served WebP, but the link preview crop
+    // is JPEG because scraper support for WebP is still uneven.
+    ->where(['directory' => '[a-z0-9\-]+', 'file' => '[A-Za-z0-9\-]+\.(webp|jpg)'])
     ->name('media');
 
 Route::name('blog.')->middleware(\App\Http\Middleware\CacheResponse::class)->group(function () {

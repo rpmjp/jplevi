@@ -58,17 +58,34 @@ class BlogController extends Controller
 
         $related = self::related($post);
 
-        $schema = [
+        $schema = array_filter([
             '@context' => 'https://schema.org',
             '@type' => 'BlogPosting',
             'headline' => $post->title,
             'description' => $post->meta_description ?: $post->excerpt,
             'datePublished' => $post->published_at?->toIso8601String(),
             'dateModified' => $post->updated_at?->toIso8601String(),
-            'author' => ['@type' => 'Person', 'name' => $post->author->name],
-            'publisher' => ['@type' => 'Organization', 'name' => 'JP LEVI INC.'],
-            'mainEntityOfPage' => route('blog.show', $post),
-        ];
+            'wordCount' => str_word_count(strip_tags((string) $post->body)),
+            'timeRequired' => 'PT'.$post->reading_minutes.'M',
+            'articleSection' => $post->categories->pluck('name')->all(),
+            'keywords' => $post->categories->pluck('name')->implode(', '),
+            'inLanguage' => 'en-US',
+            'author' => array_filter([
+                '@type' => 'Person',
+                'name' => $post->author->name,
+                'url' => route('blog.author', $post->author),
+                'image' => $post->author->avatarUrl(400),
+            ]),
+            'publisher' => [
+                '@type' => 'Organization',
+                'name' => 'JP LEVI INC.',
+                'url' => 'https://jplevi.com',
+            ],
+            'mainEntityOfPage' => [
+                '@type' => 'WebPage',
+                '@id' => $post->canonical_url ?: route('blog.show', $post),
+            ],
+        ]);
 
         if ($image = \App\Models\Rendition::social($post->cover_path)) {
             $schema['image'] = [$image];

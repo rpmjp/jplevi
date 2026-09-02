@@ -83,9 +83,15 @@ class Rendition
             return self::url($path);
         }
 
-        $file = $path.'-social.webp';
+        // The current format first, then the one earlier uploads were written
+        // in, so a post whose crop predates the change still previews.
+        foreach ([ImageIngest::SOCIAL_EXTENSION, 'webp'] as $extension) {
+            if (self::exists($file = "{$path}-social.{$extension}")) {
+                return self::link($file);
+            }
+        }
 
-        return self::exists($file) ? self::link($file) : self::url($path, 1600);
+        return self::url($path, 1600);
     }
 
     /**
