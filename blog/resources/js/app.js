@@ -65,3 +65,65 @@ document.addEventListener('DOMContentLoaded', () => {
         import('./math.js').then((m) => m.default(article));
     }
 });
+
+/* Share controls. Delegated for the same reason the tabs are: the content
+   security policy forbids inline handlers, and that policy is what keeps an
+   escaping mistake in the comments from becoming somebody else's script. */
+document.addEventListener('click', async (event) => {
+    const copy = event.target.closest('[data-copy-link]');
+    if (copy) {
+        const label = copy.querySelector('[data-copy-label]');
+        try {
+            await navigator.clipboard.writeText(copy.dataset.copyLink);
+            if (label) {
+                label.textContent = 'Copied';
+                setTimeout(() => { label.textContent = 'Copy link'; }, 1800);
+            }
+        } catch {
+            /* Denied clipboard permission, or an insecure origin. Select the
+               URL so it can still be copied by hand rather than failing
+               silently and looking broken. */
+            const field = document.createElement('input');
+            field.value = copy.dataset.copyLink;
+            field.setAttribute('readonly', '');
+            field.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+            document.body.append(field);
+            field.select();
+            document.execCommand('copy');
+            field.remove();
+            if (label) {
+                label.textContent = 'Copied';
+                setTimeout(() => { label.textContent = 'Copy link'; }, 1800);
+            }
+        }
+        return;
+    }
+
+    const share = event.target.closest('[data-native-share]');
+    if (share) {
+        try {
+            await navigator.share({
+                title: share.dataset.shareTitle,
+                text: share.dataset.shareText,
+                url: share.dataset.shareUrl,
+            });
+        } catch {
+            /* The reader dismissed the sheet. Nothing to report. */
+        }
+        return;
+    }
+
+    if (event.target.closest('[data-print]')) {
+        window.print();
+    }
+});
+
+/* The share sheet exists on phones and on very little else, so the button is
+   hidden in the markup and revealed only where it will actually do something. */
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof navigator.share !== 'function') return;
+
+    document.querySelectorAll('[data-native-share]').forEach((button) => {
+        button.hidden = false;
+    });
+});

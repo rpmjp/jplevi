@@ -35,7 +35,12 @@ class PublicBlogTest extends TestCase
         $this->assertStringContainsString('Machine learning', $html);
         // The row used to read a relation that is always empty now.
         $this->assertStringNotContainsString('Untagged', $html);
-        $this->assertStringContainsString('Uncategorised', $html);
+
+        // A post with no category simply has no "In ..." clause in its byline.
+        // The old row printed "Uncategorised" there, which told a reader nothing
+        // and put a word on screen that no author had written.
+        $this->assertStringNotContainsString('Uncategorised', $html);
+        $this->assertStringContainsString('Bare', $html);
     }
 
     public function test_index_lists_published_posts_only(): void

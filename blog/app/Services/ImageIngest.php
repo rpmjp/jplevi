@@ -23,13 +23,30 @@ class ImageIngest
     /** Formats we accept, by real MIME type. */
     private const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
-    /** Widths generated for responsive delivery. */
-    private const WIDTHS = [480, 960, 1600];
+    /**
+     * Widths generated for responsive delivery, smallest first.
+     *
+     * WordPress ships thumbnail/medium/medium_large/large and lets the browser
+     * pick with srcset. The same idea, with the widths chosen for where they
+     * are actually used: 400 covers the feed thumbnail on a retina screen, 800
+     * the phone-width hero, 1200 the desktop hero and the link preview, 1600
+     * the same hero on a retina desktop.
+     */
+    public const WIDTHS = [400, 800, 1200, 1600];
+
+    /**
+     * The link preview crop.
+     *
+     * Facebook, X, LinkedIn, Slack, Discord and iMessage all unfurl at 1.91:1,
+     * so one 1200x630 rendition satisfies every one of them. Cropped rather
+     * than scaled, because a letterboxed preview reads as a mistake.
+     */
+    public const SOCIAL = [1200, 630];
 
     public function __construct(private ImageManager $images) {}
 
     /**
-     * @return array{basename:string, width:int, height:int, sizes:array<int,string>}
+     * @return array{basename:string, path:string, width:int, height:int, sizes:array<int,string>}
      */
     public function store(UploadedFile $file, string $directory = 'posts'): array
     {
@@ -52,6 +69,10 @@ class ImageIngest
         $sizes = [];
 
         foreach (self::WIDTHS as $width) {
+            // Never upscale. A 900px original gets 400 and 800 and stops there,
+            // so srcset never offers the browser a blurrier file as a bigger
+            // one. The smallest width is always written, so there is something
+            // to serve even from a tiny original.
             if ($image->width() < $width && $width !== self::WIDTHS[0]) {
                 continue;
             }
@@ -63,8 +84,20 @@ class ImageIngest
             $sizes[$width] = $path;
         }
 
+        // cover() fills the box and trims the overflow, so the preview is
+        // always exactly 1.91:1 whatever shape the original was.
+        [$w, $h] = self::SOCIAL;
+        $social = (clone $image)->cover($w, $h);
+
+        Storage::disk('media')->put(
+            "{$directory}/{$basename}-social.webp",
+            (string) $social->encode(new WebpEncoder(quality: 84)),
+        );
+
         return [
             'basename' => $basename,
+            // What goes in the database: everything else is derived from it.
+            'path' => "{$directory}/{$basename}",
             'width' => $image->width(),
             'height' => $image->height(),
             'sizes' => $sizes,

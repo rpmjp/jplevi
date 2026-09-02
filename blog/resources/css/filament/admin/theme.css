@@ -180,3 +180,26 @@
     border-color: #72aee6 !important;
     box-shadow: none !important;
 }
+
+/* ---------------------------------------------------------------------------
+   The writing screen.
+
+   WordPress gives a post a title that looks like a title and a canvas with room
+   to write on. Filament's defaults are sized for a form field, which is right
+   for a form and wrong for the one screen where the whole job is writing.
+   --------------------------------------------------------------------------- */
+
+/* A canvas, not a text box. Tall enough that a paragraph does not start the
+   page scrolling, and it still grows with the post. */
+.fi-fo-rich-editor-content {
+    min-height: 30rem;
+}
+
+/* The title. Sized like the thing it names, and set in the same face the
+   published headline uses so what is typed here looks like what ships. */
+input[data-post-title] {
+    font-size: 1.5rem;
+    line-height: 1.25;
+    font-weight: 600;
+    padding-block: 0.65rem;
+}

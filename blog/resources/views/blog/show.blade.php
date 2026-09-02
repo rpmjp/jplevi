@@ -3,10 +3,49 @@
 @section('description', $post->meta_description ?: $post->excerpt)
 @section('canonical', $post->canonical_url ?: route('blog.show', $post))
 
+@php
+    $shareUrl = $post->canonical_url ?: route('blog.show', $post);
+    $shareImage = \App\Models\PostCover::social($post->cover_path);
+    $shareText = $post->meta_description ?: $post->excerpt ?: $post->title;
+    $hero = \App\Models\PostCover::url($post->cover_path, 1200);
+    $heroSet = \App\Models\PostCover::srcset($post->cover_path);
+    $heroSize = \App\Models\PostCover::dimensions($post->cover_path);
+@endphp
+
 @push('head')
+{{--
+    What a link preview is built from.
+
+    The networks read these tags off the page; the share buttons only ever hand
+    them a URL. So this block, and the 1200x630 crop it points at, is what
+    decides whether the post arrives in a feed as a card with a picture or as a
+    bare blue link.
+--}}
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="JP LEVI INC.">
+<meta property="og:url" content="{{ $shareUrl }}">
 <meta property="og:title" content="{{ $post->meta_title ?: $post->title }}">
-<meta property="og:description" content="{{ $post->meta_description ?: $post->excerpt }}">
+<meta property="og:description" content="{{ $shareText }}">
+@if($shareImage)
+    <meta property="og:image" content="{{ $shareImage }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ $post->cover_alt ?: $post->title }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ $shareImage }}">
+@else
+    {{-- No picture, so ask for the compact card rather than letting the network
+         pick something arbitrary off the page. --}}
+    <meta name="twitter:card" content="summary">
+@endif
+<meta name="twitter:title" content="{{ $post->meta_title ?: $post->title }}">
+<meta name="twitter:description" content="{{ $shareText }}">
+<meta property="article:published_time" content="{{ $post->published_at?->toIso8601String() }}">
+<meta property="article:modified_time" content="{{ $post->updated_at?->toIso8601String() }}">
+<meta property="article:author" content="{{ $post->author->name }}">
+@foreach($post->categories as $category)
+    <meta property="article:tag" content="{{ $category->name }}">
+@endforeach
 <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 @endpush
 
@@ -18,12 +57,16 @@
         </p>
     @endif
 
-    <p class="biz-label">
-        {{ $post->published_at?->format('j F Y') ?? 'Unpublished' }}
-        &middot; {{ $post->reading_minutes }} min read
-    </p>
+    @if($post->categories->isNotEmpty())
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+            @foreach($post->categories as $category)
+                <a href="{{ route('blog.topic', $category) }}"
+                   class="font-mono text-[0.68rem] uppercase tracking-label text-brand transition-colors hover:text-ink-ink">{{ $category->name }}</a>
+            @endforeach
+        </div>
+    @endif
 
-    <h1 class="biz-display mt-5 max-w-[20ch] text-[clamp(2.2rem,6.5vw,4.6rem)]">{{ $post->title }}</h1>
+    <h1 class="biz-display mt-4 max-w-[20ch] text-[clamp(2.2rem,6.5vw,4.6rem)]">{{ $post->title }}</h1>
 
     @if($post->excerpt)
         <p class="mt-8 max-w-prose border-l-2 border-brand pl-5 font-sans text-[1.1rem] leading-[1.55] text-ink-ink">
@@ -31,15 +74,45 @@
         </p>
     @endif
 
-    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-paper-3 pt-6">
-        <a href="{{ route('blog.author', $post->author) }}" class="font-mono text-[0.72rem] text-ink-soft transition-colors hover:text-brand">By {{ $post->author->name }}</a>
-        @foreach($post->categories as $tag)
-            <a href="{{ route('blog.topic', $tag) }}"
-               class="border border-paper-3 px-2.5 py-1 font-mono text-[0.68rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand">
-                {{ $tag->name }}
-            </a>
-        @endforeach
+    {{-- Byline and share on one rule: who wrote it and how to pass it on are
+         the two things a reader wants at this point, and neither deserves its
+         own band of whitespace. --}}
+    <div class="mt-9 flex flex-wrap items-center justify-between gap-x-8 gap-y-5 border-y border-paper-3 py-5">
+        <div class="flex items-center gap-3">
+            <x-avatar :name="$post->author->name" :size="40" />
+            <div>
+                <a href="{{ route('blog.author', $post->author) }}"
+                   class="block font-sans text-[0.95rem] font-medium text-ink-ink transition-colors hover:text-brand">{{ $post->author->name }}</a>
+                <p class="mt-0.5 font-mono text-[0.72rem] text-ink-soft">
+                    <time datetime="{{ $post->published_at?->toDateString() }}">{{ $post->published_at?->format('F j, Y') ?? 'Unpublished' }}</time>
+                    &middot; {{ $post->reading_minutes }} min read
+                </p>
+            </div>
+        </div>
+
+        <x-share-row :post="$post" />
     </div>
+
+    {{-- Featured image.
+
+         The real dimensions go on the tag so the page reserves the right box
+         and nothing jumps when it arrives, and it loads eagerly at high
+         priority because it is the one image certain to be on screen. Capped in
+         height so a tall photograph does not take the whole first screen and
+         push the writing out of sight. --}}
+    @if($hero)
+        <figure class="mt-10">
+            <img src="{{ $hero }}" @if($heroSet) srcset="{{ $heroSet }}" @endif
+                 sizes="(max-width: 1024px) 100vw, 960px"
+                 alt="{{ $post->cover_alt }}"
+                 @if($heroSize) width="{{ $heroSize[0] }}" height="{{ $heroSize[1] }}" @endif
+                 fetchpriority="high" decoding="async"
+                 class="max-h-[34rem] w-full bg-paper-2 object-cover">
+            @if($post->cover_alt)
+                <figcaption class="mt-3 font-mono text-[0.7rem] text-ink-soft">{{ $post->cover_alt }}</figcaption>
+            @endif
+        </figure>
+    @endif
 
     @if(count($toc['items']) > 2)
         <nav aria-label="Contents" class="mt-12 border-y border-paper-3 py-5">
@@ -58,32 +131,19 @@
 
     <div class="prose-jp mt-12">{!! $toc['html'] !!}</div>
 
-    <div class="mt-16 border-t border-ink-ink pt-8">
+    {{-- Again at the foot, where a reader who has actually finished it is far
+         likelier to pass it on than one who has just arrived. --}}
+    <div class="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-ink-ink pt-8">
+        <x-share-row :post="$post" />
         <a href="{{ route('blog.index') }}" class="font-mono text-[0.75rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">
             &larr; All notes
         </a>
     </div>
 </article>
 
+@include('blog._related')
+
 @include('blog._comments')
 
 @include('blog._subscribe')
-
-@if($related->isNotEmpty())
-    <section class="mx-auto mt-20 max-w-5xl px-6 sm:px-10">
-        <h2 class="biz-label">Related</h2>
-        <ul class="mt-5 grid gap-6 border-t border-paper-4 pt-6 sm:grid-cols-2">
-            @foreach($related as $other)
-                <li>
-                    <a href="{{ route('blog.show', $other) }}" class="group block">
-                        <p class="font-mono text-[0.66rem] text-ink-soft">{{ $other->published_at?->format('d M y') }}</p>
-                        <p class="mt-1.5 font-display text-[1.05rem] font-bold uppercase leading-tight tracking-tight2 text-ink-ink transition-colors group-hover:text-brand">
-                            {{ $other->title }}
-                        </p>
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </section>
-@endif
 @endsection

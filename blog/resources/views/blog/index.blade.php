@@ -3,7 +3,7 @@
 @section('description', 'Notes on AI, machine learning, and building software for small businesses.')
 
 @section('content')
-<section class="mx-auto max-w-5xl px-6 pb-10 pt-14 sm:px-10 sm:pt-20">
+<section class="mx-auto max-w-5xl px-6 pt-14 sm:px-10 sm:pt-20">
     <p class="biz-label">Notes</p>
     <h1 class="biz-display mt-5 text-[clamp(2.4rem,7vw,5rem)]">
         Working notes<span class="ml-3 inline-block h-[0.13em] w-[0.13em] rounded-full bg-brand align-baseline"></span>
@@ -23,57 +23,39 @@
         @endif
     </form>
 
+    {{-- Topics as a tab strip above the feed, which is where a reader looks for
+         a way to narrow it down. The current one is underlined rather than
+         filled, so the row stays quiet next to the headlines below it. --}}
     @if($topics->isNotEmpty())
-        <ul class="mt-6 flex flex-wrap gap-2">
+        <nav aria-label="Topics" class="mt-10 -mb-px flex gap-6 overflow-x-auto border-b border-paper-3">
+            <a href="{{ route('blog.index') }}"
+               class="shrink-0 border-b-2 pb-3 font-sans text-[0.9rem] transition-colors {{ request('topic') ? 'border-transparent text-ink-soft hover:text-ink-ink' : 'border-ink-ink font-medium text-ink-ink' }}">
+                All
+            </a>
             @foreach($topics as $topic)
-                <li>
-                    <a href="{{ route('blog.topic', $topic) }}"
-                       class="inline-block border px-3 py-1.5 font-mono text-[0.7rem] transition-colors
-                              {{ request()->is('blog/topic/'.$topic->slug) ? 'border-brand bg-brand text-white' : 'border-paper-3 text-ink-body hover:border-ink-ink' }}">
-                        {{ $topic->name }}
-                        <span class="{{ request()->is('blog/topic/'.$topic->slug) ? 'text-white/70' : 'text-ink-soft' }}">{{ $topic->posts_count }}</span>
-                    </a>
-                </li>
+                <a href="{{ route('blog.topic', $topic) }}"
+                   class="shrink-0 border-b-2 border-transparent pb-3 font-sans text-[0.9rem] text-ink-soft transition-colors hover:text-ink-ink">
+                    {{ $topic->name }}
+                    <span class="ml-1 font-mono text-[0.7rem] text-ink-soft/70">{{ $topic->posts_count }}</span>
+                </a>
             @endforeach
-        </ul>
+        </nav>
     @endif
 </section>
 
-{{-- The specimen table from /services: the whole row is the target. --}}
-<nav aria-label="Notes" class="border-t border-ink-ink">
-    <ul>
-        @forelse($posts as $post)
-            <li class="border-b border-paper-4">
-                <a href="{{ route('blog.show', $post) }}"
-                   class="group grid grid-cols-[4.5rem_minmax(0,1fr)_auto] items-center gap-x-5 px-6 py-5 transition-colors hover:bg-night sm:px-10 lg:grid-cols-[6rem_minmax(0,20rem)_minmax(0,1fr)_auto] lg:gap-x-8">
-                    <span class="font-mono text-[0.68rem] text-ink-soft transition-colors group-hover:text-brand-soft">
-                        {{ $post->published_at?->format('d M y') ?? 'Draft' }}
-                    </span>
-                    <span class="font-display text-[1.05rem] font-bold uppercase leading-tight tracking-tight2 text-ink-ink transition-colors group-hover:text-paper sm:text-[1.2rem]">
-                        {{ $post->title }}
-                    </span>
-                    <span class="hidden lg:grid">
-                        <span class="[grid-area:1/1] self-center font-mono text-[0.66rem] uppercase tracking-label text-ink-soft transition-opacity duration-200 group-hover:opacity-0">
-                            {{ $post->categories->pluck('name')->implode(' &middot; ') ?: 'Uncategorised' }}
-                        </span>
-                        <span class="[grid-area:1/1] line-clamp-2 self-center font-sans text-[0.8rem] leading-[1.4] text-paper/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                            {{ $post->excerpt }}
-                        </span>
-                    </span>
-                    <span aria-hidden="true" class="font-mono text-[0.9rem] text-ink-soft transition-all group-hover:translate-x-1 group-hover:text-brand-soft">&rarr;</span>
-                </a>
-            </li>
-        @empty
-            <li class="px-6 py-16 text-center font-mono text-[0.85rem] text-ink-soft sm:px-10">
-                Nothing published yet.
-            </li>
-        @endforelse
-    </ul>
-</nav>
+<div class="mx-auto max-w-5xl px-6 pt-10 sm:px-10">
+    @forelse($posts as $post)
+        @include('blog._card', ['post' => $post])
+    @empty
+        <p class="border-y border-paper-3 py-16 text-center font-mono text-[0.85rem] text-ink-soft">
+            Nothing published yet.
+        </p>
+    @endforelse
+
+    @if($posts->hasPages())
+        <div class="py-10">{{ $posts->withQueryString()->links() }}</div>
+    @endif
+</div>
 
 @include('blog._subscribe')
-
-@if($posts->hasPages())
-    <div class="mx-auto max-w-5xl px-6 py-10 sm:px-10">{{ $posts->withQueryString()->links() }}</div>
-@endif
 @endsection

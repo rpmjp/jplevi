@@ -14,6 +14,7 @@ class BlogController extends Controller
     {
         $posts = Post::published()
             ->with(['categories', 'author'])
+            ->withCount(['comments' => fn ($q) => $q->approved()])
             ->when($request->string('topic')->toString(), fn ($q, $slug) => $q->whereHas('categories', fn ($c) => $c->where('slug', $slug)))
             ->when($request->string('audience')->toString(), fn ($q, $a) => $q->whereIn('audience', [$a, 'both']))
             ->when($request->string('q')->toString(), function ($q, $term) {
@@ -55,12 +56,7 @@ class BlogController extends Controller
             $preview = true;
         }
 
-        $related = Post::published()
-            ->whereKeyNot($post->id)
-            ->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $post->categories->pluck('id')))
-            ->latest('published_at')
-            ->limit(4)
-            ->get();
+        $related = self::related($post);
 
         $schema = [
             '@context' => 'https://schema.org',
@@ -73,6 +69,10 @@ class BlogController extends Controller
             'publisher' => ['@type' => 'Organization', 'name' => 'JP LEVI INC.'],
             'mainEntityOfPage' => route('blog.show', $post),
         ];
+
+        if ($image = \App\Models\PostCover::social($post->cover_path)) {
+            $schema['image'] = [$image];
+        }
 
         $comments = $post->comments()
             ->approved()
@@ -112,11 +112,49 @@ class BlogController extends Controller
         return ['html' => $html, 'items' => $items];
     }
 
+    /**
+     * Four posts to carry a reader onwards.
+     *
+     * Same topics first, because that is the strongest signal we have that they
+     * will care. Topped up with whatever is newest when the overlap runs short,
+     * so the row under a post is never one lonely card, and never empty on a
+     * post that has no category on it yet.
+     *
+     * @return \Illuminate\Support\Collection<int,Post>
+     */
+    private static function related(Post $post, int $want = 4): \Illuminate\Support\Collection
+    {
+        $ids = $post->categories->pluck('id');
+
+        $matching = $ids->isEmpty() ? collect() : Post::published()
+            ->whereKeyNot($post->id)
+            ->whereHas('categories', fn ($q) => $q->whereIn('categories.id', $ids))
+            ->with('categories')
+            ->latest('published_at')
+            ->limit($want)
+            ->get();
+
+        if ($matching->count() >= $want) {
+            return $matching;
+        }
+
+        $filler = Post::published()
+            ->whereKeyNot($post->id)
+            ->whereNotIn('id', $matching->pluck('id'))
+            ->with('categories')
+            ->latest('published_at')
+            ->limit($want - $matching->count())
+            ->get();
+
+        return $matching->concat($filler);
+    }
+
     public function topic(Category $category)
     {
         $posts = Post::published()
             ->whereHas('categories', fn ($q) => $q->whereKey($category->id))
             ->with(['categories', 'author'])
+            ->withCount(['comments' => fn ($q) => $q->approved()])
             ->latest('published_at')
             ->paginate(15);
 
@@ -135,6 +173,7 @@ class BlogController extends Controller
         $posts = Post::published()
             ->where('user_id', $user->id)
             ->with(['categories', 'author'])
+            ->withCount(['comments' => fn ($q) => $q->approved()])
             ->latest('published_at')
             ->paginate(15);
 
