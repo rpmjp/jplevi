@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 
 class MediaResource extends Resource
 {
+    protected static ?string $recordTitleAttribute = 'alt';
+
     protected static string | \UnitEnum | null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 3;

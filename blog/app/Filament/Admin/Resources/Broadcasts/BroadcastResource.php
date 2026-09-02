@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 
 class BroadcastResource extends Resource
 {
+    protected static ?string $recordTitleAttribute = 'subject';
+
     protected static string | \UnitEnum | null $navigationGroup = 'Audience';
 
     protected static ?int $navigationSort = 3;

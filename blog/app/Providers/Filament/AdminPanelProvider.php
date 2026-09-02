@@ -39,6 +39,25 @@ class AdminPanelProvider extends PanelProvider
             // WordPress has no dark mode, and half a WordPress is worse than
             // either whole one.
             ->darkMode(false)
+            // WordPress's toolbar carries a command palette and a search; this
+            // is both. Resources declare a title attribute so it finds things.
+            ->globalSearch()
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->sidebarCollapsibleOnDesktop()
+            ->userMenuItems([
+                // The site name node in WordPress's bar: a way back to the
+                // thing you are editing. There was no link to it at all.
+                'visit' => \Filament\Navigation\MenuItem::make()
+                    ->label('Visit site')
+                    ->url(fn () => url('/blog'), shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-arrow-top-right-on-square'),
+
+                'profile' => \Filament\Navigation\MenuItem::make()->label('Profile'),
+            ])
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::TOPBAR_START,
+                fn (): string => view('filament.topbar')->render(),
+            )
             // Grouped the way WordPress groups it, because that is the part
             // that makes a panel findable without being explained.
             ->navigationGroups([

@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 
 class CategoryResource extends Resource
 {
+    protected static ?string $recordTitleAttribute = 'name';
+
     protected static string | \UnitEnum | null $navigationGroup = 'Content';
 
     protected static ?int $navigationSort = 2;

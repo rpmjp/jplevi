@@ -118,3 +118,65 @@
 /* Tables read as rows of records rather than as cards */
 .fi-ta-row:hover { background-color: #f6f7f7; }
 .fi-ta-header-cell { background-color: #fff; color: var(--wp-heading); }
+
+/* Toolbar items, styled as WordPress styles its bar: quiet grey that goes white
+   on hover, and a blue count bubble that only appears when there is something
+   waiting. */
+.wp-topbar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem .6rem;
+    border-radius: 2px;
+    font-size: .8125rem;
+    line-height: 1;
+    color: #c3c4c7;
+    transition: background-color .12s, color .12s;
+}
+
+.wp-topbar-link:hover,
+.wp-topbar-link:focus-visible {
+    background-color: rgba(255, 255, 255, .08);
+    color: #72aee6;
+}
+
+.wp-bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.1rem;
+    height: 1.1rem;
+    padding: 0 .3rem;
+    border-radius: 999px;
+    background-color: #d63638;
+    color: #fff;
+    font-size: .6875rem;
+    font-weight: 600;
+}
+
+/* Global search sits in a dark bar, so it cannot keep its light styling.
+   fi-global-search-field is the wrapper, not the input, so the input is reached
+   through it rather than named directly. */
+.fi-global-search-field,
+.fi-global-search-field .fi-input-wrp {
+    background-color: rgba(255, 255, 255, .08) !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.fi-global-search-field input,
+.fi-global-search-field .fi-input {
+    background-color: transparent !important;
+    color: #f0f0f1 !important;
+}
+
+.fi-global-search-field input::placeholder { color: #a7aaad !important; }
+
+.fi-global-search-field .fi-icon { color: #a7aaad !important; }
+
+.fi-global-search-field:focus-within,
+.fi-global-search-field .fi-input-wrp:focus-within {
+    background-color: rgba(255, 255, 255, .14) !important;
+    border-color: #72aee6 !important;
+    box-shadow: none !important;
+}

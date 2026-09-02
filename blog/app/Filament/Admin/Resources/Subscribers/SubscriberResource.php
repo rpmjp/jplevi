@@ -16,6 +16,8 @@ use Filament\Tables\Table;
 
 class SubscriberResource extends Resource
 {
+    protected static ?string $recordTitleAttribute = 'email';
+
     protected static string | \UnitEnum | null $navigationGroup = 'Audience';
 
     protected static ?int $navigationSort = 2;
