@@ -69,7 +69,11 @@ class PostForm
                         TextInput::make('slug')
                             ->required()
                             ->unique(ignoreRecord: true)
-                            ->prefix(url('/blog').'/')
+                            // Generated, never assembled. url('/blog') put a
+                            // second /blog on the end of an APP_URL that
+                            // already carried one; asking the router for the
+                            // index gives whatever the posts actually sit under.
+                            ->prefix(rtrim(route('blog.index'), '/').'/')
                             ->helperText('Changing this on a published post leaves a permanent redirect behind.'),
 
                         RichEditor::make('body')

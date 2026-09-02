@@ -41,6 +41,34 @@ class PostEditorLayoutTest extends TestCase
         }
     }
 
+    public function test_the_slug_prefix_is_where_the_post_actually_lives(): void
+    {
+        $admin = $this->admin();
+
+        $post = \App\Models\Post::create([
+            'user_id' => $admin->id,
+            'title' => 'Where does this live',
+            'body' => '<p>Body.</p>',
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        $html = $this->actingAs($admin)
+            ->get(route('filament.admin.resources.posts.edit', $post))
+            ->assertOk()
+            ->getContent();
+
+        // The prefix was assembled by hand as url('/blog').'/', which appended
+        // a second /blog to an APP_URL that already carried one and told the
+        // author their post lived somewhere it did not. Generated from the
+        // router, the prefix and the real URL cannot disagree.
+        $expected = rtrim(route('blog.index'), '/').'/';
+
+        $this->assertStringContainsString(e($expected), $html);
+        $this->assertStringStartsWith($expected, route('blog.show', $post));
+        $this->assertStringNotContainsString('/blog/blog/', $html);
+    }
+
     public function test_the_editor_opens_on_an_existing_post_with_a_cover(): void
     {
         $admin = $this->admin();
