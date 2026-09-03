@@ -89,14 +89,29 @@ class ImageIngest
     {
         $widths ??= self::WIDTHS;
 
+        $path = $file->getRealPath();
+
+        // An empty file, reported plainly. A browser hands over zero bytes when
+        // the picture was dragged straight out of another web page, or when it
+        // lives in cloud storage and has not been downloaded to the machine
+        // yet. Neither is obvious from a failed upload, so it is said here.
+        if (! $path || filesize($path) === 0) {
+            throw new \RuntimeException(
+                'That file arrived empty. If you dragged it out of a browser tab or another app, '
+                .'save it to the computer first and choose the saved file.'
+            );
+        }
+
         // Read the magic bytes rather than asking the upload what it is.
         // getMimeType() can be led by the extension; finfo looks at content.
-        $head = (string) file_get_contents($file->getRealPath(), length: 4096);
+        $head = (string) file_get_contents($path, length: 4096);
         $mime = (new \finfo(FILEINFO_MIME_TYPE))->buffer($head) ?: 'unknown';
 
         if (! in_array($mime, self::ALLOWED, true)) {
             throw new \RuntimeException("Unsupported image type: {$mime}");
         }
+
+        $this->guardAgainstRunningOutOfMemory($path);
 
         try {
             $image = $this->images->decodePath($file->getRealPath());
@@ -161,5 +176,70 @@ class ImageIngest
             'height' => $image->height(),
             'sizes' => $sizes,
         ];
+    }
+
+    /**
+     * Refuses an image that cannot be decoded within the memory available.
+     *
+     * Dimensions come from the file header, which costs nothing to read, so an
+     * image too large to open is turned away before anything tries to open it.
+     * Without this the process is killed part way through and the browser is
+     * left showing a failed upload with no reason attached, which is the worst
+     * possible way to find out.
+     *
+     * The pixel count is what matters, not the file size. A 20MB photograph
+     * decodes to about the same memory as a 2MB one of the same dimensions,
+     * because both become four bytes a pixel once open.
+     */
+    private function guardAgainstRunningOutOfMemory(string $path): void
+    {
+        $size = @getimagesize($path);
+
+        if (! $size) {
+            throw new \RuntimeException('That file could not be read as an image.');
+        }
+
+        [$width, $height] = $size;
+
+        // Four bytes a pixel while open, and the resize holds the source and
+        // the new copy at the same time. The margin covers the difference
+        // between that arithmetic and what the extension actually does.
+        $needed = (int) ($width * $height * 4 * 2.4);
+        $free = self::memoryLimit() - memory_get_usage(true);
+
+        if ($needed <= $free) {
+            return;
+        }
+
+        $largest = (int) sqrt(max($free, 1) / (4 * 2.4));
+
+        throw new \RuntimeException(sprintf(
+            'That image is %s×%s, which is too large to process on this server. '
+            .'Anything up to about %s×%s is fine. Resizing it before uploading will fix it, '
+            .'and will cost nothing in quality: the largest copy kept here is %spx wide.',
+            number_format($width), number_format($height),
+            number_format($largest), number_format($largest),
+            number_format(max(self::WIDTHS)),
+        ));
+    }
+
+    /** The memory ceiling in bytes, with no limit treated as a generous one. */
+    private static function memoryLimit(): int
+    {
+        $limit = trim((string) ini_get('memory_limit'));
+
+        if ($limit === '' || $limit === '-1') {
+            return 1024 * 1024 * 1024;
+        }
+
+        $unit = strtolower(substr($limit, -1));
+        $value = (int) $limit;
+
+        return match ($unit) {
+            'g' => $value * 1024 ** 3,
+            'm' => $value * 1024 ** 2,
+            'k' => $value * 1024,
+            default => $value,
+        };
     }
 }

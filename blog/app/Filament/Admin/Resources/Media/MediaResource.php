@@ -194,7 +194,7 @@ class MediaResource extends Resource
             ->image()
             ->required()
             ->maxFiles(30)
-            ->maxSize(10240)
+            ->maxSize(32768)
             ->reorderable(false)
             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
             // Kept as uploads rather than written to a disk, so ImageIngest

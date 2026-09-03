@@ -33,7 +33,10 @@ class ListMedia extends ListRecords
                             MediaResource::ingest($file);
                             $added++;
                         } catch (\Throwable $e) {
-                            $failed[] = $file->getClientOriginalName();
+                            // The reason, not just the filename. "could not be
+                            // read as an image" and "too large to process" are
+                            // different problems with different fixes.
+                            $failed[$file->getClientOriginalName()] = $e->getMessage();
                             report($e);
                         }
                     }
@@ -49,8 +52,8 @@ class ListMedia extends ListRecords
                     if ($failed) {
                         Notification::make()
                             ->warning()
-                            ->title('Some files were not added')
-                            ->body(implode(', ', $failed).' could not be read as an image.')
+                            ->title(count($failed).' '.str('file')->plural(count($failed)).' were not added')
+                            ->body(collect($failed)->map(fn ($why, $name) => "{$name}: {$why}")->implode("\n\n"))
                             ->persistent()
                             ->send();
                     }

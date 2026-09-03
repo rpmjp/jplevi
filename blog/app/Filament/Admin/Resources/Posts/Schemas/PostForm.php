@@ -185,14 +185,29 @@ class PostForm
                                 ->image()
                                 ->imageEditor()
                                 ->imageEditorAspectRatios(['16:9', '1.91:1', '4:3', null])
-                                ->maxSize(8192)
+                                ->maxSize(32768)
                                 ->panelAspectRatio('16:9')
                                 ->panelLayout('integrated')
                                 ->uploadingMessage('Resizing and cropping…')
-                                ->helperText('1600px wide or more gives the sharpest result. Four sizes and a 1200x630 share crop are made for you.')
-                                ->saveUploadedFileUsing(
-                                    fn (TemporaryUploadedFile $file) => app(ImageIngest::class)->store($file, 'covers')['path'],
-                                )
+                                ->helperText('1600px wide or more gives the sharpest result, and anything bigger is scaled down for you. Four sizes and a 1200x630 share crop are made automatically.')
+                                // Failures are reported rather than swallowed.
+                                // Filament turns an exception here into a bare
+                                // "failed to upload", which says nothing about
+                                // an empty file or an image too big to decode.
+                                ->saveUploadedFileUsing(function (TemporaryUploadedFile $file) {
+                                    try {
+                                        return app(ImageIngest::class)->store($file, 'covers')['path'];
+                                    } catch (\RuntimeException $e) {
+                                        \Filament\Notifications\Notification::make()
+                                            ->danger()
+                                            ->title('That image could not be used')
+                                            ->body($e->getMessage())
+                                            ->persistent()
+                                            ->send();
+
+                                        throw $e;
+                                    }
+                                })
                                 ->getUploadedFileUsing(fn (?string $file) => filled($file) ? [
                                     'name' => basename($file),
                                     'url' => Rendition::url($file, 800),
