@@ -32,6 +32,19 @@ Route::get('/media/{directory}/{file}', \App\Http\Controllers\MediaController::c
 
 Route::name('blog.')->middleware(\App\Http\Middleware\CacheResponse::class)->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');
+
+    /*
+     * The blog home arrives on two different paths, and this is not a
+     * redundancy.
+     *
+     * Every other URL under the mount reaches Laravel with /blog already
+     * stripped: a request for /blog/sign-in arrives as /sign-in. The home page
+     * does not. It is the one request the web server answers through
+     * DirectoryIndex rather than the rewrite, and it reports enough of a
+     * different script name that the base path is left on, so /blog/ arrives as
+     * "blog". Both are the index.
+     */
+    Route::get('/blog', [BlogController::class, 'index']);
     Route::get('/feed.xml', [BlogController::class, 'feed'])->name('feed');
     Route::get('/sitemap.xml', [BlogController::class, 'sitemap'])->name('sitemap');
     Route::get('/by/{user}', [BlogController::class, 'author'])->name('author');
@@ -66,11 +79,13 @@ Route::view('/sign-in', 'auth.sign-in')->name('sign-in');
  * The old doubled paths.
  *
  * Anything already shared or indexed as /blog/blog/{slug} keeps working and
- * says permanently where the post actually lives now.
+ * says permanently where the post actually lives now. There is deliberately no
+ * redirect for the bare path: that one is the blog's own home page, handled
+ * above, and a redirect there sent every reader who clicked Notes to the site
+ * root instead.
  */
-Route::permanentRedirect('/blog', '/');
 Route::get('/blog/{path}', fn (string $path) => redirect('/'.$path, 301))
-    ->where('path', '.*');
+    ->where('path', '.+');
 
 /*
  * Registered last on purpose.

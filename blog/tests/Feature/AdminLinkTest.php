@@ -31,6 +31,31 @@ class AdminLinkTest extends TestCase
         $this->assertStringContainsString(route('filament.admin.pages.dashboard'), $html);
     }
 
+    public function test_the_blog_home_answers_on_both_paths_the_mount_produces(): void
+    {
+        // Every URL under the mount reaches Laravel with /blog stripped, except
+        // the home page, which the web server answers through DirectoryIndex
+        // and which arrives as "blog". A redirect used to sit on that path, so
+        // clicking Notes in the header sent readers to the site root.
+        foreach (['/', '/blog'] as $path) {
+            $this->get($path)->assertOk()->assertSee('Working notes', false);
+        }
+    }
+
+    public function test_an_old_doubled_post_url_still_finds_its_post(): void
+    {
+        $post = \App\Models\Post::create([
+            'user_id' => User::factory()->create()->id,
+            'title' => 'Moved',
+            'body' => '<p>Body.</p>',
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        $this->get('/blog/'.$post->slug)
+            ->assertRedirect('/'.$post->slug);
+    }
+
     public function test_a_link_the_index_prints_is_a_link_the_app_answers_on(): void
     {
         // The bug this guards was not a broken link in a template; it was every
