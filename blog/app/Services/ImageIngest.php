@@ -69,6 +69,13 @@ class ImageIngest
 
     /**
      * @param  array<int,int>  $widths  Renditions to write. Never upscaled.
+     * @param  string|null  $name  A descriptive stem for the filename, usually
+     *                               the name of the file as uploaded. Search
+     *                               engines read filenames, so throwing a
+     *                               readable one away and writing only an
+     *                               identifier gives up a signal for nothing.
+     *                               A collision-proof suffix is added either
+     *                               way, so this never has to be unique.
      * @param  bool  $square  Crop to a square rather than preserving the shape.
      *                        An avatar is painted in a circle, so a portrait
      *                        that is not square arrives with its sides sliced
@@ -78,7 +85,7 @@ class ImageIngest
      *                        face that only ever appears inside the page.
      * @return array{basename:string, path:string, width:int, height:int, sizes:array<int,string>}
      */
-    public function store(UploadedFile $file, string $directory = 'posts', ?array $widths = null, bool $social = true, bool $square = false): array
+    public function store(UploadedFile $file, string $directory = 'posts', ?array $widths = null, bool $social = true, bool $square = false, ?string $name = null): array
     {
         $widths ??= self::WIDTHS;
 
@@ -97,7 +104,17 @@ class ImageIngest
             // Passed the type check but will not decode: treat as hostile.
             throw new \RuntimeException('Could not decode the image.', previous: $e);
         }
-        $basename = Str::ulid()->toString();
+        // A readable stem where one was given, then a ULID so two files
+        // called chart.png can never land on each other. Trimmed, because a
+        // filename is not a place to put a sentence.
+        $stem = Str::of((string) $name)
+            ->beforeLast('.')
+            ->slug()
+            ->limit(60, '')
+            ->trim('-')
+            ->value();
+
+        $basename = ($stem !== '' ? $stem.'-' : '').Str::ulid()->toString();
         $sizes = [];
 
         foreach ($widths as $width) {

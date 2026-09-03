@@ -85,9 +85,20 @@ class CompletenessTest extends TestCase
         $this->assertDatabaseHas('users', ['id' => $author->id]);
     }
 
-    public function test_media_requires_alt_text_at_the_database_level(): void
+    public function test_an_undescribed_image_is_allowed_in_but_never_lost_track_of(): void
     {
-        $this->expectException(\Illuminate\Database\QueryException::class);
-        \App\Models\Media::create(['path' => 'library/x.webp']);
+        // Alt text used to be not null, which meant a folder of images could
+        // not be uploaded in one go: every description had to be typed before
+        // any of them could be saved. The constraint moved rather than went.
+        // Upload first, describe after, and the library keeps a list of what is
+        // still waiting so nothing is quietly published undescribed.
+        $undescribed = \App\Models\Media::create(['path' => 'library/x', 'original_name' => 'x.png']);
+
+        $this->assertDatabaseHas('media', ['id' => $undescribed->id]);
+        $this->assertTrue(\App\Models\Media::undescribed()->whereKey($undescribed->id)->exists());
+
+        $undescribed->update(['alt' => 'Now described.']);
+
+        $this->assertFalse(\App\Models\Media::undescribed()->whereKey($undescribed->id)->exists());
     }
 }
