@@ -19,6 +19,14 @@ class Post extends Model
     ];
 
     /**
+     * The read more block as the editor stores it.
+     *
+     * Matched rather than compared, because the attributes on the placeholder
+     * are written in whatever order the editor felt like.
+     */
+    private const READ_MORE_BLOCK = '/<div[^>]*data-type="customBlock"[^>]*data-id="read-more"[^>]*><\/div>/i';
+
+    /**
      * Defaults that match the migration.
      *
      * Eloquent does not read database defaults back after an insert, so a
@@ -85,7 +93,10 @@ class Post extends Model
         static::saving(function (Post $post) {
             $post->slug ??= Str::slug($post->title);
             $post->preview_token ??= (string) Str::uuid();
-            $post->reading_minutes = self::readingMinutes($post->body ?? '');
+            // Measured on the rendered markup. The stored form is mostly
+            // placeholder divs, and strip_tags leaves nothing of those, so
+            // a post built from blocks always came out as one minute.
+            $post->reading_minutes = self::readingMinutes(self::render($post->body));
         });
 
         // A slug change would strand every link already pointing at the old
@@ -132,15 +143,85 @@ class Post extends Model
         return true;
     }
 
+    /**
+     * The post body, as HTML, with every editor block turned into markup.
+     *
+     * The editor does not store finished HTML. A block is written as a
+     * placeholder div carrying its settings, and the renderer is what turns
+     * each one back into the markup its class defines. Rendering the raw column
+     * instead prints the placeholders, which is to say prints nothing: a post
+     * built out of blocks comes out as a headline with an empty page under it.
+     *
+     * Deliberately unsanitised. The sanitiser strips iframes, which would take
+     * the video embeds with it, and it would quietly cut down whatever an
+     * administrator wrote in a Custom HTML block, which is the one thing that
+     * block exists to allow. What protects this page is the content security
+     * policy, which refuses script and foreign frames whatever the markup says,
+     * and the fact that only staff can write a body at all. Comments, which are
+     * written by the public, are escaped and never go near this path.
+     */
+    public function renderedBody(): string
+    {
+        return self::render($this->body);
+    }
+
+    /** @internal Shared by the accessor and by the reading time estimate. */
+    public static function render(?string $content): string
+    {
+        if (blank($content)) {
+            return '';
+        }
+
+        // Only content the editor wrote goes through the editor's renderer.
+        //
+        // The renderer reparses everything against the editor's own schema and
+        // drops what is not in it, which for hand-written HTML means aside and
+        // figure elements disappearing: every callout and pull quote in a post
+        // written before the editor existed. Those bodies are already finished
+        // HTML and need nothing done to them, so they are passed through
+        // untouched and only block markup is rendered.
+        if (! self::needsRendering($content)) {
+            return $content;
+        }
+
+        $html = \Filament\Forms\Components\RichEditor\RichContentRenderer::make($content)
+            ->customBlocks(\App\Filament\RichBlocks\Blocks::all())
+            ->toUnsafeHtml();
+
+        return $html;
+    }
+
+    /** Whether this body is editor content rather than finished HTML. */
+    private static function needsRendering(string $content): bool
+    {
+        // A TipTap document, or HTML carrying the editor's block placeholders.
+        return str_starts_with(ltrim($content), '{')
+            || str_starts_with(ltrim($content), '[')
+            || str_contains($content, 'data-type="customBlock"');
+    }
+
     public function lead(): string
     {
-        if (str_contains((string) $this->body, '<!--more-->')) {
-            return Str::before($this->body, '<!--more-->');
+        $body = (string) $this->body;
+
+        // Split before rendering, not after. The read more block renders as an
+        // HTML comment and the renderer strips comments on its way out, so by
+        // the time the markup exists the instruction to stop has gone with it.
+        // Splitting the stored content on the block itself survives that.
+        if (preg_match(self::READ_MORE_BLOCK, $body)) {
+            return self::render((string) preg_split(self::READ_MORE_BLOCK, $body, 2)[0]);
+        }
+
+        $rendered = $this->renderedBody();
+
+        // A post written as plain HTML carries the marker literally.
+        if (str_contains($rendered, '<!--more-->')) {
+            return Str::before($rendered, '<!--more-->');
         }
 
         return filled($this->excerpt)
             ? '<p>'.e($this->excerpt).'</p>'
-            : Str::limit(strip_tags((string) $this->body), 220);
+            : Str::limit(strip_tags($rendered), 220);
     }
 
     /** Roughly 220 words a minute, floored at one. */

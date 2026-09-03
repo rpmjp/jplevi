@@ -83,21 +83,7 @@ class PostForm
                             // WordPress gates it behind unfiltered_html. The
                             // check lives here rather than inside the block, so
                             // the block never has to be trusted to enforce it.
-                            ->customBlocks(array_filter([
-                                auth()->user()?->hasRole('admin')
-                                    ? \App\Filament\RichBlocks\HtmlBlock::class
-                                    : null,
-                                \App\Filament\RichBlocks\CalloutBlock::class,
-                                \App\Filament\RichBlocks\EmbedBlock::class,
-                                \App\Filament\RichBlocks\ButtonBlock::class,
-                                \App\Filament\RichBlocks\PullQuoteBlock::class,
-                                \App\Filament\RichBlocks\GalleryBlock::class,
-                                \App\Filament\RichBlocks\MediaTextBlock::class,
-                                \App\Filament\RichBlocks\FileBlock::class,
-                                \App\Filament\RichBlocks\TabsBlock::class,
-                                \App\Filament\RichBlocks\AccordionBlock::class,
-                                \App\Filament\RichBlocks\ReadMoreBlock::class,
-                            ]))
+                            ->customBlocks(\App\Filament\RichBlocks\Blocks::offeredTo(auth()->user()))
                             ->toolbarButtons([
                                 ['bold', 'italic', 'strike', 'underline', 'highlight', 'link'],
                                 ['h2', 'h3', 'lead', 'small'],

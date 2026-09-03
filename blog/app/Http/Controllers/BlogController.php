@@ -65,7 +65,7 @@ class BlogController extends Controller
             'description' => $post->meta_description ?: $post->excerpt,
             'datePublished' => $post->published_at?->toIso8601String(),
             'dateModified' => $post->updated_at?->toIso8601String(),
-            'wordCount' => str_word_count(strip_tags((string) $post->body)),
+            'wordCount' => str_word_count(strip_tags($post->renderedBody())),
             'timeRequired' => 'PT'.$post->reading_minutes.'M',
             'articleSection' => $post->categories->pluck('name')->all(),
             'keywords' => $post->categories->pluck('name')->implode(', '),
@@ -98,8 +98,10 @@ class BlogController extends Controller
             ->oldest()
             ->get();
 
+        // Rendered first: the stored body is placeholders, and headings inside
+        // a block would otherwise be invisible to the contents list.
         // The break is an instruction to the index, not content.
-        $toc = self::headings(str_replace('<!--more-->', '', $post->body ?? ''));
+        $toc = self::headings(str_replace('<!--more-->', '', $post->renderedBody()));
 
         return view('blog.show', compact('post', 'related', 'schema', 'preview', 'comments', 'toc'));
     }

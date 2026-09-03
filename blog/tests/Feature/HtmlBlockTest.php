@@ -50,6 +50,59 @@ class HtmlBlockTest extends TestCase
         $this->assertStringNotContainsString('&lt;div class=&quot;ledger&quot;', $html);
     }
 
+    public function test_a_post_written_with_blocks_actually_renders_on_the_page(): void
+    {
+        // The shape the editor really stores: a placeholder div carrying the
+        // block's settings, not finished HTML. Rendering the column raw printed
+        // the placeholder, which is to say printed nothing, so a post built out
+        // of blocks came out as a headline with an empty page under it and a
+        // reading time of one minute.
+        $written = '<h2>Confusion matrix</h2><p>'.str_repeat('word ', 900).'</p>';
+
+        $placeholder = '<div data-type="customBlock" data-id="html" data-config="'
+            .e(json_encode(['html' => $written])).'"></div>';
+
+        $post = Post::create([
+            'user_id' => User::factory()->create()->id,
+            'title' => 'Built from blocks',
+            'excerpt' => 'The standfirst.',
+            'body' => $placeholder,
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        $html = $this->get(route('blog.show', $post))->assertOk()->getContent();
+
+        $this->assertStringContainsString('Confusion matrix', $html);
+        $this->assertStringNotContainsString('data-type="customBlock"', $html);
+
+        // Reading time is measured on what was rendered. Measured on the stored
+        // placeholder, strip_tags leaves nothing and every post reads as one
+        // minute however long it is.
+        $this->assertGreaterThan(1, $post->fresh()->reading_minutes);
+    }
+
+    public function test_a_post_written_as_plain_html_is_not_reparsed(): void
+    {
+        // The renderer drops anything outside the editor's own schema, which
+        // for hand-written HTML means every aside and figure vanishing. Bodies
+        // that are already finished HTML are passed through untouched.
+        $body = '<aside class="callout">A note.</aside><figure><blockquote>Quoted.</blockquote></figure>';
+
+        $post = Post::create([
+            'user_id' => User::factory()->create()->id,
+            'title' => 'Written by hand',
+            'body' => $body,
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        $html = $this->get(route('blog.show', $post))->assertOk()->getContent();
+
+        $this->assertStringContainsString('<aside class="callout">', $html);
+        $this->assertStringContainsString('<figure>', $html);
+    }
+
     public function test_only_an_administrator_is_offered_the_block(): void
     {
         foreach (['admin' => true, 'editor' => false, 'author' => false] as $role => $offered) {
