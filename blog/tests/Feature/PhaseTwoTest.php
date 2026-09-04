@@ -137,6 +137,35 @@ class PhaseTwoTest extends TestCase
             ->assertForbidden();
     }
 
+    public function test_the_edit_button_only_appears_where_there_is_a_post_to_edit(): void
+    {
+        $this->seed(\Database\Seeders\RoleSeeder::class);
+
+        $admin = \App\Models\User::factory()->create();
+        $admin->syncRoles(['admin']);
+
+        $post = \App\Models\Post::create([
+            'user_id' => $admin->id,
+            'title' => 'Something to edit',
+            'body' => '<p>Body.</p>',
+            'status' => 'published',
+            'published_at' => now()->subHour(),
+        ]);
+
+        // On the post, the shortest path from spotting a typo to fixing it.
+        $this->actingAs($admin)->get(route('blog.show', $post))
+            ->assertOk()->assertSee('Edit this post');
+
+        // On a listing there is no such thing as this post. Blade hands the
+        // layout every variable the child view still had, so the posts loop
+        // used to leave one behind and the index offered to edit whichever
+        // post it happened to finish on.
+        foreach ([route('blog.index'), route('blog.author', $admin)] as $listing) {
+            $this->actingAs($admin)->get($listing)
+                ->assertOk()->assertDontSee('Edit this post');
+        }
+    }
+
     public function test_the_staff_bar_is_invisible_to_readers_and_useful_to_staff(): void
     {
         $post = $this->makePost(['title' => 'A live note']);

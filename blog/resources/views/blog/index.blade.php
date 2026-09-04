@@ -44,8 +44,8 @@
 </section>
 
 <div class="mx-auto max-w-5xl px-6 pt-10 sm:px-10">
-    @forelse($posts as $post)
-        @include('blog._card', ['post' => $post])
+    @forelse($posts as $entry)
+        @include('blog._card', ['post' => $entry])
     @empty
         <p class="border-y border-paper-3 py-16 text-center font-mono text-[0.85rem] text-ink-soft">
             Nothing published yet.

@@ -103,7 +103,10 @@ class BlogController extends Controller
         // The break is an instruction to the index, not content.
         $toc = self::headings(str_replace('<!--more-->', '', $post->renderedBody()));
 
-        return view('blog.show', compact('post', 'related', 'schema', 'preview', 'comments', 'toc'));
+        // currentPost is what the staff bar reads. Named apart from post so a
+        // listing page cannot set it by accident.
+        return view('blog.show', compact('post', 'related', 'schema', 'preview', 'comments', 'toc'))
+            ->with('currentPost', $post);
     }
 
     /**

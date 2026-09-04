@@ -52,9 +52,12 @@
                 </a>
             @endif
 
+            {{-- The same avatar the bylines use, so a photograph appears here
+                 too once one is set, rather than initials in two styles. --}}
             <a href="{{ route('account.show') }}" title="{{ auth()->user()->name }}"
-               class="{{ ($staff ?? false) ? '' : 'ml-auto' }} flex h-7 w-7 items-center justify-center rounded-full border border-ink-ink font-mono text-[0.58rem] font-semibold uppercase text-ink-ink transition-colors hover:border-brand hover:text-brand">
-                {{ Str::of(auth()->user()->name)->explode(' ')->take(2)->map(fn ($w) => Str::substr($w, 0, 1))->implode('') }}
+               class="{{ ($staff ?? false) ? '' : 'ml-auto' }} flex items-center transition-opacity hover:opacity-80">
+                <x-avatar :user="auth()->user()" :size="28" />
+                <span class="sr-only">{{ auth()->user()->name }}</span>
             </a>
 
             <form method="post" action="{{ route('social.logout') }}">

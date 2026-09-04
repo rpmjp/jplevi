@@ -27,7 +27,16 @@
 <div class="relative z-10 flex min-h-screen flex-col bg-paper xl:pl-[5.75rem]">
     @include('partials.site-header')
 
-    @include('partials.session', ['post' => $post ?? null])
+    {{--
+        currentPost, not post.
+
+        Blade hands the layout every local variable the child view still had,
+        which after a listing page includes whatever the posts loop finished on.
+        Reading $post here put an "Edit this post" button on the index pointing
+        at whichever post happened to be last. Only a page showing one post sets
+        currentPost, and nothing can leave it lying around.
+    --}}
+    @include('partials.session', ['post' => $currentPost ?? null])
 
     <main class="flex-1">@yield('content')</main>
 

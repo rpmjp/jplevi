@@ -45,8 +45,8 @@
 </section>
 
 <div class="mx-auto max-w-5xl px-6 pt-10 sm:px-10">
-    @foreach($posts as $post)
-        @include('blog._card', ['post' => $post])
+    @foreach($posts as $entry)
+        @include('blog._card', ['post' => $entry])
     @endforeach
 
     @if($posts->hasPages())
