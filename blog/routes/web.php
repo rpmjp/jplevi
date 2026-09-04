@@ -49,6 +49,7 @@ Route::name('blog.')->middleware(\App\Http\Middleware\CacheResponse::class)->gro
     Route::get('/sitemap.xml', [BlogController::class, 'sitemap'])->name('sitemap');
     Route::get('/by/{user}', [BlogController::class, 'author'])->name('author');
     Route::get('/topic/{category}', [BlogController::class, 'topic'])->name('topic');
+    Route::get('/tag/{tag}', [BlogController::class, 'tag'])->name('tag');
 });
 
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');

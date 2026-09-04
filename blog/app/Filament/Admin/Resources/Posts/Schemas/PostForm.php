@@ -210,6 +210,33 @@ class PostForm
                                 ->helperText('Describe the image for anyone who cannot see it. Left empty, it is treated as decoration and skipped by screen readers.'),
                         ]),
 
+                    /*
+                     * Tags, the way WordPress does them: typed, not picked.
+                     *
+                     * A Select would make every tag a trip through a dropdown
+                     * and a modal to create one, which is enough friction that
+                     * tagging stops happening. This is a text box: type, press
+                     * comma or enter, and it becomes a chip. Anything already
+                     * used is suggested; anything new is created on save.
+                     */
+                    Section::make('Tags')
+                        ->icon('heroicon-m-hashtag')
+                        ->schema([
+                            \Filament\Forms\Components\TagsInput::make('tags')
+                                ->hiddenLabel()
+                                ->placeholder('Add a tag and press enter')
+                                ->splitKeys([',', 'Tab'])
+                                ->suggestions(fn () => \App\Models\Tag::orderBy('name')->pluck('name')->all())
+                                ->helperText('What this piece is about. Categories are the sections of the blog; tags are the specifics.')
+                                // The field holds names, the relationship holds
+                                // rows, so both directions are stated here.
+                                ->afterStateHydrated(fn ($component, ?\App\Models\Post $record) =>
+                                    $component->state($record?->tags->pluck('name')->all() ?? []))
+                                ->dehydrated(false)
+                                ->saveRelationshipsUsing(fn (\App\Models\Post $record, $state) =>
+                                    $record->syncTagNames((array) $state)),
+                        ]),
+
                     Section::make('Categories')
                         ->icon('heroicon-m-folder')
                         ->schema([

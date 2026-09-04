@@ -56,6 +56,9 @@
 @foreach($post->categories as $category)
     <meta property="article:tag" content="{{ $category->name }}">
 @endforeach
+@foreach($post->tags as $tag)
+    <meta property="article:tag" content="{{ $tag->name }}">
+@endforeach
 {{-- The plain document-level author, which search engines read and og: does
      not replace. --}}
 <meta name="author" content="{{ $post->author->name }}">
@@ -144,9 +147,21 @@
 
     <div class="prose-jp mt-12">{!! $toc['html'] !!}</div>
 
+    @if($post->tags->isNotEmpty())
+        <div class="mt-14 flex flex-wrap items-center gap-2 border-t border-paper-3 pt-6">
+            <span class="mr-1 font-mono text-[0.66rem] uppercase tracking-label text-ink-soft">Tagged</span>
+            @foreach($post->tags as $tag)
+                <a href="{{ route('blog.tag', $tag) }}"
+                   class="rounded-full border border-paper-4 px-3 py-1 font-sans text-[0.82rem] text-ink-body transition-colors hover:border-ink-ink hover:text-ink-ink">
+                    {{ $tag->name }}
+                </a>
+            @endforeach
+        </div>
+    @endif
+
     {{-- Again at the foot, where a reader who has actually finished it is far
          likelier to pass it on than one who has just arrived. --}}
-    <div class="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-ink-ink pt-8">
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-ink-ink pt-8">
         <x-share-row :post="$post" />
         <a href="{{ route('blog.index') }}" class="font-mono text-[0.75rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">
             &larr; All notes

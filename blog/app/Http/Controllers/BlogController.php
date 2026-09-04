@@ -41,7 +41,7 @@ class BlogController extends Controller
 
     public function show(Request $request, string $slug)
     {
-        $post = Post::with(['categories', 'author'])->where('slug', $slug)->firstOrFail();
+        $post = Post::with(['categories', 'tags', 'author'])->where('slug', $slug)->firstOrFail();
 
         // A draft is readable only with its own preview token, so a link can be
         // shared for review without the post being public.
@@ -68,7 +68,7 @@ class BlogController extends Controller
             'wordCount' => str_word_count(strip_tags($post->renderedBody())),
             'timeRequired' => 'PT'.$post->reading_minutes.'M',
             'articleSection' => $post->categories->pluck('name')->all(),
-            'keywords' => $post->categories->pluck('name')->implode(', '),
+            'keywords' => $post->categories->pluck('name')->merge($post->tags->pluck('name'))->implode(', '),
             'inLanguage' => 'en-US',
             'author' => array_filter([
                 '@type' => 'Person',
@@ -188,6 +188,18 @@ class BlogController extends Controller
             // whole reason this page does not simply always get indexed.
             'indexed' => $category->shouldBeIndexed(),
         ]);
+    }
+
+    public function tag(\App\Models\Tag $tag)
+    {
+        $posts = Post::published()
+            ->whereHas('tags', fn ($q) => $q->whereKey($tag->id))
+            ->with(['categories', 'author'])
+            ->withCount(['comments' => fn ($q) => $q->approved()])
+            ->latest('published_at')
+            ->paginate(15);
+
+        return view('blog.tag', compact('tag', 'posts'));
     }
 
     public function author(User $user)

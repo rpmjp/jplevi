@@ -247,6 +247,48 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    /**
+     * Free-form tags.
+     *
+     * Separate from categories on purpose, the way WordPress separates them. A
+     * category is a section of the publication: few, chosen from a list, and
+     * worth landing on. A tag is whatever this particular piece happens to be
+     * about, typed while writing and never picked from anything.
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Attaches tags by name, creating the ones that do not exist yet.
+     *
+     * Matched on the slug rather than the name, so "Model Context Protocol",
+     * "model context protocol" and "Model  Context  Protocol" are one tag
+     * instead of three.
+     */
+    public function syncTagNames(array $names): void
+    {
+        $ids = collect($names)
+            ->map(fn ($name) => trim((string) $name))
+            ->filter()
+            ->unique(fn (string $name) => Str::slug($name))
+            ->map(fn (string $name) => Tag::firstOrCreate(
+                ['slug' => Str::slug($name)],
+                ['name' => $name],
+            )->id)
+            ->all();
+
+        $changed = $this->tags()->sync($ids);
+
+        // A pivot sync fires no model event, so the flush that rides on saving
+        // a post has already happened by the time tags are attached. Without
+        // this the post keeps its old tags on screen until the cache expires.
+        if (array_filter($changed)) {
+            \App\Http\Middleware\CacheResponse::flush();
+        }
+    }
+
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class);
