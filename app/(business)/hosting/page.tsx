@@ -27,16 +27,34 @@ export default function HostingPage() {
   return (
     <div className="w-full">
       {/* ---- Masthead ---------------------------------------------------- */}
-      <section className="px-6 pb-14 pt-14 sm:px-10 sm:pt-20">
-        <p className="biz-label-blue">Infrastructure</p>
-        <h1 className="biz-display mt-5 max-w-[15ch] text-[clamp(2.6rem,7.5vw,6rem)]">
-          We keep it running
-          <span className="ml-3 inline-block h-[0.13em] w-[0.13em] rounded-full bg-brand align-baseline" />
-        </h1>
-        <p className="biz-lead mt-10 max-w-xl">
-          Building the thing is half the job. Someone has to keep it online, patched, and backed up
-          afterwards. For most clients that someone is us.
-        </p>
+      <section className="grid gap-10 px-6 pb-14 pt-14 sm:px-10 sm:pt-20 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center lg:gap-12">
+        <div>
+          <p className="biz-label-blue">Infrastructure</p>
+          <h1 className="biz-display mt-5 max-w-[15ch] text-[clamp(2.6rem,7.5vw,6rem)]">
+            We keep it running
+            <span className="ml-3 inline-block h-[0.13em] w-[0.13em] rounded-full bg-brand align-baseline" />
+          </h1>
+          <p className="biz-lead mt-10 max-w-xl">
+            Building the thing is half the job. Someone has to keep it online, patched, and backed up
+            afterwards. For most clients that someone is us.
+          </p>
+        </div>
+        {/* Decorative infrastructure artwork; the copy carries the meaning. */}
+        <div aria-hidden="true" className="flex justify-center lg:justify-end">
+          <picture className="block w-full max-w-[22rem] sm:max-w-[28rem] lg:max-w-[32rem]">
+            <source srcSet="/hosting-servers.webp" type="image/webp" />
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export serves the generated asset directly. */}
+            <img
+              src="/hosting-servers.png"
+              alt=""
+              width={1254}
+              height={1254}
+              decoding="async"
+              fetchPriority="high"
+              className="h-auto w-full"
+            />
+          </picture>
+        </div>
       </section>
 
       {/* ---- What offsite actually means -----------------------------------
