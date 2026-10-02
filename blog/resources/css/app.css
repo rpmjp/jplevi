@@ -38,10 +38,10 @@
   --color-night: #0B0B0C;
   --color-night-2: #141416;
 
-  /* Saira, Archivo Narrow, Space Grotesk, IBM Plex Mono, as the site loads. */
+  /* Saira, IBM Plex Sans Condensed, IBM Plex Sans, IBM Plex Mono, as the site loads. */
   --font-display: Saira, ui-sans-serif, system-ui, sans-serif;
-  --font-grotesk: "Archivo Narrow", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-grotesk: "IBM Plex Sans Condensed", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
   --tracking-hud: 0.22em;

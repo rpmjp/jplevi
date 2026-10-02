@@ -13,7 +13,7 @@
     </p>
 
     @error('auth')
-        <p class="mt-6 border-l-2 border-ember pl-4 font-mono text-[0.82rem] text-ink-body">{{ $message }}</p>
+        <p class="mt-6 border-l-2 border-ember pl-4 font-sans text-[0.875rem] text-ink-body">{{ $message }}</p>
     @enderror
 
     <div class="mt-10 flex flex-wrap gap-3">
@@ -25,7 +25,7 @@
         @endforeach
     </div>
 
-    <p class="mt-8 max-w-prose font-mono text-[0.78rem] leading-relaxed text-ink-soft">
+    <p class="mt-8 max-w-prose font-sans text-[0.875rem] leading-relaxed text-ink-soft">
         We receive your name and email address from whichever you choose, and nothing
         else. See <a href="{{ route('legal.privacy') }}" class="text-brand underline underline-offset-4">privacy</a>
         and the <a href="{{ route('legal.moderation') }}" class="text-brand underline underline-offset-4">comment rules</a>.

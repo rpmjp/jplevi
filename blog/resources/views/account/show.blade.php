@@ -8,7 +8,7 @@
 
     <div class="mt-10 border-t border-paper-4 pt-6">
         <h2 class="biz-label">What we hold</h2>
-        <dl class="mt-4 space-y-2 font-mono text-[0.85rem] text-ink-body">
+        <dl class="mt-4 space-y-2 font-sans text-[0.875rem] text-ink-body">
             <div><dt class="inline text-ink-soft">Email:</dt> <dd class="inline">{{ $user->email }}</dd></div>
             <div><dt class="inline text-ink-soft">Name:</dt> <dd class="inline">{{ $user->name }}</dd></div>
             <div><dt class="inline text-ink-soft">Joined:</dt> <dd class="inline">{{ $user->created_at->format('j F Y') }}</dd></div>
@@ -25,7 +25,7 @@
             <ul class="mt-4 space-y-4">
                 @foreach($comments as $comment)
                     <li class="border-t border-paper-3 pt-3">
-                        <p class="font-mono text-[0.7rem] text-ink-soft">
+                        <p class="font-sans text-[0.875rem] text-ink-soft">
                             <a href="{{ route('blog.show', $comment->post) }}#comments" class="text-brand underline underline-offset-4">{{ $comment->post->title }}</a>
                             &middot; {{ $comment->created_at->format('j M Y') }} &middot; {{ $comment->status }}
                         </p>

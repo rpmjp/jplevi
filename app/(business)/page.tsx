@@ -60,8 +60,8 @@ export default function BusinessHome() {
           </p>
 
           <div className="mt-7 border-l-2 border-brand pl-4">
-            <p className="font-mono text-[0.82rem] text-ink-body">{biz.teamLine}</p>
-            <p className="mt-1.5 font-mono text-[0.82rem] font-semibold text-ink-ink">
+            <p className="font-sans text-[0.95rem] text-ink-body">{biz.teamLine}</p>
+            <p className="mt-1.5 font-sans text-[0.95rem] font-semibold text-ink-ink">
               {biz.disciplines.join(" • ")}
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function BusinessHome() {
                 <span aria-hidden="true" className="h-2 w-2 border border-ink-ink" />
                 <h2 className="biz-label !text-ink-ink">{stage.title}</h2>
               </div>
-              <p className="mt-3 font-mono text-[0.82rem] leading-relaxed text-ink-body">
+              <p className="mt-3 font-sans text-[0.95rem] leading-relaxed text-ink-body">
                 {stage.body}
               </p>
             </li>
@@ -93,61 +93,64 @@ export default function BusinessHome() {
 
       {/* ---- Inverted band ---------------------------------------------- */}
       <section className="biz-invert relative w-full" aria-labelledby="ownership-heading">
+        {/* One left column, held clear of the feasibility panel at xl so the
+            heading, the rail and the promise all share the same right edge. */}
         <div className="px-6 pb-16 pt-12 sm:px-10 sm:pb-20 sm:pt-10">
-          <h2
-            id="ownership-heading"
-            className="biz-display max-w-[62rem] text-[2rem] tracking-[-0.03em] sm:text-[3rem] lg:text-[min(4.25vw,65px)]"
-          >
-            {ownershipHeading}
-            <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
-          </h2>
+          <div className="xl:mr-[540px]">
+            {/* One line from lg up. At xl the size tracks the column left of
+                the panel, so the line always ends before it. */}
+            <h2
+              id="ownership-heading"
+              className="biz-display text-[2rem] leading-[0.95] tracking-[-0.02em] sm:text-[3rem] lg:whitespace-nowrap lg:text-[min(4.25vw,65px)] xl:text-[min(calc((100vw-620px)/17),65px)]"
+            >
+              {ownershipHeading}
+              <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
+            </h2>
 
-          <ol className="mt-8 flex flex-wrap gap-x-[42px] gap-y-8 border-t border-white/20 pt-0 xl:mr-[520px]">
-            {ownership.map((item) => (
-              <li key={item.n} className="relative pt-3">
-                {/* tick rising from the rule above, as in the reference */}
-                <span aria-hidden="true" className="absolute left-0 top-0 h-3 w-px bg-white/35" />
-                <span className="flex items-baseline gap-2">
-                  <span className="font-grotesk text-[0.85rem] font-black text-paper">{item.n}</span>
-                  <span aria-hidden="true" className="h-px w-3 bg-ember" />
-                  <span className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-paper/85 sm:whitespace-nowrap">
-                    {item.label}
+            {/* One row from lg up: number and label side by side, the label
+                scaling with the viewport so all four clear the panel at xl. */}
+            <ol className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/20 lg:flex lg:flex-nowrap lg:justify-between lg:gap-x-4">
+              {ownership.map((item) => (
+                <li key={item.n} className="relative pt-4">
+                  {/* tick rising from the rule above, as in the reference */}
+                  <span aria-hidden="true" className="absolute left-0 top-0 h-3 w-px bg-white/35" />
+                  <span className="flex items-baseline gap-1.5">
+                    <span className="font-grotesk text-[0.9rem] font-black text-paper">{item.n}</span>
+                    <span aria-hidden="true" className="h-px w-2.5 shrink-0 self-center bg-ember" />
+                    <span className="font-grotesk text-[0.75rem] font-medium uppercase tracking-[0.04em] text-paper/85 lg:whitespace-nowrap xl:text-[clamp(0.62rem,0.8vw,0.75rem)]">
+                      {item.label}
+                    </span>
                   </span>
-                </span>
-              </li>
-            ))}
-          </ol>
+                </li>
+              ))}
+            </ol>
 
-          {/* The promise, where the differentiator used to sit on its own.
-              The xl width cap keeps it clear of the product panel. */}
-          <div className="mt-14 border-t border-white/20 pt-9 xl:max-w-[46rem]">
-            <div>
-            <h3 className="font-grotesk text-2xl font-bold tracking-tight2 text-paper sm:text-3xl">
-              {guarantee.question}
-            </h3>
-            <p className="mt-3 font-mono text-[0.82rem] uppercase tracking-label text-brand-soft">
-              {guarantee.subhead}
-            </p>
-            <p className="mt-6 max-w-prose2 font-sans text-[1.02rem] leading-[1.7] text-paper/75">
-              {guarantee.pitch}
-            </p>
-            </div>
+            {/* The promise, where the differentiator used to sit on its own. */}
+            <div className="mt-12 border-t border-white/20 pt-9">
+              <h3 className="font-grotesk text-2xl font-bold uppercase leading-none tracking-normal text-paper sm:text-3xl">
+                {guarantee.question}
+              </h3>
+              <p className="mt-3 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-brand-soft">
+                {guarantee.subhead}
+              </p>
+              <p className="mt-6 max-w-prose2 font-sans text-[1.02rem] leading-[1.7] text-paper/75">
+                {guarantee.pitch}
+              </p>
 
-            {/* Kept in the left column and width-capped so it stays clear of
-                the feasibility panel rather than sitting behind it. */}
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Link
-                href={bizRoutes.contact}
-                className="biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
-              >
-                {biz.railCta} ↗
-              </Link>
-              <a
-                href={`tel:${biz.phoneHref}`}
-                className="font-grotesk text-[1.05rem] font-bold tracking-tight2 text-paper transition-colors hover:text-brand-soft"
-              >
-                {biz.phone}
-              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <Link
+                  href={bizRoutes.contact}
+                  className="biz-btn !border-brand !bg-brand !text-white hover:!border-brand-soft hover:!bg-brand-soft"
+                >
+                  {biz.railCta} ↗
+                </Link>
+                <a
+                  href={`tel:${biz.phoneHref}`}
+                  className="font-grotesk text-[1.2rem] font-bold tracking-normal text-paper transition-colors hover:text-brand-soft"
+                >
+                  {biz.phone}
+                </a>
+              </div>
             </div>
           </div>
         </div>

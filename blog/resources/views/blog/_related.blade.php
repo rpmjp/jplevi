@@ -46,7 +46,7 @@
                             {{ $other->title }}
                         </h3>
 
-                        <p class="mt-2.5 font-mono text-[0.7rem] text-ink-soft">
+                        <p class="mt-2.5 font-sans text-[0.875rem] text-ink-soft">
                             {{ $other->published_at?->format('M j, Y') }} &middot; {{ $other->reading_minutes }} min
                         </p>
                     </a>

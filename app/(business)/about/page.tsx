@@ -65,7 +65,7 @@ export default function CompanyPage() {
               {lead.line}
             </p>
 
-            <p className="mt-8 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-paper/70">
+            <p className="mt-8 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-paper/70">
               {site.legalName} has been a New Jersey corporation since {biz.founded}. It takes on a
               limited number of projects at a time and says no to work it is not the right fit for.
               The studio also publishes its own products, which keeps it honest about what is
@@ -126,7 +126,7 @@ export default function CompanyPage() {
               <span className="font-grotesk text-[clamp(2.2rem,4.5vw,3.4rem)] font-black leading-none tracking-tight3 text-brand">
                 {m.year}
               </span>
-              <p className="mt-3 font-mono text-[0.8rem] leading-relaxed text-ink-body">{m.label}</p>
+              <p className="mt-3 font-sans text-[0.9rem] leading-relaxed text-ink-body">{m.label}</p>
             </li>
           ))}
         </ol>
@@ -142,7 +142,7 @@ export default function CompanyPage() {
                 {c.where ? <span className="text-brand"> / {c.where}</span> : null}
               </dd>
               {c.note ? (
-                <p className="mt-1 font-mono text-[0.72rem] text-ink-soft">{c.note}</p>
+                <p className="mt-1 font-sans text-[0.875rem] text-ink-soft">{c.note}</p>
               ) : null}
             </div>
           ))}
@@ -158,7 +158,7 @@ export default function CompanyPage() {
           <ol className="mt-10 grid gap-10 sm:grid-cols-2">
             {shipped.map((w, i) => (
               <li key={w.id} className="border-t border-white/20 pt-5">
-                <span className="font-mono text-[0.7rem] text-brand-soft">
+                <span className="font-sans text-[0.875rem] text-brand-soft">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-2 font-grotesk text-[1.6rem] font-black uppercase tracking-tight2 text-paper">
@@ -184,12 +184,12 @@ export default function CompanyPage() {
               className="lg:grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:items-baseline lg:gap-x-12"
             >
               <h3 className="font-grotesk text-[clamp(1.8rem,5vw,3.4rem)] font-black uppercase leading-[0.92] tracking-tight3 text-ink-ink">
-                <span className="mr-4 align-top font-mono text-[0.7rem] font-medium tracking-label text-brand">
+                <span className="mr-4 align-top font-sans text-[0.875rem] font-medium tracking-label text-brand">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {p.t}
               </h3>
-              <p className="mt-4 max-w-prose2 font-mono text-[0.85rem] leading-[1.8] text-ink-body lg:mt-0">
+              <p className="mt-4 max-w-prose2 font-sans text-[0.95rem] leading-[1.8] text-ink-body lg:mt-0">
                 {p.b}
               </p>
             </li>
@@ -209,7 +209,7 @@ export default function CompanyPage() {
                 <dt className="w-24 shrink-0 font-mono text-[0.64rem] uppercase tracking-label text-ink-soft">
                   {c.k}
                 </dt>
-                <dd className="font-mono text-[0.76rem] text-ink-ink">{c.v}</dd>
+                <dd className="font-sans text-[0.9rem] text-ink-ink">{c.v}</dd>
               </div>
             ))}
           </dl>
@@ -230,7 +230,7 @@ export default function CompanyPage() {
             </Link>
             <a
               href={`tel:${biz.phoneHref}`}
-              className="font-mono text-[0.78rem] text-ink-body transition-colors hover:text-brand"
+              className="font-sans text-[0.9rem] text-ink-body transition-colors hover:text-brand"
             >
               or call {biz.phone}
             </a>

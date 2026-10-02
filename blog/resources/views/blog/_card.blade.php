@@ -49,7 +49,7 @@
             </a>
 
             {{-- Meta --}}
-            <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.72rem] text-ink-soft">
+            <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-[0.875rem] text-ink-soft">
                 <span class="inline-flex items-center gap-1.5">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>

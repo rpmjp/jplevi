@@ -20,7 +20,7 @@ export function BizFooter() {
             <p className="font-grotesk text-2xl font-bold uppercase tracking-tight2 text-paper">
               {biz.name}
             </p>
-            <p className="mt-4 max-w-sm font-mono text-[0.82rem] leading-relaxed text-paper/65">
+            <p className="mt-4 max-w-sm font-sans text-[0.95rem] leading-relaxed text-paper/65">
               {biz.lead}
             </p>
             <div className="mt-6 flex flex-col gap-2">
@@ -32,7 +32,7 @@ export function BizFooter() {
               </a>
               <a
                 href={`tel:${biz.phoneHref}`}
-                className="inline-block font-mono text-[0.8rem] text-paper/65 transition-colors hover:text-brand-soft"
+                className="inline-block font-sans text-[0.9rem] text-paper/65 transition-colors hover:text-brand-soft"
               >
                 {biz.phone}
               </a>
@@ -49,7 +49,7 @@ export function BizFooter() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="font-mono text-[0.82rem] text-paper/80 transition-colors hover:text-brand-soft"
+                    className="font-sans text-[0.95rem] text-paper/80 transition-colors hover:text-brand-soft"
                   >
                     {item.label}
                   </Link>
@@ -63,7 +63,7 @@ export function BizFooter() {
               Company
             </h2>
             <div className="mt-3 h-px w-full bg-white/15" />
-            <ul className="mt-4 space-y-2.5 font-mono text-[0.82rem] text-paper/80">
+            <ul className="mt-4 space-y-2.5 font-sans text-[0.95rem] text-paper/80">
               <li>{site.legalName}</li>
               <li>{biz.location}</li>
               <li>Est. {biz.founded}</li>

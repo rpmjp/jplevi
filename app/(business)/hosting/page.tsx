@@ -76,7 +76,7 @@ export default function HostingPage() {
             <article key={tier.n} className="border-t border-ink-ink pt-8">
               <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-x-14">
                 <div>
-                  <span className="font-mono text-[0.72rem] text-brand">{tier.n}</span>
+                  <span className="font-sans text-[0.875rem] text-brand">{tier.n}</span>
                   <h3 className="mt-3 font-grotesk text-[clamp(1.8rem,4.5vw,3rem)] font-black uppercase leading-[0.95] tracking-tight3 text-ink-ink">
                     {tier.name}
                   </h3>
@@ -91,7 +91,7 @@ export default function HostingPage() {
                       <dt className="w-32 shrink-0 font-mono text-[0.66rem] uppercase tracking-label text-ink-soft">
                         {k}
                       </dt>
-                      <dd className="font-mono text-[0.82rem] text-ink-ink">{v}</dd>
+                      <dd className="font-sans text-[0.95rem] text-ink-ink">{v}</dd>
                     </div>
                   ))}
                 </dl>
@@ -110,7 +110,7 @@ export default function HostingPage() {
                         <p className="font-grotesk text-[1.1rem] font-bold tracking-tight2 text-ink-ink">
                           {s.label}
                         </p>
-                        <ul className="mt-3 space-y-1.5 font-mono text-[0.78rem] text-ink-body">
+                        <ul className="mt-3 space-y-1.5 font-sans text-[0.9rem] text-ink-body">
                           <li>{s.cpu}</li>
                           <li>{s.ram}</li>
                           <li>{s.disk}</li>
@@ -134,12 +134,12 @@ export default function HostingPage() {
             {included.map((item, i) => (
               <li key={item.t}>
                 <div className="flex items-baseline gap-3">
-                  <span className="font-mono text-[0.7rem] text-brand">
+                  <span className="font-sans text-[0.875rem] text-brand">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="biz-h3">{item.t}</h3>
                 </div>
-                <p className="mt-2.5 font-mono text-[0.84rem] leading-relaxed text-ink-body">
+                <p className="mt-2.5 font-sans text-[0.95rem] leading-relaxed text-ink-body">
                   {item.b}
                 </p>
               </li>
@@ -153,14 +153,14 @@ export default function HostingPage() {
         <div className="grid gap-10 border-t border-paper-3 pt-10 lg:grid-cols-2 lg:gap-x-16">
           <div>
             <h2 className="biz-h2">Who this suits</h2>
-            <p className="mt-5 max-w-prose2 font-mono text-[0.88rem] leading-[1.8] text-ink-body">
+            <p className="mt-5 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-ink-body">
               Teams running a handful of applications who do not have, and do not want, a full-time
               operations hire. If you already have a platform team, you do not need this.
             </p>
           </div>
           <div>
             <h2 className="biz-h2">No lock-in</h2>
-            <p className="mt-5 max-w-prose2 font-mono text-[0.88rem] leading-[1.8] text-ink-body">
+            <p className="mt-5 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-ink-body">
               Configuration lives in your repository. If you want to take it in-house you get the
               keys, the runbook, and a handover call rather than an argument.
             </p>
@@ -172,7 +172,7 @@ export default function HostingPage() {
       <section className="px-6 pb-16 sm:px-10 sm:pb-20">
         <div className="border border-ink-ink p-9 sm:p-12">
           <h2 className="biz-h2">Pricing</h2>
-          <p className="mt-5 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-ink-body">
+          <p className="mt-5 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-ink-body">
             Quoted per engagement, based on which tier you need, how many applications you run, and
             how much of the software we are maintaining. Tell us what you are running and we will
             send a number.
@@ -183,7 +183,7 @@ export default function HostingPage() {
             </Link>
             <a
               href={`tel:${biz.phoneHref}`}
-              className="font-mono text-[0.78rem] text-ink-body transition-colors hover:text-brand"
+              className="font-sans text-[0.9rem] text-ink-body transition-colors hover:text-brand"
             >
               or call {biz.phone}
             </a>

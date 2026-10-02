@@ -8,7 +8,7 @@
     <h1 class="biz-display mt-5 text-[clamp(2.4rem,7vw,5rem)]">
         Working notes<span class="ml-3 inline-block h-[0.13em] w-[0.13em] rounded-full bg-brand align-baseline"></span>
     </h1>
-    <p class="mt-8 max-w-xl border-l-2 border-ink-ink pl-5 font-mono text-[0.9rem] leading-relaxed">
+    <p class="mt-8 max-w-xl border-l-2 border-ink-ink pl-5 font-sans text-[0.9rem] leading-relaxed">
         Machine learning experiments, build write-ups, and opinions about where AI actually helps a
         business. Some of it is for engineers, some for owners.
     </p>
@@ -36,7 +36,7 @@
                 <a href="{{ route('blog.topic', $topic) }}"
                    class="shrink-0 border-b-2 border-transparent pb-3 font-sans text-[0.9rem] text-ink-soft transition-colors hover:text-ink-ink">
                     {{ $topic->name }}
-                    <span class="ml-1 font-mono text-[0.7rem] text-ink-soft/70">{{ $topic->posts_count }}</span>
+                    <span class="ml-1 font-sans text-[0.875rem] text-ink-soft/70">{{ $topic->posts_count }}</span>
                 </a>
             @endforeach
         </nav>
@@ -47,7 +47,7 @@
     @forelse($posts as $entry)
         @include('blog._card', ['post' => $entry])
     @empty
-        <p class="border-y border-paper-3 py-16 text-center font-mono text-[0.85rem] text-ink-soft">
+        <p class="border-y border-paper-3 py-16 text-center font-sans text-[0.875rem] text-ink-soft">
             Nothing published yet.
         </p>
     @endforelse

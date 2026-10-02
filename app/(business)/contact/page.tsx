@@ -45,7 +45,7 @@ export default function ContactPage() {
           </a>
           <a
             href={`mailto:${biz.email}`}
-            className="font-mono text-[0.82rem] text-paper/70 underline decoration-white/30 underline-offset-[6px] transition-colors hover:text-paper"
+            className="font-sans text-[0.95rem] text-paper/70 underline decoration-white/30 underline-offset-[6px] transition-colors hover:text-paper"
           >
             {biz.email}
           </a>
@@ -63,7 +63,7 @@ export default function ContactPage() {
           </p>
         </div>
         <div className="biz-rule-draw mt-5 bg-paper-4" />
-        <p className="mt-6 max-w-prose2 font-mono text-[0.88rem] leading-[1.8] text-ink-body">
+        <p className="mt-6 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-ink-body">
           Answer what you can. Partial is fine, and the message builds itself beside you so you can
           see exactly what arrives.
         </p>
@@ -92,12 +92,12 @@ export default function ContactPage() {
                 className="lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-baseline lg:gap-x-12"
               >
                 <h3 className="font-grotesk text-[clamp(1.5rem,4vw,2.6rem)] font-black uppercase leading-[0.95] tracking-tight3 text-ink-ink">
-                  <span className="mr-4 align-top font-mono text-[0.7rem] font-medium tracking-label text-brand">
+                  <span className="mr-4 align-top font-sans text-[0.875rem] font-medium tracking-label text-brand">
                     {step.n}
                   </span>
                   {step.title}
                 </h3>
-                <p className="mt-3 max-w-prose2 font-mono text-[0.85rem] leading-[1.8] text-ink-body lg:mt-0">
+                <p className="mt-3 max-w-prose2 font-sans text-[0.95rem] leading-[1.8] text-ink-body lg:mt-0">
                   {step.body}
                 </p>
               </li>
@@ -115,7 +115,7 @@ export default function ContactPage() {
               <li key={s.id}>
                 <Link
                   href={`${bizRoutes.services}#${s.id}`}
-                  className="inline-block border border-paper-3 px-3.5 py-2 font-mono text-[0.75rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
+                  className="inline-block border border-paper-3 px-3.5 py-2 font-sans text-[0.875rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
                 >
                   <span className="text-ink-soft">{s.n}</span> {s.title.join(" ")}
                 </Link>

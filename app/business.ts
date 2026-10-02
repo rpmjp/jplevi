@@ -21,7 +21,7 @@ export const biz = {
   /** E.164 for the tel: link. */
   phoneHref: "+19293564644",
   /** Three lines, with the first set larger, as in the reference. */
-  headline: ["AI", "that works for", "your business."],
+  headline: ["AI", "that works for", "your business"],
   lead:
     "We design, build, and operate useful AI systems: RAG, GraphRAG, machine learning, automation, full-stack products, and managed infrastructure.",
   /** The four phases named under the hero CTA. */
@@ -569,7 +569,7 @@ export const credentials = [
 /** How this site is built. True of the page you are reading it on. */
 export const colophon = [
   { k: "Framework", v: "Next.js, static export" },
-  { k: "Type", v: "Archivo Narrow, IBM Plex Mono" },
+  { k: "Type", v: "IBM Plex Sans Condensed, IBM Plex Sans, IBM Plex Mono" },
   { k: "Delivery", v: "Build gate on every push" },
   { k: "Runtime", v: "No tracking, no analytics" },
 ] as const;

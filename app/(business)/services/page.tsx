@@ -86,7 +86,7 @@ export default function ServicesPage() {
                 href={`#${c.id}`}
                 className="group grid grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-x-5 px-6 py-4 transition-colors hover:bg-night sm:px-10 lg:grid-cols-[3rem_minmax(0,17rem)_minmax(0,1fr)_auto] lg:gap-x-8"
               >
-                <span className="font-mono text-[0.72rem] text-ink-soft transition-colors group-hover:text-brand-soft">
+                <span className="font-sans text-[0.875rem] text-ink-soft transition-colors group-hover:text-brand-soft">
                   {c.n}
                 </span>
                 <span className="font-grotesk text-[1.05rem] font-bold uppercase leading-tight tracking-tight2 text-ink-ink transition-colors group-hover:text-paper sm:text-[1.2rem]">
@@ -105,7 +105,7 @@ export default function ServicesPage() {
 
                 <span
                   aria-hidden="true"
-                  className="font-mono text-[0.9rem] text-ink-soft transition-all group-hover:translate-x-1 group-hover:text-brand-soft"
+                  className="font-sans text-[1rem] text-ink-soft transition-all group-hover:translate-x-1 group-hover:text-brand-soft"
                 >
                   →
                 </span>
@@ -124,7 +124,7 @@ export default function ServicesPage() {
                 <span aria-hidden="true" className="h-2 w-2 border border-ink-ink" />
                 <h2 className="biz-label !text-ink-ink">{stage.title}</h2>
               </div>
-              <p className="mt-2 font-mono text-[0.8rem] leading-relaxed text-ink-body">
+              <p className="mt-2 font-sans text-[0.9rem] leading-relaxed text-ink-body">
                 {stage.body}
               </p>
             </li>
@@ -228,7 +228,7 @@ export default function ServicesPage() {
                     Technical detail
                   </summary>
                   <p
-                    className={`mt-4 max-w-prose2 font-mono text-[0.84rem] leading-[1.7] ${t.body}`}
+                    className={`mt-4 max-w-prose2 font-sans text-[0.95rem] leading-[1.7] ${t.body}`}
                   >
                     {c.blurb}
                   </p>
@@ -240,7 +240,7 @@ export default function ServicesPage() {
                         >
                           {m.label}
                         </dt>
-                        <dd className={`font-mono text-[0.78rem] ${t.meta}`}>{m.value}</dd>
+                        <dd className={`font-sans text-[0.9rem] ${t.meta}`}>{m.value}</dd>
                       </div>
                     ))}
                   </dl>
@@ -256,7 +256,7 @@ export default function ServicesPage() {
                     </Link>
                     <a
                       href={`tel:${biz.phoneHref}`}
-                      className={`font-mono text-[0.78rem] transition-colors ${t.body}`}
+                      className={`font-sans text-[0.9rem] transition-colors ${t.body}`}
                     >
                       or call {biz.phone}
                     </a>
@@ -282,7 +282,7 @@ export default function ServicesPage() {
             </Link>
             <a
               href={`tel:${biz.phoneHref}`}
-              className="font-mono text-[0.78rem] text-ink-body transition-colors hover:text-brand"
+              className="font-sans text-[0.9rem] text-ink-body transition-colors hover:text-brand"
             >
               or call {biz.phone}
             </a>

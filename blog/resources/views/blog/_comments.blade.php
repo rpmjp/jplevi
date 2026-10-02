@@ -3,10 +3,10 @@
         <h2 class="biz-label">{{ $comments->count() }} {{ Str::plural('comment', $comments->count()) }}</h2>
 
         @if(session('comment_status'))
-            <p class="mt-6 border-l-2 border-brand pl-4 font-mono text-[0.82rem] text-ink-body">{{ session('comment_status') }}</p>
+            <p class="mt-6 border-l-2 border-brand pl-4 font-sans text-[0.875rem] text-ink-body">{{ session('comment_status') }}</p>
         @endif
         @error('body')
-            <p class="mt-6 border-l-2 border-ember pl-4 font-mono text-[0.82rem] text-ink-body">{{ $message }}</p>
+            <p class="mt-6 border-l-2 border-ember pl-4 font-sans text-[0.875rem] text-ink-body">{{ $message }}</p>
         @enderror
 
         @if($post->acceptsComments())
@@ -21,7 +21,7 @@
                               class="mt-3 w-full resize-y border border-paper-4 bg-white/60 px-4 py-3 font-sans text-[0.92rem] leading-relaxed text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"></textarea>
                     <div class="mt-4 flex flex-wrap items-center gap-4">
                         <button class="border border-brand bg-brand px-5 py-2.5 font-mono text-[0.72rem] uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">Post</button>
-                        <span class="font-mono text-[0.72rem] text-ink-soft">
+                        <span class="font-sans text-[0.875rem] text-ink-soft">
                             as {{ auth()->user()->name }} &middot;
                             <a href="{{ route('legal.moderation') }}" class="underline underline-offset-[4px] hover:text-brand">rules</a> &middot;
                             <button form="logout-form" class="underline underline-offset-[4px] hover:text-brand">sign out</button>
@@ -45,13 +45,13 @@
                             </a>
                         @endforeach
                     </div>
-                    <p class="mt-4 font-mono text-[0.72rem] text-ink-soft">
+                    <p class="mt-4 font-sans text-[0.875rem] text-ink-soft">
                         <a href="{{ route('sign-in') }}" class="underline underline-offset-4 hover:text-brand">More about signing in</a>
                     </p>
                 </div>
             @endauth
         @else
-            <p class="mt-6 font-mono text-[0.82rem] text-ink-soft">Comments are closed on this post.</p>
+            <p class="mt-6 font-sans text-[0.875rem] text-ink-soft">Comments are closed on this post.</p>
         @endif
 
         <ol class="mt-12 space-y-8">

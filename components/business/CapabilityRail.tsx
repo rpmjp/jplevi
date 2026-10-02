@@ -164,7 +164,7 @@ export function CapabilityRail() {
               }`}
             >
               <span
-                className={`font-mono text-[0.68rem] ${on ? "text-brand" : "text-ink-soft"}`}
+                className={`font-sans text-[0.875rem] ${on ? "text-brand" : "text-ink-soft"}`}
               >
                 {c.n}
               </span>
@@ -195,7 +195,7 @@ export function CapabilityRail() {
             <p className="font-mono text-[0.7rem] uppercase tracking-label text-ink-ink">
               {current.title.join(" ")}
             </p>
-            <p className="flex items-center gap-2 font-mono text-[0.66rem] text-ink-soft">
+            <p className="flex items-center gap-2 font-sans text-[0.8rem] text-ink-soft">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-live-deep" />
               {current.status}
             </p>
@@ -225,7 +225,7 @@ export function CapabilityRail() {
                   <dt className="font-mono text-[0.62rem] uppercase tracking-label text-ink-soft">
                     {m.label}
                   </dt>
-                  <dd className="mt-1 font-mono text-[0.8rem] text-ink-ink">{m.value}</dd>
+                  <dd className="mt-1 font-sans text-[0.9rem] text-ink-ink">{m.value}</dd>
                 </div>
               ))}
             </dl>

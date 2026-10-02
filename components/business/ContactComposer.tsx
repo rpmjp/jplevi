@@ -230,7 +230,7 @@ export function ContactComposer() {
                 </p>
               ) : null}
 
-              <p className="mt-4 font-mono text-[0.7rem] leading-relaxed text-ink-soft">
+              <p className="mt-4 font-sans text-[0.875rem] leading-relaxed text-ink-soft">
                 {live
                   ? "Sending delivers it straight to us. No mail app on this machine? Send is the one to use. Nothing is tracked, and the message is not stored anywhere else."
                   : "No mail app on this machine? Copy it and paste into webmail."}

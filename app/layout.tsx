@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Saira, Archivo_Narrow, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Saira, IBM_Plex_Sans_Condensed, IBM_Plex_Sans, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "./site";
 import { biz } from "./business";
@@ -11,12 +11,20 @@ const display = Saira({
   display: "swap",
 });
 
-// Business side display face: heavy neo-grotesque for poster-scale headlines.
-// Archivo Narrow: drawn narrow rather than squeezed. Measured against the
-// reference it matches at natural width (1.03x), so no font-stretch is needed.
-const grotesk = Archivo_Narrow({
+// Business side display face: Plex Sans Condensed, drawn narrow so the
+// poster-scale headlines keep their measure.
+const grotesk = IBM_Plex_Sans_Condensed({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   variable: "--font-grotesk",
+  display: "swap",
+});
+
+// Business side reading face; scoped in .biz-scope so gaming keeps Space Grotesk.
+const business = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-business",
   display: "swap",
 });
 
@@ -68,7 +76,7 @@ export const viewport: Viewport = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${grotesk.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${grotesk.variable} ${business.variable} ${body.variable} ${mono.variable}`}>
       <body className="min-h-screen overflow-x-hidden">
         <a
           href="#main"

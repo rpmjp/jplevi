@@ -57,7 +57,7 @@ export function ProcessTimeline() {
 
             <ul className="mt-4 space-y-1.5">
               {phase.output.map((o) => (
-                <li key={o} className="flex gap-2 font-mono text-[0.75rem] text-ink-ink">
+                <li key={o} className="flex gap-2 font-sans text-[0.875rem] text-ink-ink">
                   <span aria-hidden="true" className="text-brand">
                     →
                   </span>
@@ -74,7 +74,7 @@ export function ProcessTimeline() {
         <h3 className="biz-label">Working stack</h3>
         <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
           {stack.map((item) => (
-            <li key={item} className="font-mono text-[0.75rem] text-ink-body">
+            <li key={item} className="font-sans text-[0.875rem] text-ink-body">
               {item}
             </li>
           ))}

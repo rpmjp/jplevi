@@ -7,10 +7,10 @@
         </p>
 
         @if(session('status'))
-            <p class="mt-6 border-l-2 border-brand pl-4 font-mono text-[0.82rem] text-ink-body">{{ session('status') }}</p>
+            <p class="mt-6 border-l-2 border-brand pl-4 font-sans text-[0.875rem] text-ink-body">{{ session('status') }}</p>
         @endif
         @error('email')
-            <p class="mt-6 border-l-2 border-ember pl-4 font-mono text-[0.82rem] text-ink-body">{{ $message }}</p>
+            <p class="mt-6 border-l-2 border-ember pl-4 font-sans text-[0.875rem] text-ink-body">{{ $message }}</p>
         @enderror
 
         <form method="post" action="{{ route('newsletter.subscribe') }}" class="mt-7 flex flex-wrap gap-3">

@@ -10,7 +10,7 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@400;700;800;900&family=Archivo+Narrow:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@400;700;800;900&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
@@ -47,7 +47,7 @@
                     AI that works for<br>your business.
                 </p>
                 <div class="flex flex-col gap-2">
-                    <a href="mailto:hello@jplevi.com" class="font-mono text-[0.8rem] text-paper/70 transition-colors hover:text-paper">hello@jplevi.com</a>
+                    <a href="mailto:hello@jplevi.com" class="font-sans text-sm text-paper/70 transition-colors hover:text-paper">hello@jplevi.com</a>
                     <a href="tel:+19293564644" class="font-display text-[1.2rem] font-bold tracking-tight2 text-paper transition-colors hover:text-brand-soft">(929) 356-4644</a>
                 </div>
             </div>
