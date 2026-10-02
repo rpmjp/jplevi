@@ -14,7 +14,7 @@
     <div class="mx-auto flex max-w-biz flex-wrap items-center gap-x-5 gap-y-2 px-6 py-2.5 sm:px-10">
         @guest
             <a href="{{ route('sign-in') }}"
-               class="ml-auto border border-brand bg-brand px-4 py-1.5 font-mono text-[0.66rem] font-semibold uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
+               class="ml-auto border border-brand bg-brand px-4 py-1.5 font-sans text-[0.875rem] font-semibold tracking-normal text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
                 Sign in
             </a>
         @else
@@ -23,7 +23,7 @@
                      to fixing it. --}}
                 @if(! empty($post))
                     <a href="{{ route('filament.admin.resources.posts.edit', $post) }}"
-                       class="border border-brand bg-brand px-3.5 py-1.5 font-mono text-[0.66rem] font-semibold uppercase tracking-label text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
+                       class="border border-brand bg-brand px-3.5 py-1.5 font-sans text-[0.875rem] font-semibold tracking-normal text-white transition-colors hover:border-brand-soft hover:bg-brand-soft">
                         Edit this post
                     </a>
 
@@ -35,19 +35,19 @@
                 @endif
 
                 <a href="{{ route('filament.admin.resources.posts.create') }}"
-                   class="font-mono text-[0.66rem] uppercase tracking-label text-ink-body transition-colors hover:text-brand">New post</a>
+                   class="font-sans text-[0.875rem] tracking-normal text-ink-body transition-colors hover:text-brand">New post</a>
 
                 <a href="{{ route('filament.admin.resources.categories.index') }}"
-                   class="font-mono text-[0.66rem] uppercase tracking-label text-ink-body transition-colors hover:text-brand">Categories</a>
+                   class="font-sans text-[0.875rem] tracking-normal text-ink-body transition-colors hover:text-brand">Categories</a>
 
                 @php($pending = \App\Models\Comment::where('status', 'pending')->count())
                 <a href="{{ route('filament.admin.resources.comments.index') }}"
-                   class="font-mono text-[0.66rem] uppercase tracking-label transition-colors {{ $pending > 0 ? 'text-brand' : 'text-ink-body hover:text-brand' }}">
+                   class="font-sans text-[0.875rem] tracking-normal transition-colors {{ $pending > 0 ? 'text-brand' : 'text-ink-body hover:text-brand' }}">
                     Comments{{ $pending > 0 ? ' ('.$pending.')' : '' }}
                 </a>
 
                 <a href="{{ route('filament.admin.pages.dashboard') }}"
-                   class="ml-auto border border-ink-ink px-3.5 py-1.5 font-mono text-[0.66rem] uppercase tracking-label text-ink-ink transition-colors hover:border-brand hover:text-brand">
+                   class="ml-auto border border-ink-ink px-3.5 py-1.5 font-sans text-[0.875rem] tracking-normal text-ink-ink transition-colors hover:border-brand hover:text-brand">
                     Dashboard
                 </a>
             @endif
@@ -62,7 +62,7 @@
 
             <form method="post" action="{{ route('social.logout') }}">
                 @csrf
-                <button class="font-mono text-[0.66rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">Out</button>
+                <button class="font-sans text-[0.875rem] tracking-normal text-ink-soft transition-colors hover:text-brand">Out</button>
             </form>
         @endguest
     </div>

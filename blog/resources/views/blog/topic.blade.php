@@ -31,7 +31,7 @@
             @foreach($children as $child)
                 <li>
                     <a href="{{ route('blog.topic', $child) }}"
-                       class="inline-block border border-paper-3 px-3 py-1.5 font-mono text-[0.7rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand">
+                       class="inline-block border border-paper-3 px-3 py-1.5 font-sans text-[0.875rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand">
                         {{ $child->name }} <span class="text-ink-soft">{{ $child->posts_count }}</span>
                     </a>
                 </li>
@@ -39,7 +39,7 @@
         </ul>
     @endif
 
-    <p class="mt-7 font-mono text-[0.8rem] text-ink-soft">
+    <p class="mt-7 font-sans text-[0.875rem] text-ink-soft">
         {{ $posts->total() }} {{ Str::plural('post', $posts->total()) }}
     </p>
 </section>

@@ -21,7 +21,7 @@
         <div class="min-w-0 flex-1">
 
             {{-- Byline --}}
-            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[0.82rem] text-ink-body">
+            <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-sans text-[0.875rem] text-ink-body">
                 <x-avatar :user="$post->author" :size="24" />
                 @if($primary)
                     <span class="text-ink-soft">In</span>
@@ -38,7 +38,7 @@
             {{-- Headline and standfirst. One target, because a reader aiming at
                  either of them means the same thing. --}}
             <a href="{{ route('blog.show', $post) }}" class="mt-3 block">
-                <h2 class="font-grotesk text-[1.35rem] font-extrabold leading-[1.15] tracking-tight2 text-ink-ink transition-colors group-hover:text-brand sm:text-[1.7rem]">
+                <h2 class="font-grotesk text-[1.35rem] font-semibold leading-[1.15] tracking-tight2 text-ink-ink transition-colors group-hover:text-brand sm:text-[1.7rem]">
                     {{ $post->title }}
                 </h2>
                 @if($post->excerpt)
@@ -49,7 +49,7 @@
             </a>
 
             {{-- Meta --}}
-            <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.72rem] text-ink-soft">
+            <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-[0.875rem] text-ink-soft">
                 <span class="inline-flex items-center gap-1.5">
                     <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>

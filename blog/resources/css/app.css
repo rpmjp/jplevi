@@ -38,14 +38,14 @@
   --color-night: #0B0B0C;
   --color-night-2: #141416;
 
-  /* Saira, Archivo Narrow, Space Grotesk, IBM Plex Mono, as the site loads. */
-  --font-display: Saira, ui-sans-serif, system-ui, sans-serif;
-  --font-grotesk: "Archivo Narrow", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* Inter for business text; IBM Plex Mono for code and technical labels. */
+  --font-display: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-grotesk: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
   --tracking-hud: 0.22em;
-  --tracking-label: 0.18em;
+  --tracking-label: 0.08em;
   --tracking-tight2: -0.03em;
   --tracking-tight3: -0.045em;
   --tracking-wordmark: 0.06em;
@@ -58,10 +58,9 @@
 @layer components {
   .biz-display {
     font-family: var(--font-grotesk);
-    font-weight: 900;
-    text-transform: uppercase;
-    line-height: 0.86;
-    letter-spacing: var(--tracking-tight3);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: var(--tracking-tight2);
     color: var(--color-ink-ink);
   }
 
@@ -73,7 +72,7 @@
 
   .biz-label {
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: var(--tracking-label);
@@ -84,9 +83,9 @@
   .prose-jp { max-width: 68ch; }
   .prose-jp p { margin-block: 1.15rem; line-height: 1.7; color: var(--color-ink-body); }
   .prose-jp h2 {
-    font-family: var(--font-grotesk); font-weight: 800; text-transform: uppercase;
+    font-family: var(--font-grotesk); font-weight: 600;
     letter-spacing: var(--tracking-tight2); color: var(--color-ink-ink);
-    font-size: clamp(1.5rem, 3.5vw, 2.2rem); line-height: 1; margin-block: 2.6rem 0.9rem;
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem); line-height: 1.2; margin-block: 2.6rem 0.9rem;
   }
   .prose-jp h3 {
     font-family: var(--font-sans); font-weight: 600; color: var(--color-ink-ink);
@@ -98,7 +97,7 @@
   .prose-jp ol { list-style: decimal; }
   .prose-jp blockquote {
     border-left: 2px solid var(--color-brand); padding-left: 1.2rem; margin-block: 1.6rem;
-    font-family: var(--font-mono); font-size: 0.9rem; line-height: 1.7; color: var(--color-ink-body);
+    font-family: var(--font-sans); font-size: 1rem; line-height: 1.7; color: var(--color-ink-body);
   }
   .prose-jp pre {
     background: var(--color-night); color: var(--color-paper); padding: 1.1rem 1.3rem;

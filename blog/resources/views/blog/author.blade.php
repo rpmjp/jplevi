@@ -6,7 +6,7 @@
 <section class="mx-auto max-w-5xl px-6 pb-10 pt-14 sm:px-10 sm:pt-20">
     <p class="biz-label">Author</p>
     <h1 class="biz-display mt-5 text-[clamp(2.2rem,6vw,4.4rem)]">{{ $user->name }}</h1>
-    <p class="mt-7 font-mono text-[0.82rem] text-ink-soft">
+    <p class="mt-7 font-sans text-[0.875rem] text-ink-soft">
         {{ $posts->total() }} {{ Str::plural('post', $posts->total()) }}
     </p>
 </section>

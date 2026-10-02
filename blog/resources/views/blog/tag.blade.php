@@ -22,7 +22,7 @@
 
     <h1 class="biz-display mt-5 text-[clamp(2.2rem,6vw,4.4rem)]">{{ $tag->name }}</h1>
 
-    <p class="mt-7 font-mono text-[0.8rem] text-ink-soft">
+    <p class="mt-7 font-sans text-[0.875rem] text-ink-soft">
         {{ $posts->total() }} {{ Str::plural('post', $posts->total()) }}
     </p>
 </section>
@@ -31,7 +31,7 @@
     @forelse($posts as $entry)
         @include('blog._card', ['post' => $entry])
     @empty
-        <p class="border-y border-paper-3 py-16 text-center font-mono text-[0.85rem] text-ink-soft">
+        <p class="border-y border-paper-3 py-16 text-center font-sans text-[0.875rem] text-ink-soft">
             Nothing tagged this yet.
         </p>
     @endforelse

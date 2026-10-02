@@ -42,7 +42,7 @@
     @endforeach
 
     <button type="button" data-copy-link="{{ $url }}" title="Copy link"
-            class="inline-flex h-9 items-center gap-2 border border-paper-4 px-3 font-mono text-[0.68rem] uppercase tracking-label text-ink-soft transition-colors hover:border-ink-ink hover:bg-ink-ink hover:text-paper">
+            class="inline-flex h-9 items-center gap-2 border border-paper-4 px-3 font-sans text-[0.875rem] tracking-normal text-ink-soft transition-colors hover:border-ink-ink hover:bg-ink-ink hover:text-paper">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M10 13a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1L11.5 4.5"/>
             <path d="M14 11a5 5 0 0 0-7.1 0l-3 3a5 5 0 0 0 7.1 7.1l1.4-1.4"/>
@@ -54,7 +54,7 @@
          means a phone. Hidden by default so it never appears as a dead control. --}}
     <button type="button" data-native-share data-share-title="{{ $post->title }}" data-share-text="{{ $summary }}" data-share-url="{{ $url }}"
             hidden title="Share"
-            class="inline-flex h-9 items-center gap-2 border border-paper-4 px-3 font-mono text-[0.68rem] uppercase tracking-label text-ink-soft transition-colors hover:border-ink-ink hover:bg-ink-ink hover:text-paper">
+            class="inline-flex h-9 items-center gap-2 border border-paper-4 px-3 font-sans text-[0.875rem] tracking-normal text-ink-soft transition-colors hover:border-ink-ink hover:bg-ink-ink hover:text-paper">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
             <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>

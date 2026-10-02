@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Saira, Archivo_Narrow, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Saira, Inter, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { site } from "./site";
 import { biz } from "./business";
@@ -11,12 +11,10 @@ const display = Saira({
   display: "swap",
 });
 
-// Business side display face: heavy neo-grotesque for poster-scale headlines.
-// Archivo Narrow: drawn narrow rather than squeezed. Measured against the
-// reference it matches at natural width (1.03x), so no font-stretch is needed.
-const grotesk = Archivo_Narrow({
+// Business typography is scoped separately from the gaming body/display faces.
+const business = Inter({
   subsets: ["latin"],
-  variable: "--font-grotesk",
+  variable: "--font-business",
   display: "swap",
 });
 
@@ -68,7 +66,7 @@ export const viewport: Viewport = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${grotesk.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${business.variable} ${body.variable} ${mono.variable}`}>
       <body className="min-h-screen overflow-x-hidden">
         <a
           href="#main"

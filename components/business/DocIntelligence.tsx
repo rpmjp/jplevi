@@ -15,42 +15,42 @@ export function DocIntelligence() {
     <div className="w-full border border-white/12 bg-night text-paper shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)]">
       {/* title bar */}
       <div className="flex items-center gap-3 border-b border-white/12 px-5 py-3.5">
-        <span className="flex h-6 w-6 items-center justify-center bg-brand font-grotesk text-[0.62rem] font-black text-white">
+        <span className="flex h-6 w-6 items-center justify-center bg-brand font-grotesk text-[0.62rem] font-bold text-white">
           JP
         </span>
-        <p className="font-sans text-[0.82rem] text-paper">Document Intelligence</p>
+        <p className="font-sans text-[0.95rem] text-paper">Document Intelligence</p>
       </div>
 
       <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         {/* findings */}
         <div className="border-r border-white/12">
           <div className="border-b border-white/12 px-5 py-3">
-            <p className="font-sans text-[0.72rem] text-paper/55">Document</p>
+            <p className="font-sans text-[0.875rem] text-paper/55">Document</p>
           </div>
           <div className="flex items-center justify-between gap-3 border-b border-white/12 px-5 py-3">
-            <p className="font-sans text-[0.74rem] text-paper">Q2 Financial Report.pdf</p>
-            <span className="flex shrink-0 items-center gap-1.5 font-sans text-[0.66rem] text-paper/70">
+            <p className="font-sans text-[0.875rem] text-paper">Q2 Financial Report.pdf</p>
+            <span className="flex shrink-0 items-center gap-1.5 font-sans text-[0.8rem] text-paper/70">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-live" />
               Processed
             </span>
           </div>
           <div className="border-b border-white/12 px-5 py-2.5">
-            <p className="font-mono text-[0.6rem] uppercase tracking-label text-paper/45">Key findings</p>
+            <p className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-paper/45">Key findings</p>
           </div>
           <div className="border-b border-white/12 px-5 py-3.5">
-            <p className="font-sans text-[0.76rem] font-medium text-paper">Revenue Increase</p>
-            <p className="mt-1.5 font-sans text-[0.68rem] leading-relaxed text-paper/60">
+            <p className="font-sans text-[0.9rem] font-medium text-paper">Revenue Increase</p>
+            <p className="mt-1.5 font-sans text-[0.875rem] leading-relaxed text-paper/60">
               Revenue increased 18.6% in Q2 primarily due to expansion in enterprise accounts.
             </p>
           </div>
           <div className="px-5 py-3.5">
-            <p className="font-sans text-[0.76rem] font-medium text-paper">Top Drivers</p>
+            <p className="font-sans text-[0.9rem] font-medium text-paper">Top Drivers</p>
           </div>
         </div>
 
         {/* knowledge graph */}
         <div className="px-5 py-3">
-          <p className="font-mono text-[0.6rem] uppercase tracking-label text-paper/45">Knowledge graph</p>
+          <p className="font-mono text-[0.6rem] uppercase tracking-[0.08em] text-paper/45">Knowledge graph</p>
           <svg viewBox="0 0 240 280" className="mt-3 h-auto w-full" role="img" aria-label="Knowledge graph linking enterprise accounts, market demand, revenue increase, and sales strategy">
             <g stroke="#FFFFFF" strokeOpacity="0.28" strokeWidth="1">
               {LINKS.map(([a, b], i) => (

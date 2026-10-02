@@ -10,12 +10,12 @@ export function BizHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-paper-3 bg-paper/90 backdrop-blur supports-[backdrop-filter]:bg-paper/75">
-      <div className="mx-auto grid min-h-[76px] max-w-biz grid-cols-[auto_1fr_auto] items-center gap-x-6 px-6 py-4 sm:px-10 lg:h-[88px] lg:py-0">
+      <div className="mx-auto grid min-h-[76px] max-w-biz grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 px-6 py-4 sm:px-10 lg:min-h-[88px] lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-6">
         <BizWordmark />
 
         <nav
           aria-label="Main"
-          className="col-span-3 row-start-2 mt-3 border-t border-paper-3 pt-3 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:mt-0 lg:justify-self-center lg:border-0 lg:pt-0"
+          className="col-span-2 row-start-2 mt-3 border-t border-paper-3 pt-3 lg:col-span-1 lg:col-start-2 lg:row-start-1 lg:mt-0 lg:justify-self-center lg:border-0 lg:pt-0"
         >
           <ul className="flex flex-wrap items-center gap-x-7 gap-y-2 sm:gap-x-10">
             {bizNav.map((item) => (
@@ -27,7 +27,7 @@ export function BizHeader() {
                       ? "page"
                       : undefined
                   }
-                  className={`relative py-2 font-sans text-[0.92rem] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform hover:text-brand ${
+                  className={`relative py-2 font-sans text-[1rem] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform hover:text-brand ${
                     pathname === item.href.slice(0, -1) || pathname === item.href
                       ? "text-ink-ink after:scale-x-100"
                       : "text-ink-body after:scale-x-0 hover:after:scale-x-100"
@@ -40,18 +40,18 @@ export function BizHeader() {
           </ul>
         </nav>
 
-        <div className="col-start-3 row-start-1 ml-auto flex items-center gap-x-6">
+        <div className="col-start-2 row-start-1 ml-auto flex items-center gap-x-6 lg:col-start-3">
           {/* The number stays visible at every width; the status line is the
               first thing to go when space runs out. */}
           <a
             href={`tel:${biz.phoneHref}`}
-            className="font-grotesk text-[1.05rem] font-bold tracking-tight2 text-ink-ink transition-colors hover:text-brand"
+            className="whitespace-nowrap font-sans text-xs font-semibold tabular-nums text-ink-ink transition-colors hover:text-brand sm:text-sm lg:text-base"
           >
             {biz.phone}
           </a>
-          <p className="hidden items-center gap-2.5 lg:flex">
+          <p className="hidden items-center gap-2.5 min-[1440px]:flex">
             <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-live-deep" />
-            <span className="font-sans text-[0.88rem] text-ink-body">{biz.availability}</span>
+            <span className="font-sans text-[1rem] text-ink-body">{biz.availability}</span>
           </p>
         </div>
       </div>

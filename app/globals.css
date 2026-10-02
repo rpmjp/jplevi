@@ -138,16 +138,17 @@
 
   /* Scope resets body colour so the gaming side keeps its dark ground. */
   .biz-scope {
-    @apply bg-paper text-ink-body;
-    /* Body copy sits at 500 across the business side; headings set their own. */
-    font-weight: 500;
+    @apply bg-paper text-ink-body font-sans;
+    /* Scope the body token so gaming retains Space Grotesk. */
+    --font-body: var(--font-business);
+    font-weight: 400;
     /* Height the footer occupies once revealed; 0 below lg, where it is in flow. */
     --footer-h: 0px;
   }
 
   @media (min-width: 1024px) {
     .biz-scope {
-      --footer-h: 22rem;
+      --footer-h: 26rem;
     }
   }
 
@@ -160,13 +161,13 @@
     color: #fff;
   }
 
-  /* Poster-scale display type. */
+  /* Natural-width, sentence-case business headings. */
   .biz-display {
-    @apply font-grotesk font-black uppercase leading-[0.86] tracking-tight3 text-ink-ink;
+    @apply font-grotesk font-bold leading-[1.08] tracking-tight2 text-ink-ink;
   }
 
   .biz-h2 {
-    @apply font-grotesk text-3xl font-extrabold uppercase leading-[0.95] tracking-tight2 text-ink-ink sm:text-4xl;
+    @apply font-grotesk text-3xl font-semibold leading-[1.15] tracking-tight2 text-ink-ink sm:text-4xl;
   }
 
   .biz-h3 {
@@ -175,16 +176,16 @@
 
   /* Mono technical label, the connective tissue of the whole layout. */
   .biz-label {
-    @apply font-mono text-[0.68rem] font-medium uppercase tracking-label text-ink-soft;
+    @apply font-mono text-xs font-medium uppercase tracking-[0.08em] text-ink-soft;
   }
 
   .biz-label-blue {
     @apply biz-label text-brand;
   }
 
-  /* Body copy is mono on this side - it reads as spec, not marketing. */
+  /* Compatibility class for business prose; code and readouts set mono explicitly. */
   .biz-mono {
-    @apply font-mono text-[0.95rem] leading-[1.75] text-ink-body;
+    @apply font-sans text-base leading-[1.75] text-ink-body;
   }
 
   .biz-prose {
@@ -193,24 +194,24 @@
 
   /* Quoted lead paragraph with the reference's left rule. */
   .biz-lead {
-    @apply border-l-2 border-ink-ink pl-6 font-mono text-[0.95rem] leading-[1.56] text-ink-body;
+    @apply border-l-2 border-ink-ink pl-6 font-sans text-[1.05rem] leading-[1.65] text-ink-body;
   }
 
   .biz-link {
-    @apply font-mono text-[0.8rem] font-medium uppercase tracking-label text-brand
+    @apply font-sans text-base font-semibold tracking-normal text-brand
       underline decoration-brand/30 underline-offset-[6px] transition-colors
       hover:decoration-brand;
   }
 
   .biz-btn {
     @apply inline-flex items-center justify-center gap-2 border border-ink-ink bg-ink-ink px-6 py-3.5
-      font-mono text-[0.75rem] font-semibold uppercase tracking-label text-paper
+      font-sans text-sm font-semibold tracking-normal text-paper
       transition-colors hover:bg-brand hover:border-brand;
   }
 
   .biz-btn-ghost {
     @apply inline-flex items-center justify-center gap-2 border border-paper-4 bg-transparent px-6 py-3.5
-      font-mono text-[0.75rem] font-semibold uppercase tracking-label text-ink-ink
+      font-sans text-sm font-semibold tracking-normal text-ink-ink
       transition-colors hover:border-ink-ink;
   }
 

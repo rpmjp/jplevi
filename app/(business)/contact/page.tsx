@@ -29,7 +29,7 @@ export default function ContactPage() {
           biggest thing on the page. */}
       <section className="bg-night px-6 py-16 sm:px-10 sm:py-20">
         <p className="biz-label !text-paper/45">Our commitment</p>
-        <p className="mt-7 max-w-[20ch] font-grotesk text-[clamp(2.2rem,6.5vw,5rem)] font-black uppercase leading-[0.9] tracking-tight3 text-paper">
+        <p className="mt-7 max-w-[20ch] font-grotesk text-[clamp(2.2rem,6.5vw,5rem)] font-bold leading-[1.1] tracking-tight3 text-paper">
           {guarantee.headline}
         </p>
         <p className="mt-8 max-w-prose2 font-sans text-[1.05rem] leading-[1.6] text-paper/70">
@@ -39,13 +39,13 @@ export default function ContactPage() {
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/15 pt-8">
           <a
             href={`tel:${biz.phoneHref}`}
-            className="font-grotesk text-[clamp(1.4rem,3vw,2rem)] font-black tracking-tight2 text-paper transition-colors hover:text-brand-soft"
+            className="font-grotesk text-[clamp(1.4rem,3vw,2rem)] font-bold tracking-tight2 text-paper transition-colors hover:text-brand-soft"
           >
             {biz.phone}
           </a>
           <a
             href={`mailto:${biz.email}`}
-            className="font-mono text-[0.82rem] text-paper/70 underline decoration-white/30 underline-offset-[6px] transition-colors hover:text-paper"
+            className="font-sans text-[0.95rem] text-paper/70 underline decoration-white/30 underline-offset-[6px] transition-colors hover:text-paper"
           >
             {biz.email}
           </a>
@@ -58,12 +58,12 @@ export default function ContactPage() {
           <h2 id="composer-heading" className="biz-h2">
             Write it here
           </h2>
-          <p className="font-mono text-[0.7rem] uppercase tracking-label text-ink-soft">
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-ink-soft">
             Three steps
           </p>
         </div>
         <div className="biz-rule-draw mt-5 bg-paper-4" />
-        <p className="mt-6 max-w-prose2 font-mono text-[0.88rem] leading-[1.8] text-ink-body">
+        <p className="mt-6 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-ink-body">
           Answer what you can. Partial is fine, and the message builds itself beside you so you can
           see exactly what arrives.
         </p>
@@ -80,7 +80,7 @@ export default function ContactPage() {
         <div className="border-t border-ink-ink pt-10">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 className="biz-h2">{feasibility.title}</h2>
-            <p className="font-mono text-[0.7rem] uppercase tracking-label text-brand">No charge</p>
+            <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-brand">No charge</p>
           </div>
           <p className="mt-6 max-w-prose2 font-sans text-[1.02rem] leading-[1.65] text-ink-body">
             {feasibility.lead}
@@ -91,13 +91,13 @@ export default function ContactPage() {
                 key={step.n}
                 className="lg:grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-baseline lg:gap-x-12"
               >
-                <h3 className="font-grotesk text-[clamp(1.5rem,4vw,2.6rem)] font-black uppercase leading-[0.95] tracking-tight3 text-ink-ink">
-                  <span className="mr-4 align-top font-mono text-[0.7rem] font-medium tracking-label text-brand">
+                <h3 className="font-grotesk text-[clamp(1.5rem,4vw,2.6rem)] font-bold leading-[1.1] tracking-tight3 text-ink-ink">
+                  <span className="mr-4 align-top font-sans text-[0.875rem] font-medium tracking-[0.08em] text-brand">
                     {step.n}
                   </span>
                   {step.title}
                 </h3>
-                <p className="mt-3 max-w-prose2 font-mono text-[0.85rem] leading-[1.8] text-ink-body lg:mt-0">
+                <p className="mt-3 max-w-prose2 font-sans text-[0.95rem] leading-[1.8] text-ink-body lg:mt-0">
                   {step.body}
                 </p>
               </li>
@@ -115,7 +115,7 @@ export default function ContactPage() {
               <li key={s.id}>
                 <Link
                   href={`${bizRoutes.services}#${s.id}`}
-                  className="inline-block border border-paper-3 px-3.5 py-2 font-mono text-[0.75rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
+                  className="inline-block border border-paper-3 px-3.5 py-2 font-sans text-[0.875rem] text-ink-body transition-colors hover:border-ink-ink hover:text-brand"
                 >
                   <span className="text-ink-soft">{s.n}</span> {s.title.join(" ")}
                 </Link>

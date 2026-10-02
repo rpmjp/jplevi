@@ -64,7 +64,7 @@ export default function ServicesPage() {
             actually do
             <span className="ml-3 inline-block h-[0.14em] w-[0.14em] rounded-full bg-brand align-baseline" />
           </h1>
-          <p className="font-mono text-[0.72rem] uppercase tracking-label text-ink-soft">
+          <p className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-ink-soft">
             {String(capabilities.length).padStart(2, "0")} practices
           </p>
         </div>
@@ -86,26 +86,26 @@ export default function ServicesPage() {
                 href={`#${c.id}`}
                 className="group grid grid-cols-[2.5rem_minmax(0,1fr)_auto] items-center gap-x-5 px-6 py-4 transition-colors hover:bg-night sm:px-10 lg:grid-cols-[3rem_minmax(0,17rem)_minmax(0,1fr)_auto] lg:gap-x-8"
               >
-                <span className="font-mono text-[0.72rem] text-ink-soft transition-colors group-hover:text-brand-soft">
+                <span className="font-sans text-[0.875rem] text-ink-soft transition-colors group-hover:text-brand-soft">
                   {c.n}
                 </span>
-                <span className="font-grotesk text-[1.05rem] font-bold uppercase leading-tight tracking-tight2 text-ink-ink transition-colors group-hover:text-paper sm:text-[1.2rem]">
+                <span className="font-grotesk text-[1.05rem] font-bold leading-tight tracking-tight2 text-ink-ink transition-colors group-hover:text-paper sm:text-[1.2rem]">
                   {c.title.join(" ")}
                 </span>
 
                 {/* Tag and plain words occupy one cell, so nothing reflows. */}
                 <span className="hidden lg:grid">
-                  <span className="[grid-area:1/1] self-center font-mono text-[0.68rem] uppercase tracking-label text-ink-soft transition-opacity duration-200 group-hover:opacity-0">
+                  <span className="[grid-area:1/1] self-center font-mono text-[0.68rem] uppercase tracking-[0.08em] text-ink-soft transition-opacity duration-200 group-hover:opacity-0">
                     {c.tag}
                   </span>
-                  <span className="[grid-area:1/1] self-center font-sans text-[0.8rem] leading-[1.4] text-paper/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                  <span className="[grid-area:1/1] self-center font-sans text-[0.9rem] leading-[1.4] text-paper/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                     {c.plain}
                   </span>
                 </span>
 
                 <span
                   aria-hidden="true"
-                  className="font-mono text-[0.9rem] text-ink-soft transition-all group-hover:translate-x-1 group-hover:text-brand-soft"
+                  className="font-sans text-[1rem] text-ink-soft transition-all group-hover:translate-x-1 group-hover:text-brand-soft"
                 >
                   →
                 </span>
@@ -124,7 +124,7 @@ export default function ServicesPage() {
                 <span aria-hidden="true" className="h-2 w-2 border border-ink-ink" />
                 <h2 className="biz-label !text-ink-ink">{stage.title}</h2>
               </div>
-              <p className="mt-2 font-mono text-[0.8rem] leading-relaxed text-ink-body">
+              <p className="mt-2 font-sans text-[0.9rem] leading-relaxed text-ink-body">
                 {stage.body}
               </p>
             </li>
@@ -149,7 +149,7 @@ export default function ServicesPage() {
               {/* The number pins for as long as its own section is on screen. */}
               <div className="hidden lg:block">
                 <span
-                  className={`sticky top-28 block font-grotesk text-[4rem] font-black leading-none tracking-tight3 ${t.num}`}
+                  className={`sticky top-28 block font-grotesk text-[4rem] font-bold leading-none tracking-tight3 ${t.num}`}
                 >
                   {c.n}
                 </span>
@@ -157,20 +157,20 @@ export default function ServicesPage() {
 
               <div>
                 <h2
-                  className={`font-grotesk text-[clamp(2rem,6.2vw,4.6rem)] font-black uppercase leading-[0.88] tracking-tight3 ${t.title}`}
+                  className={`font-grotesk text-[clamp(2rem,6.2vw,4.6rem)] font-bold leading-[1.1] tracking-tight3 ${t.title}`}
                 >
                   {c.title[0]} {c.title[1]}
                 </h2>
 
                 <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-                  <p className={`font-mono text-[0.7rem] uppercase tracking-label ${t.tag}`}>
+                  <p className={`font-mono text-[0.7rem] uppercase tracking-[0.08em] ${t.tag}`}>
                     <span className="lg:hidden">{c.n} / </span>
                     {c.tag}
                   </p>
                   {c.id === "ops" ? (
                     <Link
                       href={bizRoutes.hosting}
-                      className={`font-mono text-[0.7rem] uppercase tracking-label underline underline-offset-[6px] transition-colors ${t.num}`}
+                      className={`font-sans text-[0.7rem] tracking-normal underline underline-offset-[6px] transition-colors ${t.num}`}
                     >
                       Hosting detail ↗
                     </Link>
@@ -192,7 +192,7 @@ export default function ServicesPage() {
                       {c.scenarios.map((sc) => (
                         <li
                           key={sc}
-                          className={`flex gap-3 font-sans text-[0.9rem] leading-relaxed ${t.body}`}
+                          className={`flex gap-3 font-sans text-[1rem] leading-relaxed ${t.body}`}
                         >
                           <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 bg-ember" />
                           {sc}
@@ -207,7 +207,7 @@ export default function ServicesPage() {
                       {c.delivers.map((d) => (
                         <li
                           key={d}
-                          className={`flex gap-3 font-sans text-[0.9rem] leading-relaxed ${t.body}`}
+                          className={`flex gap-3 font-sans text-[1rem] leading-relaxed ${t.body}`}
                         >
                           <span
                             aria-hidden="true"
@@ -223,12 +223,12 @@ export default function ServicesPage() {
                 {/* For the technical reader, kept quiet so it does not lead. */}
                 <details className={`mt-9 border-t pt-4 ${t.rule}`}>
                   <summary
-                    className={`cursor-pointer font-mono text-[0.7rem] uppercase tracking-label transition-colors ${t.summary}`}
+                    className={`cursor-pointer font-sans text-[0.7rem] tracking-normal transition-colors ${t.summary}`}
                   >
                     Technical detail
                   </summary>
                   <p
-                    className={`mt-4 max-w-prose2 font-mono text-[0.84rem] leading-[1.7] ${t.body}`}
+                    className={`mt-4 max-w-prose2 font-sans text-[0.95rem] leading-[1.7] ${t.body}`}
                   >
                     {c.blurb}
                   </p>
@@ -236,11 +236,11 @@ export default function ServicesPage() {
                     {c.meta.map((m) => (
                       <div key={m.label} className={`flex gap-3 border-b py-2 ${t.rule}`}>
                         <dt
-                          className={`w-24 shrink-0 font-mono text-[0.66rem] uppercase tracking-label ${t.label}`}
+                          className={`w-24 shrink-0 font-mono text-[0.66rem] uppercase tracking-[0.08em] ${t.label}`}
                         >
                           {m.label}
                         </dt>
-                        <dd className={`font-mono text-[0.78rem] ${t.meta}`}>{m.value}</dd>
+                        <dd className={`font-sans text-[0.9rem] ${t.meta}`}>{m.value}</dd>
                       </div>
                     ))}
                   </dl>
@@ -256,7 +256,7 @@ export default function ServicesPage() {
                     </Link>
                     <a
                       href={`tel:${biz.phoneHref}`}
-                      className={`font-mono text-[0.78rem] transition-colors ${t.body}`}
+                      className={`font-sans text-[0.9rem] transition-colors ${t.body}`}
                     >
                       or call {biz.phone}
                     </a>
@@ -282,7 +282,7 @@ export default function ServicesPage() {
             </Link>
             <a
               href={`tel:${biz.phoneHref}`}
-              className="font-mono text-[0.78rem] text-ink-body transition-colors hover:text-brand"
+              className="font-sans text-[0.9rem] text-ink-body transition-colors hover:text-brand"
             >
               or call {biz.phone}
             </a>

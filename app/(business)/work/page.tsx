@@ -51,17 +51,17 @@ export default function WorkPage() {
         {shipped.map((item, i) => (
           <article key={item.id} className="grid gap-8 border-t border-paper-3 pt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
             <div>
-              <span className="font-mono text-[0.7rem] text-ink-soft">
+              <span className="font-sans text-[0.875rem] text-ink-soft">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <h2 className="biz-h2 mt-3">{item.title}</h2>
               <p className="mt-3 biz-label">{item.kind}</p>
             </div>
             <div>
-              <p className="font-mono text-[0.92rem] leading-[1.8] text-ink-body">{item.body}</p>
+              <p className="font-sans text-[1rem] leading-[1.8] text-ink-body">{item.body}</p>
               <ul className="mt-6 flex flex-wrap gap-2.5">
                 {item.notes.map((n) => (
-                  <li key={n} className="border border-paper-3 px-3 py-1.5 font-mono text-[0.72rem] text-ink-body">
+                  <li key={n} className="border border-paper-3 px-3 py-1.5 font-sans text-[0.875rem] text-ink-body">
                     {n}
                   </li>
                 ))}
@@ -76,7 +76,7 @@ export default function WorkPage() {
 
       <div className="mt-16 border-t border-paper-3 pt-10">
         <h2 className="biz-h2">Client engagements</h2>
-        <p className="mt-5 max-w-prose2 font-mono text-[0.9rem] leading-[1.8] text-ink-body">
+        <p className="mt-5 max-w-prose2 font-sans text-[1rem] leading-[1.8] text-ink-body">
           Client systems are covered by their own agreements, so they are not written up here.
           If you want to see comparable work before hiring us, ask on a call and we will walk you
           through architecture and decisions in as much detail as the agreement allows.

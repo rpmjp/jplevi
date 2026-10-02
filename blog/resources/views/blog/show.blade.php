@@ -68,7 +68,7 @@
 @section('content')
 <article class="mx-auto max-w-5xl px-6 pt-14 sm:px-10 sm:pt-20">
     @if($preview)
-        <p class="mb-8 border-l-2 border-ember pl-4 font-mono text-[0.78rem] text-ink-body">
+        <p class="mb-8 border-l-2 border-ember pl-4 font-sans text-[0.875rem] text-ink-body">
             Preview of an unpublished draft. Anyone with this link can read it.
         </p>
     @endif
@@ -77,7 +77,7 @@
         <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
             @foreach($post->categories as $category)
                 <a href="{{ route('blog.topic', $category) }}"
-                   class="font-mono text-[0.68rem] uppercase tracking-label text-brand transition-colors hover:text-ink-ink">{{ $category->name }}</a>
+                   class="font-sans text-[0.875rem] tracking-normal text-brand transition-colors hover:text-ink-ink">{{ $category->name }}</a>
             @endforeach
         </div>
     @endif
@@ -99,7 +99,7 @@
             <div>
                 <a href="{{ route('blog.author', $post->author) }}"
                    class="block font-sans text-[0.95rem] font-medium text-ink-ink transition-colors hover:text-brand">{{ $post->author->name }}</a>
-                <p class="mt-0.5 font-mono text-[0.72rem] text-ink-soft">
+                <p class="mt-0.5 font-sans text-[0.875rem] text-ink-soft">
                     <time datetime="{{ $post->published_at?->toDateString() }}">{{ $post->published_at?->format('F j, Y') ?? 'Unpublished' }}</time>
                     &middot; {{ $post->reading_minutes }} min read
                 </p>
@@ -125,7 +125,7 @@
                  fetchpriority="high" decoding="async"
                  class="max-h-[34rem] w-full bg-paper-2 object-cover">
             @if($post->cover_alt)
-                <figcaption class="mt-3 font-mono text-[0.7rem] text-ink-soft">{{ $post->cover_alt }}</figcaption>
+                <figcaption class="mt-3 font-sans text-[0.875rem] text-ink-soft">{{ $post->cover_alt }}</figcaption>
             @endif
         </figure>
     @endif
@@ -137,7 +137,7 @@
                 @foreach($toc['items'] as $i => $item)
                     <li class="font-sans text-[0.9rem]">
                         <a href="#{{ $item['id'] }}" class="text-ink-body transition-colors hover:text-brand">
-                            <span class="mr-2 font-mono text-[0.68rem] text-ink-soft">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>{{ $item['text'] }}
+                            <span class="mr-2 font-sans text-[0.875rem] text-ink-soft">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>{{ $item['text'] }}
                         </a>
                     </li>
                 @endforeach
@@ -152,7 +152,7 @@
             <span class="mr-1 font-mono text-[0.66rem] uppercase tracking-label text-ink-soft">Tagged</span>
             @foreach($post->tags as $tag)
                 <a href="{{ route('blog.tag', $tag) }}"
-                   class="rounded-full border border-paper-4 px-3 py-1 font-sans text-[0.82rem] text-ink-body transition-colors hover:border-ink-ink hover:text-ink-ink">
+                   class="rounded-full border border-paper-4 px-3 py-1 font-sans text-[0.875rem] text-ink-body transition-colors hover:border-ink-ink hover:text-ink-ink">
                     {{ $tag->name }}
                 </a>
             @endforeach
@@ -163,7 +163,7 @@
          likelier to pass it on than one who has just arrived. --}}
     <div class="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-ink-ink pt-8">
         <x-share-row :post="$post" />
-        <a href="{{ route('blog.index') }}" class="font-mono text-[0.75rem] uppercase tracking-label text-ink-soft transition-colors hover:text-brand">
+        <a href="{{ route('blog.index') }}" class="font-sans text-[0.875rem] tracking-normal text-ink-soft transition-colors hover:text-brand">
             &larr; All notes
         </a>
     </div>
