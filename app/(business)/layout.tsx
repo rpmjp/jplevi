@@ -20,7 +20,7 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
       <div className="pointer-events-none fixed inset-y-0 left-0 z-30 hidden border-r border-paper-3 bg-paper xl:flex xl:w-[5.75rem] xl:flex-col xl:items-center xl:justify-between xl:py-6">
         <span
           aria-hidden="true"
-          className="biz-rail shrink-0 font-mono text-[0.56rem] uppercase tracking-[0.08em] text-ink-soft"
+          className="biz-rail shrink-0 font-mono text-[0.56rem] uppercase tracking-label text-ink-soft"
         >
           {biz.rail}
         </span>
@@ -34,7 +34,7 @@ export default function BusinessLayout({ children }: { children: React.ReactNode
           </a>
           <Link
             href={bizRoutes.contact}
-            className="biz-rail shrink-0 pointer-events-auto bg-brand px-2.5 py-3 font-sans text-[0.6rem] font-semibold tracking-normal text-white transition-colors hover:bg-ink-ink"
+            className="biz-rail shrink-0 pointer-events-auto bg-brand px-2.5 py-3 font-mono text-[0.6rem] font-semibold uppercase tracking-label text-white transition-colors hover:bg-ink-ink"
           >
             {biz.railCta} ↗
           </Link>

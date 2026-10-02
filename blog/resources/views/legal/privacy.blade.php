@@ -6,7 +6,7 @@
 <section class="mx-auto max-w-5xl px-6 py-16 sm:px-10 sm:py-20">
     <p class="biz-label">Legal</p>
     <h1 class="biz-display mt-5 text-[clamp(2.2rem,6vw,4.2rem)]">Privacy</h1>
-    <p class="mt-6 font-sans text-[0.875rem] text-ink-soft">
+    <p class="mt-6 font-mono text-[0.78rem] text-ink-soft">
         JP LEVI INC., a New Jersey corporation &middot; hello@jplevi.com &middot; Effective {{ now()->format('j F Y') }}
     </p>
 

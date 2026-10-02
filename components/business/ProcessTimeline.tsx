@@ -14,7 +14,7 @@ export function ProcessTimeline() {
             How a project runs
           </h2>
         </div>
-        <p className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-ink-soft">
+        <p className="font-mono text-[0.72rem] uppercase tracking-label text-ink-soft">
           4 phases · fixed scope
         </p>
       </div>
@@ -42,7 +42,7 @@ export function ProcessTimeline() {
               <span className="font-grotesk text-xl font-bold leading-none text-brand">
                 {phase.n}
               </span>
-              <span className="border border-paper-4 px-2 py-1 font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-soft">
+              <span className="border border-paper-4 px-2 py-1 font-mono text-[0.62rem] uppercase tracking-label text-ink-soft">
                 {phase.duration}
               </span>
             </div>
@@ -51,13 +51,13 @@ export function ProcessTimeline() {
               {phase.title}
             </h3>
 
-            <p className="mt-2.5 font-sans text-[1rem] leading-[1.6] text-ink-body">
+            <p className="mt-2.5 font-sans text-[0.9rem] leading-[1.6] text-ink-body">
               {phase.body}
             </p>
 
             <ul className="mt-4 space-y-1.5">
               {phase.output.map((o) => (
-                <li key={o} className="flex gap-2 font-sans text-[0.875rem] text-ink-ink">
+                <li key={o} className="flex gap-2 font-mono text-[0.75rem] text-ink-ink">
                   <span aria-hidden="true" className="text-brand">
                     →
                   </span>
@@ -74,7 +74,7 @@ export function ProcessTimeline() {
         <h3 className="biz-label">Working stack</h3>
         <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
           {stack.map((item) => (
-            <li key={item} className="font-sans text-[0.875rem] text-ink-body">
+            <li key={item} className="font-mono text-[0.75rem] text-ink-body">
               {item}
             </li>
           ))}

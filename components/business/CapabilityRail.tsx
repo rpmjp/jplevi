@@ -102,10 +102,10 @@ export function CapabilityRail() {
           </h2>
         </div>
         <div className="flex items-center gap-5">
-          <p className="hidden font-mono text-[0.66rem] uppercase tracking-[0.08em] text-ink-soft sm:block">
+          <p className="hidden font-mono text-[0.66rem] uppercase tracking-label text-ink-soft sm:block">
             Drag or use arrows
           </p>
-          <p className="font-mono text-[0.72rem] uppercase tracking-[0.08em] text-ink-soft">
+          <p className="font-mono text-[0.72rem] uppercase tracking-label text-ink-soft">
             {current.n} / {String(capabilities.length).padStart(2, "0")}
           </p>
           <div className="flex gap-2">
@@ -164,7 +164,7 @@ export function CapabilityRail() {
               }`}
             >
               <span
-                className={`font-sans text-[0.875rem] ${on ? "text-brand" : "text-ink-soft"}`}
+                className={`font-mono text-[0.68rem] ${on ? "text-brand" : "text-ink-soft"}`}
               >
                 {c.n}
               </span>
@@ -175,7 +175,7 @@ export function CapabilityRail() {
                 <br />
                 {c.title[1]}
               </span>
-              <span className="mt-3 block font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-soft">
+              <span className="mt-3 block font-mono text-[0.62rem] uppercase tracking-label text-ink-soft">
                 {c.tag}
               </span>
             </button>
@@ -192,10 +192,10 @@ export function CapabilityRail() {
           className="mt-3 border border-ink-ink bg-white/60 shadow-[inset_0_3px_0_0_#1B3EF0]"
         >
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper-3 px-6 py-2.5">
-            <p className="font-mono text-[0.7rem] uppercase tracking-[0.08em] text-ink-ink">
+            <p className="font-mono text-[0.7rem] uppercase tracking-label text-ink-ink">
               {current.title.join(" ")}
             </p>
-            <p className="flex items-center gap-2 font-sans text-[0.8rem] text-ink-soft">
+            <p className="flex items-center gap-2 font-mono text-[0.66rem] text-ink-soft">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-live-deep" />
               {current.status}
             </p>
@@ -210,7 +210,7 @@ export function CapabilityRail() {
                 {current.delivers.map((d) => (
                   <li
                     key={d}
-                    className="flex gap-3 font-sans text-[1rem] leading-relaxed text-ink-body"
+                    className="flex gap-3 font-sans text-[0.9rem] leading-relaxed text-ink-body"
                   >
                     <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 bg-brand" />
                     {d}
@@ -222,10 +222,10 @@ export function CapabilityRail() {
             <dl className="border-t border-paper-3 pt-5 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
               {current.meta.map((m) => (
                 <div key={m.label} className="border-b border-paper-3 py-2 first:pt-0">
-                  <dt className="font-mono text-[0.62rem] uppercase tracking-[0.08em] text-ink-soft">
+                  <dt className="font-mono text-[0.62rem] uppercase tracking-label text-ink-soft">
                     {m.label}
                   </dt>
-                  <dd className="mt-1 font-sans text-[0.9rem] text-ink-ink">{m.value}</dd>
+                  <dd className="mt-1 font-mono text-[0.8rem] text-ink-ink">{m.value}</dd>
                 </div>
               ))}
             </dl>

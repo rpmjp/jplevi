@@ -13,19 +13,19 @@
     </p>
 
     @error('auth')
-        <p class="mt-6 border-l-2 border-ember pl-4 font-sans text-[0.875rem] text-ink-body">{{ $message }}</p>
+        <p class="mt-6 border-l-2 border-ember pl-4 font-mono text-[0.82rem] text-ink-body">{{ $message }}</p>
     @enderror
 
     <div class="mt-10 flex flex-wrap gap-3">
         @foreach(['google' => 'Google', 'github' => 'GitHub', 'linkedin-openid' => 'LinkedIn'] as $slug => $label)
             <a href="{{ route('social.redirect', $slug) }}"
-               class="border border-ink-ink px-5 py-3 font-sans text-[0.875rem] tracking-normal text-ink-ink transition-colors hover:border-brand hover:bg-brand hover:text-white">
+               class="border border-ink-ink px-5 py-3 font-mono text-[0.75rem] uppercase tracking-label text-ink-ink transition-colors hover:border-brand hover:bg-brand hover:text-white">
                 Continue with {{ $label }}
             </a>
         @endforeach
     </div>
 
-    <p class="mt-8 max-w-prose font-sans text-[0.875rem] leading-relaxed text-ink-soft">
+    <p class="mt-8 max-w-prose font-mono text-[0.78rem] leading-relaxed text-ink-soft">
         We receive your name and email address from whichever you choose, and nothing
         else. See <a href="{{ route('legal.privacy') }}" class="text-brand underline underline-offset-4">privacy</a>
         and the <a href="{{ route('legal.moderation') }}" class="text-brand underline underline-offset-4">comment rules</a>.

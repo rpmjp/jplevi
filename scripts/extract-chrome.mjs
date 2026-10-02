@@ -53,8 +53,8 @@ function forBlog(markup) {
     .replace(ACTIVE + '" href="/services/"', INACTIVE + '" href="/services/"')
     // Notes becomes current
     .replace(INACTIVE + '" href="/blog/"', ACTIVE + '" href="/blog/"')
-    .replace(/<a class="([^"]*)" href="\/blog\/"/,
-             '<a aria-current="page" class="$1" href="/blog/"')
+    .replace('<a class="relative py-2 font-sans text-[0.92rem] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform hover:text-brand ' + ACTIVE + '" href="/blog/"',
+             '<a aria-current="page" class="relative py-2 font-sans text-[0.92rem] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-brand after:transition-transform hover:text-brand ' + ACTIVE + '" href="/blog/"')
     // Nothing is added to the header itself: the session strip is rendered
     // below it by the layout, so this bar stays identical to every other page.
     ;

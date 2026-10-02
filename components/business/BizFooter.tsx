@@ -17,22 +17,22 @@ export function BizFooter() {
       <div className="flex h-full flex-col justify-between px-6 py-12 sm:px-10">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div>
-            <p className="font-grotesk text-2xl font-bold tracking-tight2 text-paper">
+            <p className="font-grotesk text-2xl font-bold uppercase tracking-tight2 text-paper">
               {biz.name}
             </p>
-            <p className="mt-4 max-w-sm font-sans text-[0.95rem] leading-relaxed text-paper/65">
+            <p className="mt-4 max-w-sm font-mono text-[0.82rem] leading-relaxed text-paper/65">
               {biz.lead}
             </p>
             <div className="mt-6 flex flex-col gap-2">
               <a
                 href={`mailto:${biz.email}`}
-                className="inline-block font-sans text-[0.8rem] font-medium tracking-normal text-brand-soft underline decoration-brand-soft/30 underline-offset-[6px] transition-colors hover:decoration-brand-soft"
+                className="inline-block font-mono text-[0.8rem] font-medium uppercase tracking-label text-brand-soft underline decoration-brand-soft/30 underline-offset-[6px] transition-colors hover:decoration-brand-soft"
               >
                 {biz.email}
               </a>
               <a
                 href={`tel:${biz.phoneHref}`}
-                className="inline-block font-sans text-[0.9rem] text-paper/65 transition-colors hover:text-brand-soft"
+                className="inline-block font-mono text-[0.8rem] text-paper/65 transition-colors hover:text-brand-soft"
               >
                 {biz.phone}
               </a>
@@ -40,7 +40,7 @@ export function BizFooter() {
           </div>
 
           <nav aria-label="Footer">
-            <h2 className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-paper/45">
+            <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-paper/45">
               Site
             </h2>
             <div className="mt-3 h-px w-full bg-white/15" />
@@ -49,7 +49,7 @@ export function BizFooter() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="font-sans text-[0.95rem] text-paper/80 transition-colors hover:text-brand-soft"
+                    className="font-mono text-[0.82rem] text-paper/80 transition-colors hover:text-brand-soft"
                   >
                     {item.label}
                   </Link>
@@ -59,11 +59,11 @@ export function BizFooter() {
           </nav>
 
           <div>
-            <h2 className="font-mono text-[0.66rem] uppercase tracking-[0.08em] text-paper/45">
+            <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-paper/45">
               Company
             </h2>
             <div className="mt-3 h-px w-full bg-white/15" />
-            <ul className="mt-4 space-y-2.5 font-sans text-[0.95rem] text-paper/80">
+            <ul className="mt-4 space-y-2.5 font-mono text-[0.82rem] text-paper/80">
               <li>{site.legalName}</li>
               <li>{biz.location}</li>
               <li>Est. {biz.founded}</li>
@@ -78,7 +78,7 @@ export function BizFooter() {
         </div>
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/15 pt-5">
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.08em] text-paper/45">
+          <p className="font-mono text-[0.68rem] uppercase tracking-label text-paper/45">
             © {year} {site.legalName}. All rights reserved.
           </p>
         </div>

@@ -45,7 +45,7 @@ export default function NotFound() {
                 </Link>
               </li>
             </ul>
-            <p className="mt-8 font-sans text-[0.9rem] text-ink-soft">
+            <p className="mt-8 font-mono text-[0.8rem] text-ink-soft">
               Still stuck? {biz.email}
             </p>
           </div>

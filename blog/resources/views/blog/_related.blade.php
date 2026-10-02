@@ -9,7 +9,7 @@
 @if($related->isNotEmpty())
 <section aria-labelledby="keep-reading" class="mx-auto mt-20 max-w-5xl px-6 sm:px-10">
     <div class="border-t border-ink-ink pt-8">
-        <h2 id="keep-reading" class="font-grotesk text-[1.6rem] font-semibold tracking-tight2 text-ink-ink">Keep reading</h2>
+        <h2 id="keep-reading" class="font-grotesk text-[1.6rem] font-extrabold tracking-tight2 text-ink-ink">Keep reading</h2>
 
         {{-- Written out rather than interpolated: Tailwind reads these files as
              plain text to decide which classes to generate, so a class name
@@ -42,11 +42,11 @@
                             <p class="mt-4 font-mono text-[0.66rem] uppercase tracking-label text-brand">{{ $topic->name }}</p>
                         @endif
 
-                        <h3 class="mt-2 font-grotesk text-[1.05rem] font-semibold leading-[1.2] tracking-tight2 text-ink-ink transition-colors group-hover:text-brand">
+                        <h3 class="mt-2 font-grotesk text-[1.05rem] font-extrabold leading-[1.2] tracking-tight2 text-ink-ink transition-colors group-hover:text-brand">
                             {{ $other->title }}
                         </h3>
 
-                        <p class="mt-2.5 font-sans text-[0.875rem] text-ink-soft">
+                        <p class="mt-2.5 font-mono text-[0.7rem] text-ink-soft">
                             {{ $other->published_at?->format('M j, Y') }} &middot; {{ $other->reading_minutes }} min
                         </p>
                     </a>

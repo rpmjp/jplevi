@@ -24,26 +24,29 @@ export default function BusinessHome() {
   return (
     <>
       {/* ---- Hero ------------------------------------------------------- */}
-      {/* Wider type gets its own column so it stays clear of the artwork. */}
-      <section className="relative w-full overflow-hidden px-6 pb-12 pt-8 sm:px-10 lg:min-h-[42rem] lg:pt-10 xl:min-h-[46rem]">
-        <h1 className="biz-display relative z-10 text-[clamp(2.1rem,6vw,4rem)] lg:max-w-[48%] lg:text-[clamp(2.6rem,4.6vw,5.5rem)]">
-          <span className="block">
+      {/* Proportions taken from the reference at 1536x1024: rail 6%, artwork
+          58% wide starting at 39%, headline cap heights 15.1% and 8.8%. */}
+      <section className="relative w-full overflow-hidden px-6 pb-12 pt-8 sm:px-10 lg:min-h-[41rem] lg:pb-0 lg:pt-[14px] xl:min-h-[722px]">
+        {/* Artwork sits behind the type. It is transparent where the headline
+            falls, so no scrim is needed. */}
+        <h1 className="biz-display relative z-10 tracking-[-0.056em]">
+          <span className="block text-[3.6rem] leading-[0.749] tracking-[0em] sm:text-[6rem] lg:text-[min(10.4vw,159px)]">
             {biz.headline[0]}
           </span>
-          <span className="block">
+          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(6.05vw,93px)]">
             {biz.headline[1]}
           </span>
-          <span className="block">
+          <span className="block text-[2.3rem] leading-[0.822] sm:text-[3.6rem] lg:text-[min(6.05vw,93px)]">
             {biz.headline[2]}
             <span className="ml-2 inline-block h-[0.2em] w-[0.2em] rounded-full bg-brand align-baseline" />
           </span>
         </h1>
 
-        <div className="pointer-events-none relative -mx-6 mt-6 w-[calc(100%+3rem)] sm:-mx-10 sm:w-[calc(100%+5rem)] lg:absolute lg:left-[46%] lg:top-6 lg:z-0 lg:mx-0 lg:mt-0 lg:w-[54%]">
+        <div className="pointer-events-none relative -mx-6 mt-6 w-[calc(100%+3rem)] sm:-mx-10 sm:w-[calc(100%+5rem)] lg:absolute lg:left-[36.7%] lg:top-[3px] lg:z-0 lg:mx-0 lg:mt-0 lg:w-[62%]">
           <HeroArt />
         </div>
 
-        <div className="relative z-10 mt-6 lg:mt-7 lg:max-w-[46%]">
+        <div className="relative z-10 -mt-3 sm:-mt-8 lg:mt-7">
           <p className="biz-lead max-w-[26rem]">{biz.lead}</p>
 
           <div className="mt-4">
@@ -52,13 +55,13 @@ export default function BusinessHome() {
             </Link>
           </div>
 
-          <p className="mt-6 border-l-2 border-ember pl-4 font-sans text-sm leading-relaxed text-ink-body">
+          <p className="mt-6 border-l-2 border-ember pl-4 font-mono text-[0.78rem] uppercase tracking-label text-ink-body">
             {biz.phases.join("  /  ")}
           </p>
 
           <div className="mt-7 border-l-2 border-brand pl-4">
-            <p className="font-sans text-[0.95rem] text-ink-body">{biz.teamLine}</p>
-            <p className="mt-1.5 font-sans text-[0.95rem] font-semibold text-ink-ink">
+            <p className="font-mono text-[0.82rem] text-ink-body">{biz.teamLine}</p>
+            <p className="mt-1.5 font-mono text-[0.82rem] font-semibold text-ink-ink">
               {biz.disciplines.join(" • ")}
             </p>
           </div>
@@ -79,7 +82,7 @@ export default function BusinessHome() {
                 <span aria-hidden="true" className="h-2 w-2 border border-ink-ink" />
                 <h2 className="biz-label !text-ink-ink">{stage.title}</h2>
               </div>
-              <p className="mt-3 font-sans text-[0.95rem] leading-relaxed text-ink-body">
+              <p className="mt-3 font-mono text-[0.82rem] leading-relaxed text-ink-body">
                 {stage.body}
               </p>
             </li>
@@ -105,7 +108,7 @@ export default function BusinessHome() {
                 {/* tick rising from the rule above, as in the reference */}
                 <span aria-hidden="true" className="absolute left-0 top-0 h-3 w-px bg-white/35" />
                 <span className="flex items-baseline gap-2">
-                  <span className="font-grotesk text-[0.85rem] font-bold text-paper">{item.n}</span>
+                  <span className="font-grotesk text-[0.85rem] font-black text-paper">{item.n}</span>
                   <span aria-hidden="true" className="h-px w-3 bg-ember" />
                   <span className="font-mono text-[0.65rem] uppercase tracking-[0.08em] text-paper/85 sm:whitespace-nowrap">
                     {item.label}
@@ -122,7 +125,7 @@ export default function BusinessHome() {
             <h3 className="font-grotesk text-2xl font-bold tracking-tight2 text-paper sm:text-3xl">
               {guarantee.question}
             </h3>
-            <p className="mt-3 font-mono text-[0.82rem] uppercase tracking-[0.08em] text-brand-soft">
+            <p className="mt-3 font-mono text-[0.82rem] uppercase tracking-label text-brand-soft">
               {guarantee.subhead}
             </p>
             <p className="mt-6 max-w-prose2 font-sans text-[1.02rem] leading-[1.7] text-paper/75">

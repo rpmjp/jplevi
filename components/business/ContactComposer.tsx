@@ -87,7 +87,7 @@ export function ContactComposer() {
       <div>
         <fieldset className="border-t border-ink-ink pt-5">
           <legend className="sr-only">What do you need help with, if you know</legend>
-          <p className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-ink-soft">
+          <p className="font-mono text-[0.66rem] uppercase tracking-label text-ink-soft">
             01 / What do you need help with, if you know
           </p>
           <div className="mt-4 flex flex-wrap gap-1.5">
@@ -100,7 +100,7 @@ export function ContactComposer() {
                   aria-pressed={on}
                   onClick={() => setPicked(on ? null : p.id)}
                   className={
-                    "border px-3 py-2 text-left font-sans text-[0.9rem] leading-tight transition-colors " +
+                    "border px-3 py-2 text-left font-sans text-[0.8rem] leading-tight transition-colors " +
                     (on
                       ? "border-brand bg-brand text-white"
                       : "border-paper-4 text-ink-body hover:border-ink-ink hover:text-ink-ink")
@@ -116,7 +116,7 @@ export function ContactComposer() {
         <div className="mt-10 border-t border-ink-ink pt-5">
           <label
             htmlFor="contact-detail"
-            className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-ink-soft"
+            className="font-mono text-[0.66rem] uppercase tracking-label text-ink-soft"
           >
             02 / Describe it in your own words
           </label>
@@ -127,14 +127,14 @@ export function ContactComposer() {
             value={detail}
             onChange={(e) => setDetail(e.target.value)}
             placeholder="What is happening now, roughly what data or systems you already have, and what a good outcome would look like. Partial is fine."
-            className="mt-4 w-full resize-y border border-paper-4 bg-white/60 px-4 py-3.5 font-sans text-base leading-relaxed text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"
+            className="mt-4 w-full resize-y border border-paper-4 bg-white/60 px-4 py-3.5 font-sans text-[0.92rem] leading-relaxed text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"
           />
         </div>
 
         <div className="mt-10 border-t border-ink-ink pt-5">
           <label
             htmlFor="contact-from"
-            className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-ink-soft"
+            className="font-mono text-[0.66rem] uppercase tracking-label text-ink-soft"
           >
             03 / Where do we reply
           </label>
@@ -147,7 +147,7 @@ export function ContactComposer() {
             value={from}
             onChange={(e) => setFrom(e.target.value)}
             placeholder="you@company.com"
-            className="mt-4 w-full border border-paper-4 bg-white/60 px-4 py-3.5 font-sans text-base text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"
+            className="mt-4 w-full border border-paper-4 bg-white/60 px-4 py-3.5 font-sans text-[0.92rem] text-ink-ink placeholder:text-ink-soft/70 focus:border-brand focus:outline-none"
           />
         </div>
 
@@ -166,7 +166,7 @@ export function ContactComposer() {
       {/* ---- the message, in the open ---- */}
       <div className="mt-12 lg:mt-0">
         <div className="lg:sticky lg:top-28">
-          <p className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-ink-soft">
+          <p className="font-mono text-[0.66rem] uppercase tracking-label text-ink-soft">
             What gets sent
           </p>
 
@@ -180,7 +180,7 @@ export function ContactComposer() {
           {status === "sent" ? (
             <div
               role="status"
-              className="mt-5 border border-brand bg-brand/5 px-5 py-4 font-sans text-base leading-relaxed text-ink-ink"
+              className="mt-5 border border-brand bg-brand/5 px-5 py-4 font-sans text-[0.9rem] leading-relaxed text-ink-ink"
             >
               <p className="font-grotesk text-[1.05rem] font-bold tracking-tight2">Sent.</p>
               <p className="mt-1.5 text-ink-body">
@@ -215,7 +215,7 @@ export function ContactComposer() {
               <button
                 type="button"
                 onClick={copy}
-                className="mt-4 font-sans text-[0.72rem] tracking-normal text-ink-soft underline decoration-paper-4 underline-offset-[6px] transition-colors hover:text-brand"
+                className="mt-4 font-mono text-[0.72rem] uppercase tracking-label text-ink-soft underline decoration-paper-4 underline-offset-[6px] transition-colors hover:text-brand"
               >
                 {copied ? "Copied to clipboard" : "Or copy the message"}
               </button>
@@ -223,14 +223,14 @@ export function ContactComposer() {
               {status === "error" ? (
                 <p
                   role="alert"
-                  className="mt-4 border-l-2 border-ember pl-4 font-sans text-[0.95rem] leading-relaxed text-ink-body"
+                  className="mt-4 border-l-2 border-ember pl-4 font-sans text-[0.85rem] leading-relaxed text-ink-body"
                 >
                   That did not go through. Use the mail draft or copy the message above and send it
                   yourself, and it will still reach us.
                 </p>
               ) : null}
 
-              <p className="mt-4 font-sans text-[0.875rem] leading-relaxed text-ink-soft">
+              <p className="mt-4 font-mono text-[0.7rem] leading-relaxed text-ink-soft">
                 {live
                   ? "Sending delivers it straight to us. No mail app on this machine? Send is the one to use. Nothing is tracked, and the message is not stored anywhere else."
                   : "No mail app on this machine? Copy it and paste into webmail."}

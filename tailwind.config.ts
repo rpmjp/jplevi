@@ -83,7 +83,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
-        grotesk: ["var(--font-business)", "ui-sans-serif", "system-ui", "sans-serif"],
+        grotesk: ["var(--font-grotesk)", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
